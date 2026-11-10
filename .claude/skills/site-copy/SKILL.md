@@ -113,6 +113,10 @@ Títulos: [3 opções, preferida marcada + 1 linha de justificativa]
 ## [Nome da seção 2]
 ...
 
+## CTAs da página
+Barra fixa (celular): [até ~28 caracteres]
+Mensagem pronta do WhatsApp: [1 frase]
+
 ## Lacunas e pontos de checagem
 - [A CONFIRMAR: ...]
 - [CHECAR REGRA: depoimento X, CFM/Meta]

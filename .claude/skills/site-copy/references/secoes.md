@@ -64,3 +64,5 @@ A seção da "pré-consulta". Tire o medo do desconhecido.
 - Verbo de ação + o que acontece: "Agendar minha avaliação", "Falar com a equipe no WhatsApp".
 - Coerentes ao longo da página (mesma ação, mesmas palavras).
 - Microtexto de apoio quando reduzir medo: "Resposta em horário comercial", "Sem compromisso de agendamento".
+- **Por página, entregue também:** o texto da **barra fixa de CTA** do celular (até ~28 caracteres, ex.: "Quero avaliar meu melasma") e a **mensagem pronta do WhatsApp** (1 frase, na voz do paciente, sem dado pessoal, ex.: "Olá! Vim pelo site e quero agendar uma avaliação para melasma.").
+- **Botões no meio da página:** no máximo 1 ou 2, nos pontos de decisão (ex.: depois de "como funciona" e da prova social), com texto que fecha o raciocínio da seção. A seção final de CTA é sempre obrigatória.

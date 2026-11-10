@@ -64,8 +64,8 @@ Registradas em "Decisões técnicas" no `CLAUDE.md`. Resumo: Astro + Tailwind v4
 ## Plano da Fase 4 (validar com o Arthur ao fim de cada etapa)
 
 1. ✅ Organizar workspace (mover, git, .gitignore, READMEs, decisões no CLAUDE.md)
-2. Extração técnica das refs 03 a 06 → `_referencias/extracao-tecnica.md`
-3. Skill `site-build` (primeira versão)
+2. ✅ Extração técnica das refs 03 a 07 (desktop e celular) → `_referencias/extracao-tecnica.md`
+3. ✅ Skill `site-build` (primeira versão; `references/template.md` completa na etapa 4)
 4. `_template/` com o demo do Dr. Arthur Silveira [FICTÍCIO]
 5. Editor (CMS, candidato: Pages CMS) testado no demo; ajuste final da skill
 
