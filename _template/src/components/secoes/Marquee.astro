@@ -11,7 +11,7 @@ const { dados: d } = Astro.props;
 <section class="mq" aria-label={d.itens.join(', ')}>
   <div class="mq-trilho">
     {
-      [0, 1].map((copia) => (
+      [0, 1].map(() => (
         <ul class="mq-lista" aria-hidden="true">
           {d.itens.map((t) => (
             <li>

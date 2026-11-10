@@ -1,0 +1,257 @@
+---
+// PRANCHA DE ESTILO: prévia da direção visual para aprovação. Removida do build publicado (astro.config.mjs).
+import '../styles/global.css';
+import { Font } from 'astro:assets';
+import Botao from '../components/base/Botao.astro';
+import Marca from '../components/conceito/Marca.astro';
+import DecorTopo from '../components/conceito/DecorTopo.astro';
+import Divisor from '../components/conceito/Divisor.astro';
+import Marcador from '../components/conceito/Marcador.astro';
+import Separador from '../components/conceito/Separador.astro';
+import IconeProcedimento from '../components/conceito/IconeProcedimento.astro';
+import SobreFoto from '../components/conceito/SobreFoto.astro';
+import DecorCta from '../components/conceito/DecorCta.astro';
+import { medico, home } from '../lib/dados';
+import { linkWhatsApp, titulo } from '../lib/texto';
+
+const m = await medico();
+const h = await home();
+Astro.locals.ctx = { pagina: 'prancha', whatsapp: linkWhatsApp(m.whatsapp, h.data.cta.mensagem), modoLP: false };
+const topo = h.data.secoes.find((s) => s.tipo === 'topo');
+const frase = topo?.tipo === 'topo' ? topo.titulo : 'Título de exemplo com **palavra-chave**';
+
+const cores = [
+  ['fundo', 'Fundo da página'],
+  ['superficie', 'Cards'],
+  ['superficie-2', 'Blocos de destaque'],
+  ['tinta', 'Títulos'],
+  ['texto', 'Texto corrido'],
+  ['apagado', 'Legendas'],
+  ['acao', 'Só CTAs'],
+  ['destaque', 'Palavra-chave e detalhes'],
+  ['escuro', 'CTA final e rodapé'],
+];
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Prancha de estilo</title>
+    <Font cssVariable="--fonte-titulo" preload />
+    <Font cssVariable="--fonte-texto" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <main class="wrap pr">
+      <header class="pr-cab">
+        <p class="rotulo">Prancha de estilo · prévia para aprovação</p>
+        <Marca />
+      </header>
+
+      <section class="pr-sec">
+        <h2 class="pr-t">Paleta</h2>
+        <ul class="pr-cores">
+          {
+            cores.map(([t, papel]) => (
+              <li>
+                <span class="pr-amostra" style={`background:var(--color-${t})`} />
+                <strong>{t}</strong>
+                <span class="t-pequeno">{papel}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="pr-sec">
+        <h2 class="pr-t">Tipografia</h2>
+        <p class="t-display medida-titulo" set:html={titulo(frase)} />
+        <p class="t-h2 medida-titulo" set:html={titulo('Título de seção com **palavra-chave**')} />
+        <p class="t-h3">Título de card ou passo</p>
+        <p class="t-lead medida">Texto de destaque, usado logo abaixo dos títulos para apoiar a leitura.</p>
+        <p class="medida">Texto corrido em 16px no celular e 17px no desktop. Linhas curtas, frases de tamanhos variados, leitura confortável para quem chega pelo Instagram.</p>
+        <p class="t-pequeno" style="color:var(--color-apagado)">Legenda e microtexto de apoio.</p>
+      </section>
+
+      <section class="pr-sec">
+        <h2 class="pr-t">Botões (passe o mouse no primeiro)</h2>
+        <div class="pr-linha">
+          <Botao texto="Agendar consulta" posicao="prancha" />
+          <Botao texto="Ver tratamentos" estilo="escuro" href="#" />
+          <Botao texto="Quero entender meu caso" estilo="contorno" href="#" />
+          <Botao texto="Link leve" estilo="link" href="#" />
+        </div>
+      </section>
+
+      <section class="pr-sec">
+        <h2 class="pr-t">Elementos do conceito</h2>
+        <div class="pr-conceito">
+          <figure>
+            <div class="pr-caixa pr-topo">
+              <DecorTopo />
+              <div class="pr-foto foto-reservada">[FOTO]</div>
+              <SobreFoto />
+            </div>
+            <figcaption class="t-pequeno">Curvas de nível + lente sobre a foto</figcaption>
+          </figure>
+          <figure>
+            <div class="pr-caixa pr-icones" data-desenha>
+              <IconeProcedimento indice={0} />
+              <IconeProcedimento indice={1} />
+              <IconeProcedimento indice={2} />
+            </div>
+            <figcaption class="t-pequeno">Ícones de procedimento (se desenham)</figcaption>
+          </figure>
+          <figure>
+            <div class="pr-caixa pr-icones" style="color:var(--color-destaque)">
+              <Marcador />
+              <Separador />
+            </div>
+            <figcaption class="t-pequeno">Marcador e separador (ponto de mapa)</figcaption>
+          </figure>
+        </div>
+        <Divisor />
+      </section>
+
+      <section class="pr-sec pr-cards">
+        <div class="pr-card">
+          <span class="rotulo">Card</span>
+          <h3 class="t-h3">A mancha que volta todo verão</h3>
+          <p>Melhora no inverno, volta com o sol, e você já nem sabe mais o que passar.</p>
+        </div>
+        <div class="pr-card escuro">
+          <DecorCta />
+          <h3 class="t-h3" style="position:relative">Bloco escuro</h3>
+          <p style="position:relative">Usado no CTA final e no rodapé.</p>
+        </div>
+      </section>
+
+      <section class="pr-sec">
+        <h2 class="pr-t">Topo no celular (390 × 664, navegador do Instagram)</h2>
+        <iframe class="pr-celular" src="/" title="Topo da home no celular" loading="lazy"></iframe>
+      </section>
+    </main>
+    <script>
+      import '../scripts/fx.ts';
+    </script>
+  </body>
+</html>
+
+<style>
+  .pr {
+    padding-block: 48px 96px;
+    display: grid;
+    gap: 64px;
+  }
+  .pr-cab {
+    display: grid;
+    gap: 16px;
+  }
+  .pr-sec {
+    display: grid;
+    gap: 20px;
+  }
+  .pr-t {
+    font-family: var(--font-texto);
+    font-size: var(--t-rotulo);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-apagado);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-linha);
+  }
+  .pr-cores {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+  }
+  .pr-cores li {
+    display: grid;
+    gap: 4px;
+  }
+  .pr-amostra {
+    height: 72px;
+    border-radius: var(--radius-card);
+    box-shadow: inset 0 0 0 1px var(--color-linha);
+  }
+  .pr-linha {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+  }
+  .pr-conceito {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+  .pr-conceito figure {
+    display: grid;
+    gap: 8px;
+  }
+  .pr-caixa {
+    position: relative;
+    height: 260px;
+    border-radius: var(--radius-bloco);
+    background: var(--color-superficie);
+    box-shadow: inset 0 0 0 1px var(--color-linha);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+  .pr-topo {
+    overflow: hidden;
+  }
+  .pr-foto {
+    position: relative;
+    z-index: 1;
+    width: 120px;
+    height: 150px;
+    border-radius: var(--recorte-foto);
+  }
+  .pr-topo :global(.sobre-foto) {
+    width: 64px;
+    left: calc(50% - 92px);
+    bottom: 40px;
+  }
+  .pr-icones {
+    display: flex;
+    gap: 28px;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-destaque);
+  }
+  .pr-cards {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .pr-card {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    gap: 10px;
+    padding: 32px;
+    border-radius: var(--radius-bloco);
+    background: var(--color-superficie);
+    box-shadow: inset 0 0 0 1px var(--color-linha);
+  }
+  .pr-card.escuro {
+    background: var(--color-escuro);
+    box-shadow: none;
+  }
+  .pr-celular {
+    width: 390px;
+    max-width: 100%;
+    height: 664px;
+    border: 0;
+    border-radius: 28px;
+    box-shadow:
+      0 0 0 10px var(--color-tinta),
+      0 30px 60px -30px rgb(0 0 0 / 0.5);
+    margin: 10px;
+  }
+</style>

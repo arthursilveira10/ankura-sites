@@ -3,6 +3,7 @@
 // Conteúdo (textos, fotos, dados do médico) fica em src/content/.
 import { fontProviders } from 'astro/config';
 
+/** @type {{ url: string, fontes: NonNullable<import('astro').AstroUserConfig['fonts']> }} */
 export const cliente = {
   // Endereço final do site (usado em sitemap, canonical e Open Graph).
   url: 'https://exemplo.ankura.com.br',

@@ -1,0 +1,10 @@
+// Publicação na Cloudflare (Workers com arquivos estáticos). Troque "name" pelo nome do projeto do cliente.
+// Outras hospedagens: comando de build "npm run build", pasta de saída "dist".
+{
+  "name": "site-cliente",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+  },
+}

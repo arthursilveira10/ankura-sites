@@ -47,7 +47,11 @@ const ano = new Date().getFullYear();
           </a>
         )
       }
-      <a href={m.endereco.mapa ?? '#'} target="_blank" rel="noopener">
+      <a
+        href={m.endereco.mapa ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent([m.endereco.linha1, m.endereco.linha2].filter(Boolean).join(', '))}`}
+        target="_blank"
+        rel="noopener"
+      >
         <Icone nome="local" tamanho={18} />
         <span>
           {m.endereco.linha1}

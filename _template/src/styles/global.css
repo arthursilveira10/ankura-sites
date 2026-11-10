@@ -107,6 +107,17 @@ img {
   contain-intrinsic-size: auto 900px;
 }
 
+.t-display,
+.t-h2,
+.t-h3 {
+  font-family: var(--font-titulo);
+  font-weight: var(--titulo-peso);
+  color: var(--color-tinta);
+  text-wrap: balance;
+}
+.escuro :is(.t-display, .t-h2, .t-h3) {
+  color: var(--color-escuro-texto);
+}
 .t-display {
   font-size: var(--t-display);
   line-height: 1.02;

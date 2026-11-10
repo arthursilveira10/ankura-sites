@@ -4,6 +4,7 @@
 import Foto from '../base/Foto.astro';
 import Botao from '../base/Botao.astro';
 import DecorTopo from '../conceito/DecorTopo.astro';
+import SobreFoto from '../conceito/SobreFoto.astro';
 import { titulo } from '../../lib/texto';
 import type { Secao } from '../../lib/dados';
 
@@ -21,6 +22,7 @@ const colagem = d.variante === 'colagem' && d.fotosExtras.length > 0;
       <div class="topo-foto" data-revela-foto>
         <Foto foto={d.foto} sizes="(min-width: 1024px) 460px, 80vw" larguras={[360, 520, 720, 920]} prioridade proporcao="4/5" />
       </div>
+      <SobreFoto />
       {
         colagem &&
           d.fotosExtras.map((f, i) => (

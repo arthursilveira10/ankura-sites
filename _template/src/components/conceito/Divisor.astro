@@ -1,0 +1,30 @@
+---
+// DIVISOR TEMÁTICO (por cliente). Demo: faixa de curvas de nível com um ponto de mapa.
+import { curvasAbertas } from './topografia';
+interface Props {
+  semente?: number;
+}
+const { semente = 3 } = Astro.props;
+const linhas = curvasAbertas({ largura: 1200, altura: 60, linhas: 4, semente });
+---
+
+<div class="wrap divisor" aria-hidden="true">
+  <svg class="decor" viewBox="0 0 1200 60" preserveAspectRatio="none">
+    {linhas.map((d) => <path d={d} />)}
+  </svg>
+</div>
+
+<style>
+  .divisor svg {
+    display: block;
+    width: 100%;
+    height: clamp(36px, 5vw, 60px);
+    fill: none;
+    stroke: var(--color-destaque);
+    stroke-width: 1;
+    opacity: 0.4;
+  }
+  .divisor path {
+    vector-effect: non-scaling-stroke;
+  }
+</style>

@@ -1,19 +1,26 @@
 ---
-// DECORAÇÃO DO TOPO (por cliente): elemento do conceito atrás da foto.
+// DECORAÇÃO DO TOPO (por cliente). Demo "Leitura da pele": curvas de nível atrás da foto.
 // Sempre decorativo: aria-hidden, atrás do conteúdo, sem bloquear clique.
-// Padrão do template: um círculo suave na cor de destaque.
+import { curvasFechadas } from './topografia';
+const curvas = curvasFechadas({ cx: 250, cy: 250, raio: 245, niveis: 9, semente: 11 });
 ---
 
-<svg class="decor decor-topo" viewBox="0 0 400 400" aria-hidden="true">
-  <circle cx="200" cy="200" r="190" fill="var(--color-superficie-2)"></circle>
+<svg class="decor decor-topo" viewBox="0 0 500 500" aria-hidden="true" data-desenha>
+  {curvas.map((d, i) => <path d={d} pathLength="1" style={`--atraso:${i}`} />)}
 </svg>
 
 <style>
   .decor-topo {
     position: absolute;
     z-index: 0;
-    inset: -12% -18%;
-    width: 136%;
+    left: 50%;
+    top: 50%;
+    width: 175%;
     height: auto;
+    transform: translate(-50%, -50%);
+    fill: none;
+    stroke: var(--color-destaque);
+    stroke-width: 1.3;
+    opacity: 0.4;
   }
 </style>

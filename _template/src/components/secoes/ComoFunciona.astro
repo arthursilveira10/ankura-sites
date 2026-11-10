@@ -99,7 +99,10 @@ const v = d.variante;
     position: relative;
     display: grid;
     gap: 6px;
-    opacity: calc(0.4 + var(--on) * 0.6);
+  }
+  /* O passo "acende" pelo marcador e pela cor do título; o texto fica sempre legível (contraste AA). */
+  .cf-passos-com-linha .cf-passo h3 {
+    color: color-mix(in oklab, var(--color-tinta) calc(var(--on) * 100%), var(--color-apagado));
   }
   .cf-marca {
     position: absolute;

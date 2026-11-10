@@ -15,7 +15,7 @@ const { dados: d } = Astro.props;
     <Cabecalho rotulo={d.rotulo} titulo={d.titulo} />
     {
       d.nota && (
-        <a class="dep-nota" href={d.nota.link} target="_blank" rel="noopener" data-revela>
+        <a class="dep-nota" href={d.nota.link ?? '#depoimentos'} {...(d.nota.link ? { target: '_blank', rel: 'noopener' } : {})} data-revela>
           <span class="dep-valor">{d.nota.valor}</span>
           <span class="dep-estrelas" aria-hidden="true">
             {[1, 2, 3, 4, 5].map(() => <Icone nome="estrela" tamanho={16} />)}

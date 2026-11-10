@@ -1,0 +1,41 @@
+---
+// ELEMENTO SOBRE A FOTO DO TOPO (por cliente). Demo: a lente do dermatoscópio no canto da foto.
+// Decorativo: aria-hidden, sem bloquear clique. Deixe o arquivo vazio se o conceito não pedir.
+const marcas = Array.from({ length: 36 }, (_, i) => i * 10);
+---
+
+<svg class="decor sobre-foto" viewBox="0 0 120 120" aria-hidden="true">
+  <circle cx="60" cy="60" r="56" fill="var(--color-fundo)" opacity="0.92"></circle>
+  <circle cx="60" cy="60" r="56" fill="none" stroke="var(--color-tinta)" stroke-width="1"></circle>
+  <g class="sobre-foto-escala">
+    {
+      marcas.map((g) => (
+        <line x1="60" y1="7" x2="60" y2={g % 90 === 0 ? 16 : g % 30 === 0 ? 13 : 11} stroke="var(--color-tinta)" stroke-width="0.9" transform={`rotate(${g} 60 60)`} />
+      ))
+    }
+  </g>
+  <circle cx="60" cy="60" r="30" fill="none" stroke="var(--color-destaque)" stroke-width="1"></circle>
+  <path d="M60 46v28M46 60h28" stroke="var(--color-destaque)" stroke-width="1" stroke-linecap="round"></path>
+</svg>
+
+<style>
+  .sobre-foto {
+    position: absolute;
+    z-index: 3;
+    width: 34%;
+    left: -14%;
+    bottom: 6%;
+    filter: drop-shadow(0 10px 18px rgb(0 0 0 / 0.16));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .sobre-foto-escala {
+      transform-origin: 60px 60px;
+      animation: escala-gira 40s linear infinite;
+    }
+  }
+  @keyframes escala-gira {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>

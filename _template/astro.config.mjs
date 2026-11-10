@@ -9,7 +9,7 @@ import { cliente } from './cliente.config.mjs';
 const semPrevia = () => ({
   name: 'ankura-sem-previa',
   hooks: {
-    'astro:build:done': async ({ dir }) => {
+    'astro:build:done': async (/** @type {{ dir: URL }} */ { dir }) => {
       await rm(new URL('./previa/', dir), { recursive: true, force: true });
     },
   },

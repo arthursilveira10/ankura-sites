@@ -96,7 +96,7 @@ Variantes:
 **Função:** portas de entrada para as páginas de procedimento.
 Variantes:
 - **lista-em-linhas** (padrão): cada linha com ícone do conceito, miniatura, nome (palavra-chave em negrito), uma linha de descrição e seta para a página. Funciona igual no celular e no desktop.
-- **lista-com-imagem**: no desktop, a imagem do item ativo aparece ao lado (hover); no celular, vira acordeão com a imagem dentro do item aberto e o primeiro item aberto.
+- **lista-com-imagem**: acordeão com a imagem dentro do item aberto e o primeiro item aberto. (A versão desktop com a imagem ao lado no hover ainda não existe no template.)
 - **cards**: 2 a 4 cards com foto. Só quando houver poucos procedimentos e fotos boas.
 
 ### Detalhe do procedimento (páginas de procedimento)

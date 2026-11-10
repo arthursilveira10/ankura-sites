@@ -19,6 +19,7 @@ import Clinica from './secoes/Clinica.astro';
 import Particular from './secoes/Particular.astro';
 import Faq from './secoes/Faq.astro';
 import CtaFinal from './secoes/CtaFinal.astro';
+import Divisor from './conceito/Divisor.astro';
 
 interface Props {
   secoes: Secao[];
@@ -44,12 +45,13 @@ const mapa: Record<Secao['tipo'], any> = {
   particular: Particular,
   faq: Faq,
   'cta-final': CtaFinal,
+  divisor: Divisor,
 };
 ---
 
 {
   secoes.map((s, i) => {
     const Componente = mapa[s.tipo];
-    return <Componente dados={s} indice={i} />;
+    return s.tipo === 'divisor' ? <Divisor semente={s.semente} /> : <Componente dados={s} indice={i} />;
   })
 }

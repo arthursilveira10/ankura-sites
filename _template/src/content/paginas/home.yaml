@@ -79,6 +79,8 @@ secoes:
       - quando: '2021'
         titulo: Abertura do consultório em Campinas
 
+  - tipo: divisor
+
   - tipo: procedimentos
     variante: lista-em-linhas
     rotulo: Tratamentos
@@ -136,6 +138,9 @@ secoes:
     cta:
       texto: Quero conversar com o Dr. Arthur
       posicao: meio-2
+
+  - tipo: divisor
+    semente: 8
 
   - tipo: faq
     rotulo: Dúvidas

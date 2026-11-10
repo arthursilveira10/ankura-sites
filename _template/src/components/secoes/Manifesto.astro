@@ -63,7 +63,8 @@ lista.forEach((p, i) => {
   .w {
     /* liga quando o progresso passa da posição da palavra */
     --on: clamp(0, calc((var(--p) * (var(--n) + 4) - var(--i)) / 4), 1);
-    color: color-mix(in oklab, var(--color-tinta) calc(18% + var(--on) * 82%), var(--color-fundo));
+    /* começa em 52% (contraste ~3:1, mínimo para texto grande) e vai a 100% */
+    color: color-mix(in oklab, var(--color-tinta) calc(52% + var(--on) * 48%), var(--color-fundo));
     transition: color 0.3s linear;
   }
   .mf-foto {

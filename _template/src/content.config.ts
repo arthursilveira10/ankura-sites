@@ -55,6 +55,10 @@ const secoes = (image: any) => {
       itens: z.array(z.object({ rotulo: z.string().max(24), valor: z.string().max(40) })).max(4).optional(),
     }),
     z.object({
+      tipo: z.literal('divisor'), // elemento do conceito entre seções
+      semente: z.number().int().optional(),
+    }),
+    z.object({
       tipo: z.literal('marquee'),
       itens: z.array(z.string().max(40)).min(3).max(10),
     }),
@@ -139,7 +143,7 @@ const secoes = (image: any) => {
       tipo: z.literal('depoimentos'),
       rotulo: z.string().max(40).optional(),
       titulo,
-      nota: z.object({ valor: z.string().max(4), total: z.string().max(30), link: z.string().url().optional() }).optional(),
+      nota: z.object({ valor: z.string().max(4), total: z.string().max(30), link: z.url().optional() }).optional(),
       itens: z.array(z.object({ texto: z.string().max(420), autor: z.string().max(40), origem: z.string().max(30).optional() })).min(1).max(8),
       cta: ctaMeio,
     }),
@@ -200,7 +204,7 @@ const medico = defineCollection({
       modalidade: z.string().max(40),
       whatsapp: z.string().regex(/^\d{12,13}$/, 'Só números, com 55 e DDD'),
       instagram: z.string().max(40).optional(),
-      endereco: z.object({ linha1: z.string().max(80), linha2: z.string().max(80).optional(), mapa: z.string().url().optional() }),
+      endereco: z.object({ linha1: z.string().max(80), linha2: z.string().max(80).optional(), mapa: z.url().optional() }),
       horarios: z.array(z.string().max(60)).max(4),
       consulta: z
         .object({ valor: z.string().max(20).optional(), mostrarValor: z.boolean().default(false), convenios: z.array(z.string().max(40)).default([]) })

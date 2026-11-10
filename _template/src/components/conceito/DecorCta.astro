@@ -1,20 +1,27 @@
 ---
-// DECORAÇÃO DO CTA FINAL (por cliente): elemento do conceito ao fundo do bloco escuro.
+// DECORAÇÃO DO CTA FINAL (por cliente). Demo: curvas de nível claras no fundo escuro.
+import { curvasFechadas } from './topografia';
+const curvas = curvasFechadas({ cx: 400, cy: 400, raio: 390, niveis: 12, semente: 29, irregular: 0.2 });
 ---
 
 <svg class="decor decor-cta" viewBox="0 0 800 800" aria-hidden="true">
-  <circle cx="400" cy="400" r="380" fill="none" stroke="var(--color-escuro-linha)" stroke-width="1"></circle>
-  <circle cx="400" cy="400" r="280" fill="none" stroke="var(--color-escuro-linha)" stroke-width="1"></circle>
-  <circle cx="400" cy="400" r="180" fill="none" stroke="var(--color-escuro-linha)" stroke-width="1"></circle>
+  {curvas.map((d) => <path d={d} />)}
 </svg>
 
 <style>
   .decor-cta {
     position: absolute;
     z-index: 0;
-    left: 50%;
-    top: 50%;
-    width: max(120%, 900px);
+    left: 70%;
+    top: 55%;
+    width: max(110%, 900px);
     transform: translate(-50%, -50%);
+    fill: none;
+    stroke: var(--color-escuro-texto);
+    stroke-width: 1;
+    opacity: 0.12;
+  }
+  .decor-cta path {
+    vector-effect: non-scaling-stroke;
   }
 </style>

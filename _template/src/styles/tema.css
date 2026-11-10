@@ -1,33 +1,35 @@
 /*
   TEMA DO CLIENTE
   Único arquivo de identidade visual. Trocar os valores aqui muda o site inteiro.
-  Papéis das cores: ver .claude/skills/site-build/references/direcao-visual.md (seção 3).
-  Fontes: definidas em cliente.config.mjs (--fonte-titulo e --fonte-texto).
+  Papéis das cores: .claude/skills/site-build/references/direcao-visual.md (seção 3).
+  Fontes: cliente.config.mjs (--fonte-titulo e --fonte-texto).
+
+  Demo: Dr. Arthur Silveira [FICTÍCIO], conceito "Leitura da pele" (ver direcao-visual.md).
 */
 
 @theme {
-  /* Cores */
-  --color-fundo: #f6f1ea;
-  --color-superficie: #fbf8f3;
-  --color-superficie-2: #efe4d6;
-  --color-tinta: #2a211b;
-  --color-texto: #4f443b;
-  --color-apagado: #7a6d62;
-  --color-linha: rgb(42 33 27 / 0.14);
-  --color-acao: #b4532f;
-  --color-acao-texto: #fff8f2;
-  --color-acao-hover: #963f21;
-  --color-destaque: #7d8a5b;
-  --color-escuro: #2f2721;
-  --color-escuro-texto: #f6f1ea;
-  --color-escuro-apagado: rgb(246 241 234 / 0.68);
-  --color-escuro-linha: rgb(246 241 234 / 0.16);
+  /* Cores (contraste conferido em direcao-visual.md) */
+  --color-fundo: #f4eee6; /* areia */
+  --color-superficie: #faf6f0;
+  --color-superficie-2: #eadfd0;
+  --color-tinta: #2b231d;
+  --color-texto: #51463d;
+  --color-apagado: #6b5e52;
+  --color-linha: rgb(43 35 29 / 0.14);
+  --color-acao: #a04b2b; /* argila: só CTAs */
+  --color-acao-texto: #fff8f1;
+  --color-acao-hover: #86391d;
+  --color-destaque: #566440; /* sálvia */
+  --color-escuro: #2b2520;
+  --color-escuro-texto: #f4eee6;
+  --color-escuro-apagado: rgb(244 238 230 / 0.7);
+  --color-escuro-linha: rgb(244 238 230 / 0.14);
 
   /* Fontes */
   --font-titulo: var(--fonte-titulo), Georgia, serif;
   --font-texto: var(--fonte-texto), Arial, sans-serif;
 
-  /* Forma (perfil "médio" por padrão: 24 / 16 / 10) */
+  /* Forma: perfil médio */
   --radius-bloco: 24px;
   --radius-card: 16px;
   --radius-mini: 10px;
@@ -35,12 +37,11 @@
 }
 
 :root {
-  /* Ajustes finos de tipografia da identidade */
   --titulo-peso: 400;
-  --titulo-destaque-peso: 500;
-  --titulo-destaque-estilo: italic; /* como a **palavra-chave** aparece nos títulos */
+  --titulo-destaque-peso: 400;
+  --titulo-destaque-estilo: italic;
   --titulo-espacamento: -0.03em;
 
-  /* Recorte da foto principal: arco | cantos | circulo */
-  --recorte-foto: 999px 999px var(--radius-bloco) var(--radius-bloco);
+  /* Recorte da foto principal */
+  --recorte-foto: 32px;
 }

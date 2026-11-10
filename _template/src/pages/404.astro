@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import Botao from '../components/base/Botao.astro';
+import { home, medico } from '../lib/dados';
+import { linkWhatsApp } from '../lib/texto';
+const h = await home();
+const m = await medico();
+Astro.locals.ctx = { pagina: '404', whatsapp: linkWhatsApp(m.whatsapp, h.data.cta.mensagem), modoLP: false };
+---
+
+<Base titulo="Página não encontrada" descricao="Esta página não existe." botaoMenu={h.data.cta.botaoMenu} indexar={false}>
+  <section class="secao wrap nf">
+    <p class="rotulo">Erro 404</p>
+    <h1 class="t-h2">Esta página não existe.</h1>
+    <p class="t-lead">Talvez o endereço tenha mudado. Você pode voltar ao início.</p>
+    <Botao texto="Voltar ao início" href="/" estilo="escuro" />
+  </section>
+</Base>
+
+<style>
+  .nf {
+    display: grid;
+    gap: 20px;
+    justify-items: start;
+    padding-top: calc(var(--header) + 80px);
+    min-height: 70svh;
+  }
+</style>
