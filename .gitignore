@@ -1,0 +1,23 @@
+# Dependências e builds
+node_modules/
+dist/
+.astro/
+.wrangler/
+.netlify/
+.vercel/
+
+# Variáveis e segredos
+.env
+.env.*
+!.env.example
+
+# Código de cada cliente vive no repositório próprio do cliente
+sites/*/site/
+
+# Configurações locais
+.claude/settings.local.json
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
