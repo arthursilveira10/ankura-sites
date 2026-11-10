@@ -250,3 +250,59 @@ O paciente chega pelo Instagram. Dentro do app do Instagram, o navegador tem bar
 - **Fotos secundárias do topo carregando atrasadas (03, 04):** a foto principal tem prioridade alta, mas as fotos menores da colagem estão com carregamento adiado (`loading="lazy"`). No primeiro print elas aparecem como **blocos vazios**. Regra: **tudo que aparece na primeira tela carrega na hora**, e a foto principal tem `fetchpriority="high"`.
 - **Topo invisível até a animação terminar (05):** a headline e a foto só aparecem depois da tela de carregamento e da animação de entrada. No teste, a primeira tela ficou vazia por vários segundos. O tempo foi inflado porque o navegador do teste estava em segundo plano, mas o problema é de fundo: **a headline nunca pode depender de animação para aparecer**. A animação de entrada vale só para a foto e os elementos decorativos.
 - **Selo de agenda com mês (05):** "agenda aberta em outubro" já estava fora do prazo quando medimos. Nada de data no topo.
+
+---
+
+## 6. Ref. 07: Instituto Bonança (régua de excelência)
+
+Medido em 1440×900 e 390×844. Não é site de médico individual. O valor dele está no **processo de identidade**, mais do que nas medidas.
+
+### O método por trás (o que leva a Ankura a outro nível)
+
+1. **Conceito-mãe:** uma metáfora curta que nasce da história do cliente. No Bonança: tempestade → calmaria → nova direção.
+2. **Vocabulário visual do conceito:** 4 a 6 elementos que derivam dele. No Bonança: barco, onda, sol nascendo, horizonte, farol, rota no mapa.
+3. **Cada elemento ganha uma função no site,** não fica só de enfeite:
+   - logotipo e ícone do botão (barco);
+   - divisor entre seções (linha de onda tracejada com o barco navegando);
+   - indicador de progresso (barco andando na linha conforme a pessoa avança);
+   - fundo do topo (sol nascendo atrás do nome);
+   - ícones dos pilares (farol, mapa);
+   - mapa de contato (pino que cai e traça a rota).
+4. **Paleta com nomes do conceito:** os tokens se chamam azul, calmaria, horizonte, creme, luz, sol. Isso obriga cada cor a ter um papel. O sol é a cor de ação e aparece quase só nos CTAs.
+5. **Microinteração-assinatura** no ponto de conversão: o botão tem partículas de luz subindo devagar (cada uma com tempo diferente, 1,5 a 2,5s, para não parecer mecânico) e o barco se desenhando no hover. Ao clicar, o botão afunda levemente (escala 0,965).
+
+Para a Ankura: na etapa de **Design**, toda direção visual passa a começar por um **conceito-mãe tirado do briefing**, com o vocabulário e onde cada elemento entra. A bússola do Lucas (ref. 03) é a versão mínima disso: um conceito, um elemento animado. O Bonança é a versão completa. Para médicos, o ponto ideal fica no meio: 1 conceito, 3 a 4 elementos, 1 assinatura no botão.
+
+### Medidas
+
+| Item | Valor |
+|---|---|
+| Fontes | serifada expressiva nos títulos (Asul, 400/700) + sans arredondada e variável no texto (Parkinsans, 300 a 800) |
+| Display / H1 | `clamp(36px, 4.6vw, 66px)`; o nome gigante do topo é um **SVG** na largura total |
+| H2 | `clamp(30px, 3.1vw, 46px)`; títulos-manifesto em caixa-alta chegam a 80 a 130px |
+| Texto | 17px no desktop; 14 a 15px no celular (pequeno, mesmo problema do Lucas) |
+| Largura máxima | 1440px, margem lateral `clamp(20px, 5vw, 72px)` |
+| Respiro entre seções | `clamp(88px, 11vw, 152px)` |
+| Raios | 28px nos cards; raio dos blocos grandes fluido, `clamp(28px, 3.4vw, 48px)`; 18px nos pequenos; pílula nos botões |
+| Curva | `cubic-bezier(0.16, 1, 0.3, 1)`, a mesma das refs 05 e 06 |
+| Entradas | 0,8 a 1,2s; ícones em traço que se desenham em 1,8s |
+| Movimento reduzido | 17 regras: cada animação contínua só liga para quem não pediu redução (abordagem mais segura que desligar tudo depois) |
+| Topo | `container-type: inline-size` (o topo se ajusta ao próprio espaço, não só à tela) |
+
+### Componentes que valem para o template
+
+- **Títulos com duas pesagens:** a frase em peso normal e a palavra-chave em negrito ou cor de destaque. Simples, dá ritmo e ajuda a leitura rápida no celular.
+- **Fotos dentro do título gigante:** caixa-alta enorme com 2 a 3 fotos em pílula entre as palavras. Mesmo princípio da miniatura no manifesto do Lucas.
+- **Lista de procedimentos em linhas:** ícone + miniatura + nome (palavra-chave em negrito) + uma linha de descrição + botão "+" que abre detalhes. Funciona igual no celular e no desktop, sem precisar de hover. **Melhor que o hover com imagem da ref. 06 para o nosso caso.**
+- **Cards empilhados no celular:** os 5 pilares viram cartas com sticky e topo crescente (84, 98, 112...), o mesmo padrão do Lucas. Terceira referência confirmando que funciona no celular.
+- **Ícones e ilustrações em traço que se desenham** ao aparecer e de novo no hover (animando o contorno). Leve, só SVG, e dá vida sem foto.
+- **Divisor temático entre seções:** uma linha (onda, no caso) com um elemento do conceito. Substitui a troca de cor de fundo como forma de separar seções.
+- **Botão com 3 estilos claros:** principal (cor de ação), escuro (azul) e contorno. Todos com a mesma forma e comportamento, mudando só as variáveis de cor.
+
+### O que não levar
+
+- **Rolagem horizontal travada** na seção de especialidades (no desktop, a seção tem ~3.060px e prende a rolagem vertical para andar na horizontal). É scrolljacking, proibido no CLAUDE.md.
+- **Topo de quase 3 telas no celular** (2.300px) e seção de especialidades com ~5 telas no celular.
+- **Canvas de partículas por cima de toda a página**, rodando o tempo todo. Não bloqueia clique, mas gasta bateria e fica sobre o conteúdo. Se quisermos partícula, só dentro do botão (como ele mesmo faz) ou numa área decorativa delimitada.
+- **Texto de 14 a 15px** e 16 áreas de toque pequenas no celular. Sem barra fixa de CTA.
+- **Next.js** para uma página de conteúdo.

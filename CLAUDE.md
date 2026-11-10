@@ -52,12 +52,15 @@ O workspace fica em `C:\dev\ankura-sites` (fora do OneDrive) e o backup é o Git
 - **Conteúdo** em arquivos de dados com regras de formato (limite de caracteres, proporção de imagem), pronto para editor (CMS).
 - **Editor do médico:** só campos operacionais (endereço, horários, valor da consulta, convênios, fotos do consultório). Copy de venda fica com a Ankura, para não pular a revisão CFM.
 - **Contato:** somente botão de WhatsApp, com mensagem pronta por página. Formulário só em caso específico, decidido pelo Arthur.
+- **CTA no celular:** barra fixa embaixo que surge depois do topo, em todas as páginas (substitui a bolinha flutuante do WhatsApp). Texto e mensagem de WhatsApp variam por página, não por seção. Some quando a seção final de CTA ou o rodapé aparecem. Sem pulsar. No desktop, o botão do menu flutuante faz esse papel.
+- **Botões ao longo da página:** seção final de CTA sempre; no meio, só 1 ou 2 botões leves nos pontos de decisão (ex.: depois de "como funciona" e dos depoimentos).
+- **Modo LP:** igual à página de procedimento, mas com o menu sem links.
 - **CTAs identificados** no código (página e posição) para o rastreamento que o Arthur implementa depois.
 - **Hospedagem:** Cloudflare como padrão; pode variar por cliente (qualquer hospedagem de site estático serve). O cliente é dono do próprio domínio.
 
 ## Estrutura padrão para médicos
 
-Home (institucional enxuta) + páginas de procedimento (quantidade definida pelo Arthur em cada projeto) + variante "modo LP" de cada página de procedimento (sem menu, CTA fixo no celular) para receber anúncios. A personalização acontece dentro da estrutura, não na estrutura. Detalhes em `.claude/skills/site-estrategia/references/nichos/medicina.md`.
+Home (institucional enxuta) + páginas de procedimento (quantidade definida pelo Arthur em cada projeto) + variante "modo LP" de cada página de procedimento (sem links no menu) para receber anúncios. A personalização acontece dentro da estrutura, não na estrutura. Detalhes em `.claude/skills/site-estrategia/references/nichos/medicina.md`.
 
 ## Regras de imagem
 

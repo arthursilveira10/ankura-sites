@@ -26,6 +26,7 @@ Prints na pasta `prints/`. Os comentários "Arthur" são dele; "Análise" é lei
 8. **Hover que revela imagem** ao passar sobre cada serviço/procedimento.
 9. **Antes e depois em slider comparativo** (*before/after slider*), com legenda clínica e aviso legal, quando permitido.
 10. **Linha do tempo** para contar a trajetória do profissional.
+11. **Conceito-mãe que vira sistema** (ref. 07, e em escala menor a bússola da ref. 03): uma metáfora tirada da história do médico ou da marca gera os elementos visuais, as microinterações e os nomes das cores. É o que separa um site "bonito" de um site com personalidade.
 
 ### O que o Arthur NÃO quer (regras para o build)
 
@@ -138,6 +139,30 @@ Prints: `06-gabrielle-hero-a.jpg`, `06-gabrielle-hero-b.jpg`, `06-gabrielle-mani
 - Alerta de copy: headline e textos genéricos ("alto nível", "excelência", "sorriso impecável"). Odontologia (CFO): referência só visual/estrutural.
 
 **Usar para:** animação de entrada da hero, selos ao redor da foto, text reveal, hover com imagem, timeline, legenda legal de casos.
+
+---
+
+### 07. Instituto Bonança (clínica multidisciplinar de saúde mental e desenvolvimento, Camaragibe/PE) ⭐ referência de excelência
+https://bonancainstituto.com.br/
+Sem prints salvos (analisado direto no navegador, ver `extracao-tecnica.md`, seção 6).
+
+**Arthur:** cheio de personalidade, muito bem feito. Não é site de médico individual, mas é a régua de excelência que queremos alcançar. Feito com Claude por um criador do YouTube.
+
+**Análise:**
+- A grande lição é o **conceito-mãe que vira sistema visual**. O nome (bonança = calmaria depois da tempestade) gera a metáfora (travessia, nova direção), e dela nasce tudo: logotipo-barco, sol nascendo atrás do topo, linha de onda tracejada com um barquinho separando as seções, ícone de barco que se desenha nos botões, farol, mapa com rota, paleta com nomes de conceito (calmaria, horizonte, sol, luz). É a bússola do Lucas (ref. 03) levada ao site inteiro.
+- **Cor de ação exclusiva:** o amarelo "sol" aparece quase só nos CTAs. O olho aprende rápido onde clicar.
+- **Tipografia com personalidade:** serifada expressiva nos títulos + sans arredondada e amigável no texto. Títulos com **duas pesagens** destacando a palavra-chave da frase.
+- **Fotos dentro do título gigante:** palavras em caixa-alta enormes com fotos em pílula encaixadas entre elas (variação do manifesto do Lucas).
+- **Ilustrações próprias em traço** num estilo só (farol, mapa, criança com fone), que se desenham na tela ao aparecer. Coerentes com a nossa regra: ilustração conceitual pode ser IA ou ilustrador.
+- **Direção de fotos uniforme:** roupas nas cores da marca, fundos claros, objetos de cena da identidade. Não dá para afirmar se são fotos reais, banco ou IA. Para nós, vale a **lição de direção de ensaio** aplicada a fotos reais do médico e da clínica.
+- **Lista de tratamentos em linhas** (ícone, miniatura, nome com palavra-chave em negrito, botão "+"). Ótimo formato para a lista de procedimentos da home.
+- **Botão com microvida:** partículas de luz subindo devagar, brilho interno e o barco se desenhando. Assinatura do conceito no ponto de conversão.
+- **Acróstico** nos 5 pilares (as iniciais formam APOIO). Funciona porque a palavra é o conceito. Usar com parcimônia.
+- Cuida bem do movimento reduzido: cada animação é ligada só para quem não pediu redução.
+- **Fraquezas:** a seção de especialidades **trava a rolagem vertical e anda na horizontal** no desktop (o que proibimos). No celular, essa seção vira ~5 telas. O topo no celular tem quase 3 telas de altura, texto de 14 a 15px, 16 áreas de toque pequenas, sem barra fixa de CTA. Usa Next.js e uma camada de "poeira" animada em canvas por cima de tudo, o tempo todo.
+
+**Usar para:** o processo de criar um conceito visual por cliente, cor exclusiva de CTA, títulos com duas pesagens, fotos dentro do título, ilustração em traço que se desenha, lista de tratamentos em linhas, microinteração-assinatura no botão, divisores de seção temáticos, direção de ensaio fotográfico.
+**Não usar para:** rolagem horizontal travada, topo gigante no celular, efeitos contínuos sobre o conteúdo.
 
 ---
 
