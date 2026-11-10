@@ -3,6 +3,7 @@
 // Só com autorização do paciente e conferência da regra vigente (CFM, Meta, Google).
 import Cabecalho from '../base/Cabecalho.astro';
 import Foto from '../base/Foto.astro';
+import Icone from '../base/Icone.astro';
 import type { Secao } from '../../lib/dados';
 interface Props {
   dados: Extract<Secao, { tipo: 'antes-depois' }>;
@@ -12,7 +13,7 @@ const { dados: d } = Astro.props;
 
 <section class="secao secao-abaixo ad">
   <div class="wrap">
-    <Cabecalho rotulo={d.rotulo} titulo={d.titulo} texto={d.texto} />
+    <Cabecalho rotulo={d.rotulo} titulo={d.titulo} texto={d.texto} centro />
     <div class="ad-grade">
       {
         d.casos.map((c, i) => (
@@ -34,7 +35,7 @@ const { dados: d } = Astro.props;
         ))
       }
     </div>
-    <p class="ad-aviso t-pequeno medida">{d.avisoLegal}</p>
+    <p class="ad-aviso"><Icone nome="selo" tamanho={22} /><span>{d.avisoLegal}</span></p>
   </div>
 </section>
 
@@ -125,16 +126,30 @@ const { dados: d } = Astro.props;
     color: var(--color-apagado);
   }
   .ad-aviso {
-    margin-top: 28px;
-    padding: 16px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    max-width: 52em;
+    margin: clamp(28px, 4vw, 44px) auto 0;
+    padding: 18px 22px;
     border-radius: var(--radius-card);
-    background: var(--color-superficie);
-    box-shadow: inset 0 0 0 1px var(--color-linha);
+    background: var(--color-superficie-2);
+    font-size: 0.8125rem;
+    line-height: 1.55;
     color: var(--color-texto);
+  }
+  .ad-aviso :global(svg) {
+    flex: none;
+    margin-top: 1px;
+    color: var(--color-acao);
+  }
+  .ad-caso figcaption {
+    text-align: center;
   }
   @media (min-width: 768px) {
     .ad-grade {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
     }
   }
 </style>

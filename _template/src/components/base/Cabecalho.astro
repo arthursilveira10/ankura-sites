@@ -1,5 +1,7 @@
 ---
-// Cabeçalho padrão de seção: rótulo + título (com palavra-chave) + texto de apoio.
+// Cabeçalho padrão de seção: rótulo (opcional, evite) + título + texto de apoio.
+// No celular, todos os cabeçalhos ficam centralizados (regra única da página).
+// lado: no desktop, título à esquerda e texto à direita, alinhados pela base.
 import { titulo as fmtTitulo, paragrafos } from '../../lib/texto';
 interface Props {
   rotulo?: string;
@@ -9,17 +11,18 @@ interface Props {
   id?: string;
   nivel?: 'h1' | 'h2';
   classe?: string;
+  lado?: boolean;
 }
-const { rotulo, titulo, texto, centro = false, id, nivel = 'h2', classe = 't-h2' } = Astro.props;
+const { rotulo, titulo, texto, centro = false, id, nivel = 'h2', classe = 't-h2', lado = false } = Astro.props;
 const H = nivel;
 ---
 
-<div class:list={['cab', centro && 'cab-centro']}>
-  {rotulo && <p class="rotulo" data-revela>{rotulo}</p>}
-  <H id={id} class:list={[classe, 'medida-titulo']} data-revela style="--atraso:1" set:html={fmtTitulo(titulo)} />
+<div class:list={['cab', centro && 'cab-centro', lado && 'cab-lado']}>
+  {rotulo && <p class="rotulo">{rotulo}</p>}
+  <H id={id} class:list={[classe, 'medida-titulo']} set:html={fmtTitulo(titulo)} />
   {
     texto && (
-      <div class="cab-texto t-lead medida texto" data-revela style="--atraso:2">
+      <div class="cab-texto medida texto">
         {paragrafos(texto).map((p) => (
           <p set:html={p} />
         ))}
@@ -44,5 +47,27 @@ const H = nivel;
   }
   .cab-texto {
     color: inherit;
+  }
+  @media (max-width: 1023px) {
+    .cab {
+      justify-items: center;
+      text-align: center;
+    }
+    .cab .medida-titulo,
+    .cab .medida {
+      margin-inline: auto;
+      max-width: 24em;
+    }
+  }
+  @media (min-width: 1024px) {
+    .cab-lado {
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+      gap: 48px;
+    }
+    .cab-lado .cab-texto {
+      justify-self: end;
+      max-width: 26em;
+    }
   }
 </style>

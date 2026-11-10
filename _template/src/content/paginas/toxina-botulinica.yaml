@@ -2,13 +2,16 @@
 tipo: procedimento
 nome: Toxina botulínica
 resumo: Suavizar linhas de expressão mantendo o seu jeito de sorrir e de falar.
+icone: linhas
+detalhe: A dose e os pontos são decididos na consulta, olhando como o seu rosto se mexe. O objetivo é suavizar sem tirar a expressão.
 ordem: 1
 foto:
-  alt: Aplicação de toxina botulínica
-  reservado: detalhe do procedimento
+  src: ../../assets/procedimento-toxina.webp
+  alt: ''
 seo:
   titulo: Toxina botulínica em Campinas | Dr. Arthur Silveira
   descricao: Aplicação de toxina botulínica com avaliação cuidadosa, doses pensadas para o seu rosto e retorno incluído. Campinas, SP.
+  imagem: ../../assets/compartilhamento.png
 cta:
   botaoMenu: Agendar avaliação
   barra: Quero avaliar meu caso
@@ -16,36 +19,32 @@ cta:
 
 secoes:
   - tipo: topo
-    variante: foto-compacta
-    rotulo: Toxina botulínica
-    titulo: Suavizar as linhas sem **perder** a sua expressão.
+    titulo: Suavizar as linhas sem perder a sua expressão.
     subtitulo: Antes de aplicar, eu observo como o seu rosto se mexe. A dose é pensada para você, não para uma tabela.
     foto:
-      alt: Dr. Arthur Silveira
-      reservado: foto do médico, meio corpo
-    selos:
-      - Dermatologia · RQE 00000
-      - Retorno incluído
+      src: ../../assets/medico-recorte.webp
+      alt: Dr. Arthur Silveira, de braços cruzados, sorrindo
+    fundo:
+      src: ../../assets/fundo-topo.webp
+      alt: ''
     botao:
       texto: Agendar avaliação
-    apoio: A avaliação vem antes de qualquer aplicação.
-
-  - tipo: faixa-dados
+    apoio: Retorno incluído para avaliar e ajustar
 
   - tipo: o-que-e
-    rotulo: O que é
-    titulo: Um relaxamento **temporário** de alguns músculos.
+    titulo: Um relaxamento temporário de alguns músculos.
     texto: |-
       A toxina diminui a força dos músculos que formam as rugas de expressão, como as da testa e as de entre as sobrancelhas.
 
       O efeito aparece aos poucos, em cerca de duas semanas, e vai embora naturalmente. Por isso a dose e os pontos de aplicação importam tanto.
     foto:
-      alt: ''
-      reservado: ilustração conceitual dos músculos da face (IA)
+      src: ../../assets/toxina-ilustracao.webp
+      alt: Ilustração em traço de um rosto sereno, com as linhas de expressão da testa destacadas em dourado
+      foco: 72% 40%
 
   - tipo: para-quem
-    rotulo: Para quem é
-    titulo: Pode fazer sentido para **você** se...
+    seta: true
+    titulo: Pode fazer sentido para você se...
     itens:
       - As linhas da testa ou entre as sobrancelhas aparecem mesmo com o rosto relaxado
       - Seu rosto parece cansado ou bravo mesmo quando você está bem
@@ -54,21 +53,25 @@ secoes:
     observacao: Na avaliação eu confiro se a toxina é indicada para o seu caso. Gestantes e lactantes não devem fazer o procedimento.
 
   - tipo: numeros
+    titulo: O que esperar, em números.
     itens:
       - valor: 20 min
         rotulo: duração média da aplicação
+        icone: relogio
       - valor: 2 sem
         rotulo: para o efeito aparecer por completo
+        icone: calendario
       - valor: 4 a 6
         rotulo: meses de duração média, varia de pessoa para pessoa
+        icone: sol
       - valor: 15 dias
         rotulo: retorno incluído para avaliar e ajustar
+        icone: conversa
     observacao: Valores de referência [FICTÍCIO]. A resposta varia de pessoa para pessoa.
 
   - tipo: como-funciona
-    variante: cartas-empilhadas
-    rotulo: Passo a passo
-    titulo: Como é, do começo ao **retorno**.
+    variante: passos-com-linha
+    titulo: Como é, do começo ao retorno.
     passos:
       - titulo: Avaliação
         texto: Eu observo seu rosto em movimento, entendo o que te incomoda e explico o que a toxina consegue e o que não consegue fazer.
@@ -83,8 +86,7 @@ secoes:
       posicao: meio-1
 
   - tipo: cuidados
-    rotulo: Cuidados
-    titulo: O que fazer antes e **depois**.
+    titulo: O que fazer antes e depois.
     grupos:
       - titulo: Antes
         itens:
@@ -98,8 +100,8 @@ secoes:
           - Não massageie a região aplicada
 
   - tipo: depoimentos
-    rotulo: Relatos
-    titulo: Quem já **fez**.
+    faixa: true
+    titulo: Quem já fez.
     itens:
       - texto: Fiquei com medo de ficar artificial, mas ele foi explicando cada ponto. Ninguém percebeu que eu fiz, só falaram que eu estava descansada.
         autor: C. M. [FICTÍCIO]
@@ -108,9 +110,32 @@ secoes:
         autor: P. R. [FICTÍCIO]
         origem: Google
 
+  - tipo: profissional
+    titulo: Prazer, eu sou o Arthur.
+    texto: |-
+      Escolhi a dermatologia porque a pele mexe com a forma como a gente se vê. Na residência, percebi que muita gente chegava ao consultório depois de anos tentando resolver sozinha, com produtos indicados por amigos ou pela internet.
+
+      Por isso a minha consulta começa pela conversa. Pergunto da sua rotina e do que você já usou. Examino com calma e, quando precisa, te mostro no dermatoscópio o que estou vendo.
+
+      Você sai sabendo o porquê de cada passo, com o plano por escrito. Muitas vezes o começo é mais simples do que você imagina. [FICTÍCIO]
+    foto:
+      src: ../../assets/sobre-composicao.webp
+      alt: Dr. Arthur Silveira sorrindo, de camisa verde, em frente a um fundo de luz quente
+    composicao: true
+    fatos:
+      - valor: 12 anos
+        rotulo: de formado [FICTÍCIO]
+        icone: chapeu
+      - valor: RQE
+        rotulo: título de especialista em dermatologia
+        icone: selo
+      - valor: Desde 2019
+        rotulo: atendendo em Campinas [FICTÍCIO]
+        icone: local
+
   - tipo: faq
-    rotulo: Dúvidas
-    titulo: Perguntas que eu mais **ouço**.
+    faixa: true
+    titulo: Perguntas que eu mais ouço.
     perguntas:
       - pergunta: Vou ficar com o rosto paralisado?
         resposta: O objetivo é suavizar, não travar. A dose é pensada para manter a sua expressão, e o retorno serve para ajustar.
@@ -124,7 +149,8 @@ secoes:
         resposta: Depende das regiões e da dose. Eu passo o valor na avaliação, depois de ver o que faz sentido para você.
 
   - tipo: cta-final
-    titulo: Vamos ver o que faz **sentido** para o seu rosto?
+    faixa: true
+    titulo: Vamos ver o que faz sentido para o seu rosto?
     texto: Me chama no WhatsApp. Na avaliação a gente conversa, eu examino e você decide com calma.
     botao:
       texto: Agendar avaliação

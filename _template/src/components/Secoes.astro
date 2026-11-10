@@ -20,6 +20,7 @@ import Particular from './secoes/Particular.astro';
 import Faq from './secoes/Faq.astro';
 import CtaFinal from './secoes/CtaFinal.astro';
 import Divisor from './conceito/Divisor.astro';
+import SetaRolagem from './base/SetaRolagem.astro';
 
 interface Props {
   secoes: Secao[];
@@ -47,11 +48,73 @@ const mapa: Record<Secao['tipo'], any> = {
   'cta-final': CtaFinal,
   divisor: Divisor,
 };
+// Agrupa seções seguidas com `faixa: true` numa mesma faixa de fundo, que entra com o divisor do conceito.
+type Grupo = { faixa: boolean; itens: { s: Secao; i: number }[] };
+const grupos: Grupo[] = [];
+secoes.forEach((s, i) => {
+  const naFaixa = 'faixa' in s && s.faixa === true;
+  const ultimo = grupos[grupos.length - 1];
+  if (ultimo && ultimo.faixa === naFaixa) ultimo.itens.push({ s, i });
+  else grupos.push({ faixa: naFaixa, itens: [{ s, i }] });
+});
+const render = (s: Secao, i: number) => ({ Componente: mapa[s.tipo], s, i });
 ---
 
 {
-  secoes.map((s, i) => {
-    const Componente = mapa[s.tipo];
-    return s.tipo === 'divisor' ? <Divisor semente={s.semente} /> : <Componente dados={s} indice={i} />;
-  })
+  grupos.map((g, n) =>
+    g.faixa ? (
+      <div class:list={['faixa-fundo', n < grupos.length - 1 && 'faixa-meio']} id={`faixa-${n}`}>
+        <Divisor borda="faixa" />
+        {'seta' in g.itens[0].s && g.itens[0].s.seta && (
+          <span class="faixa-seta">
+            <SetaRolagem alvo={`faixa-${n}`} />
+          </span>
+        )}
+        {g.itens.map(({ s, i }) => {
+          const { Componente } = render(s, i);
+          return <Componente dados={s} indice={i} />;
+        })}
+        {n < grupos.length - 1 && (
+          <svg class="faixa-base decor" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+            <path fill="var(--color-superficie-2)" d="M0 0H1440C1100 80 340 80 0 0Z" />
+          </svg>
+        )}
+      </div>
+    ) : (
+      g.itens.map(({ s, i }) => {
+        const { Componente } = render(s, i);
+        return s.tipo === 'divisor' ? <Divisor semente={s.semente} /> : <Componente dados={s} indice={i} />;
+      })
+    ),
+  )
 }
+
+<style>
+  .faixa-fundo {
+    position: relative;
+    margin-top: clamp(48px, 6vw, 90px);
+    padding-bottom: clamp(12px, 6vw, 96px);
+    background: var(--color-superficie-2);
+  }
+  /* faixa no meio da página: fecha embaixo com o mesmo arco, invertido */
+  .faixa-meio {
+    margin-bottom: clamp(48px, 6vw, 90px);
+    padding-bottom: clamp(24px, 3vw, 48px);
+  }
+  .faixa-base {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% - 1px);
+    width: 100%;
+    height: clamp(48px, 6vw, 90px);
+    display: block;
+  }
+  .faixa-seta {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(-1 * clamp(48px, 6vw, 90px) * 0.68);
+    height: 0;
+  }
+</style>

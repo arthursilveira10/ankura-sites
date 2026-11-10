@@ -1,187 +1,293 @@
 ---
 // COMO FUNCIONA (a experiência).
-// passos-com-linha: desktop com título sticky e linha que se preenche; celular em coluna com a mesma linha.
-// cartas-empilhadas: cada passo numa carta sticky. passos-simples: grade sem efeito.
+// passos-com-linha (padrão): bloco escuro arredondado, título fixo à esquerda e passos à direita;
+//   o sol do conceito desce pela linha com a rolagem (do primeiro ao último passo) e acende cada etapa.
+// passos-simples: grade sem efeito, para páginas de intenção urgente.
+// cartas-empilhadas: cartas sticky (pesa visualmente; use só com motivo).
 import Cabecalho from '../base/Cabecalho.astro';
+import Botao from '../base/Botao.astro';
 import CtaMeio from '../base/CtaMeio.astro';
-import Marcador from '../conceito/Marcador.astro';
-import { inline } from '../../lib/texto';
+import Icone from '../base/Icone.astro';
+import { inline, titulo as fmtTitulo, paragrafos } from '../../lib/texto';
 import type { Secao } from '../../lib/dados';
 interface Props {
   dados: Extract<Secao, { tipo: 'como-funciona' }>;
 }
 const { dados: d } = Astro.props;
 const v = d.variante;
+const pilares = d.passos.every((p) => p.icone); // sem ordem: ícone no lugar do número
 ---
 
-<section class:list={['secao secao-abaixo cf', `cf-${v}`]} id="como-funciona">
-  <div class="wrap cf-grade">
-    <div class="cf-cab">
-      <Cabecalho rotulo={d.rotulo} titulo={d.titulo} texto={d.texto} />
-      <div class="cf-cta-desk"><CtaMeio cta={d.cta} /></div>
-    </div>
-
-    <ol class="cf-passos" data-progresso={v === 'passos-com-linha' ? '' : undefined} style={`--n:${d.passos.length}`}>
-      {
-        v === 'passos-com-linha' && (
-          <span class="cf-trilho decor" aria-hidden="true">
-            <span class="cf-traco" />
-          </span>
-        )
-      }
-      {
-        d.passos.map((p, i) => (
-          <li class="cf-passo" style={`--i:${i}`} data-revela={v === 'cartas-empilhadas' ? undefined : ''}>
-            {v === 'passos-com-linha' ? (
-              <span class="cf-marca decor" aria-hidden="true">
-                <Marcador />
-              </span>
-            ) : null}
-            <span class="cf-num">{String(i + 1).padStart(2, '0')}</span>
-            <div class="cf-corpo">
-              <h3 class="t-h3">{p.titulo}</h3>
-              <p set:html={inline(p.texto)} />
+{
+  v === 'passos-com-linha' ? (
+    <section class="secao-abaixo cf-casca" id="como-funciona">
+      <div class="wrap">
+        <div class="cf-bloco escuro">
+          <div class="cf-grade">
+            <div class="cf-fixo">
+              <h2 class="t-h2 medida-titulo" set:html={fmtTitulo(d.titulo)} />
+              {paragrafos(d.texto).map((p) => <p class="cf-apoio" set:html={p} />)}
             </div>
-          </li>
-        ))
-      }
-    </ol>
-  </div>
-  <div class="wrap cf-cta-cel"><CtaMeio cta={d.cta} /></div>
-</section>
+            <div>
+              <ol class="cf-passos" data-sol>
+                <span class="trilho decor" aria-hidden="true" />
+                <span class="aceso decor" aria-hidden="true" />
+                <span class="sol decor" aria-hidden="true" />
+                {d.passos.map((p) => (
+                  <li data-passo>
+                    {p.quando && <p class="cf-quando">{p.quando}</p>}
+                    <h3 class="cf-titulo">{p.titulo}</h3>
+                    <p set:html={inline(p.texto)} />
+                  </li>
+                ))}
+              </ol>
+              {d.cta && (
+                <div class="cf-cta">
+                  <Botao texto={d.cta.texto} posicao={d.cta.posicao} estilo="claro" />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  ) : (
+    <section class:list={['secao secao-abaixo cf', `cf-${v}`]}>
+      <div class="wrap">
+        <Cabecalho rotulo={d.rotulo} titulo={d.titulo} texto={d.texto} />
+        <ol class="cf-lista">
+          {d.passos.map((p, i) => (
+            <li class="cf-item" style={`--i:${i}`}>
+              <span class="cf-num" aria-hidden="true">
+                {pilares && p.icone ? <Icone nome={p.icone} tamanho={22} /> : i + 1}
+              </span>
+              <div>
+                {p.quando && <p class="cf-quando">{p.quando}</p>}
+                <h3 class="t-h3">{p.titulo}</h3>
+                <p set:html={inline(p.texto)} />
+              </div>
+            </li>
+          ))}
+        </ol>
+        <CtaMeio cta={d.cta} />
+      </div>
+    </section>
+  )
+}
 
 <style>
-  .cf-grade {
-    display: grid;
-    gap: clamp(36px, 5vw, 64px);
+  /* ---------- passos com linha: o sol percorre ---------- */
+  .cf-casca {
+    padding-block: clamp(24px, 4vw, 48px);
   }
-  .cf-cta-desk {
-    display: none;
+  .cf-bloco {
+    position: relative;
+    overflow: clip;
+    margin-inline: calc(-1 * var(--margem) + 12px);
+    padding: clamp(64px, 8vw, 120px) clamp(22px, 5.5vw, 88px);
+    border-radius: var(--radius-bloco);
+  }
+  .cf-bloco::before {
+    content: '';
+    position: absolute;
+    width: 1100px;
+    height: 1100px;
+    left: -420px;
+    top: -640px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle, rgb(242 212 155 / 0.13), rgb(242 212 155 / 0) 62%);
+  }
+  .cf-grade {
+    position: relative;
+    display: grid;
+    gap: 40px;
+  }
+  .cf-fixo {
+    text-align: center;
+  }
+  .cf-fixo h2 {
+    color: #fff;
+    margin-inline: auto;
+  }
+  .cf-apoio {
+    margin: 20px auto 0;
+    max-width: 22em;
   }
   .cf-passos {
     position: relative;
-    display: grid;
+    margin: 0;
+    padding: 0 0 0 44px;
+    list-style: none;
   }
-  .cf-num {
-    font-size: var(--t-rotulo);
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    color: var(--color-destaque);
-  }
-  .cf-corpo {
-    display: grid;
-    gap: 8px;
-  }
-
-  /* passos com linha */
-  .cf-passos-com-linha .cf-passos {
-    --k: clamp(0, calc(var(--p) * 1.15), 1);
-    gap: 40px;
-    padding-left: 40px;
-  }
-  .cf-trilho {
+  .trilho,
+  .aceso {
     position: absolute;
-    left: 8px;
-    top: 10px;
-    bottom: 10px;
+    left: 11.5px;
     width: 1px;
-    background: var(--color-linha);
+    background: var(--color-escuro-linha);
   }
-  .cf-traco {
-    position: absolute;
-    inset: 0;
-    background: var(--color-destaque);
+  .aceso {
+    left: 11px;
+    width: 2px;
+    background: linear-gradient(to bottom, rgb(242 212 155 / 0.2), var(--color-luz));
     transform-origin: top;
-    transform: scaleY(var(--k));
+    transform: scaleY(0);
   }
-  .cf-passos-com-linha .cf-passo {
-    --on: clamp(0, calc((var(--k) * var(--n) - var(--i)) * 2), 1);
-    position: relative;
-    display: grid;
-    gap: 6px;
-  }
-  /* O passo "acende" pelo marcador e pela cor do título; o texto fica sempre legível (contraste AA). */
-  .cf-passos-com-linha .cf-passo h3 {
-    color: color-mix(in oklab, var(--color-tinta) calc(var(--on) * 100%), var(--color-apagado));
-  }
-  .cf-marca {
+  .sol {
     position: absolute;
-    left: -40px;
+    left: 12px;
     top: 0;
-    display: grid;
-    place-items: center;
-    width: 17px;
-    height: 17px;
-    color: var(--color-destaque);
-    background: var(--color-fundo);
-    transform: scale(calc(0.7 + var(--on) * 0.3));
-  }
-
-  /* cartas empilhadas */
-  .cf-cartas-empilhadas .cf-passos {
-    gap: 14px;
-  }
-  .cf-cartas-empilhadas .cf-passo {
-    position: sticky;
-    top: calc(var(--header) + 12px + var(--i) * 14px);
-    display: grid;
-    gap: 10px;
-    min-height: 200px;
-    align-content: start;
-    padding: clamp(24px, 3vw, 36px);
-    border-radius: var(--radius-bloco);
-    background: var(--color-superficie);
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border-radius: 50%;
+    background: var(--color-luz-forte);
+    will-change: transform;
     box-shadow:
-      inset 0 0 0 1px var(--color-linha),
-      0 -18px 40px -26px rgb(0 0 0 / 0.3);
+      0 0 0 6px rgb(242 212 155 / 0.22),
+      0 0 0 14px rgb(242 212 155 / 0.08),
+      0 0 56px 16px rgb(242 212 155 / 0.4);
   }
-  .cf-cartas-empilhadas .cf-passo:nth-child(even) {
-    background: var(--color-superficie-2);
+  .cf-passos li {
+    position: relative;
+    padding-bottom: 56px;
+  }
+  .cf-passos li:last-child {
+    padding-bottom: 0;
+  }
+  .cf-passos li::before {
+    content: '';
+    position: absolute;
+    left: -36.5px;
+    top: 11px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--color-escuro);
+    box-shadow: inset 0 0 0 1.5px rgb(237 241 236 / 0.42);
+    transition: all 0.5s var(--ease-ankura);
+  }
+  .cf-passos li:global(.feito)::before {
+    background: var(--color-luz);
+    box-shadow: 0 0 14px 3px rgb(242 212 155 / 0.45);
+  }
+  .cf-quando {
+    font-size: 0.8125rem;
+    line-height: 1.2;
+  }
+  .cf-titulo {
+    margin-top: 4px;
+    font-size: clamp(1.5rem, 1.2rem + 0.9vw, 1.9375rem);
+    line-height: 1.2;
+    color: var(--color-escuro-texto);
+    opacity: 0.6;
+    transition:
+      opacity 0.5s,
+      color 0.5s;
+  }
+  .cf-passos li:global(.feito) .cf-titulo {
+    opacity: 1;
+    color: #fff;
+  }
+  .cf-passos li p:last-child {
+    margin-top: 8px;
+    max-width: 32em;
+  }
+  .cf-cta {
+    margin-top: 48px;
+  }
+  @media (min-width: 1024px) {
+    .cf-bloco {
+      margin-inline: 0;
+    }
+    .cf-grade {
+      grid-template-columns: 0.82fr 1.18fr;
+      gap: clamp(32px, 6vw, 96px);
+    }
+    .cf-fixo {
+      position: sticky;
+      top: 132px;
+      align-self: start;
+      text-align: left;
+    }
+    .cf-fixo h2,
+    .cf-apoio {
+      margin-inline: 0;
+    }
+    .cf-passos {
+      padding-left: 64px;
+    }
+    .trilho {
+      left: 19.5px;
+    }
+    .aceso {
+      left: 19px;
+    }
+    .sol {
+      left: 20px;
+    }
+    .cf-passos li {
+      padding-bottom: 60px;
+    }
+    .cf-passos li::before {
+      left: -48.5px;
+    }
+    .cf-cta {
+      margin-left: 64px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cf-passos li::before,
+    .cf-titulo {
+      transition: none;
+    }
   }
 
-  /* passos simples */
-  .cf-passos-simples .cf-passos {
-    gap: var(--gap);
-  }
-  .cf-passos-simples .cf-passo {
+  /* ---------- passos simples e cartas ---------- */
+  .cf-lista {
     display: grid;
-    gap: 10px;
+    gap: 16px;
+    margin: clamp(36px, 5vw, 56px) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .cf-item {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 18px;
     padding: 24px;
     border-radius: var(--radius-card);
+    background: var(--color-superficie);
     box-shadow: inset 0 0 0 1px var(--color-linha);
   }
-
+  .cf-num {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-weight: 600;
+    color: var(--color-tinta);
+    background: radial-gradient(circle at 50% 42%, rgb(242 212 155 / 0.9), rgb(242 212 155 / 0.25) 70%);
+  }
+  .cf-item h3 + p {
+    margin-top: 6px;
+  }
+  .cf-item .cf-quando {
+    color: var(--color-apagado);
+  }
   @media (min-width: 1024px) {
-    .cf-grade {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-      align-items: start;
-      gap: 64px;
-    }
-    .cf-cab {
-      position: sticky;
-      top: calc(var(--header) + 64px);
-    }
-    .cf-cta-desk {
-      display: block;
-    }
-    .cf-cta-cel {
-      display: none;
-    }
-    .cf-passos-com-linha .cf-passos {
-      gap: 88px;
-    }
-    .cf-cartas-empilhadas .cf-passo {
-      top: calc(var(--header) + 64px + var(--i) * 20px);
-      min-height: 240px;
-    }
-    .cf-passos-simples .cf-grade {
-      grid-template-columns: 1fr;
-    }
-    .cf-passos-simples .cf-cab {
-      position: static;
-    }
-    .cf-passos-simples .cf-passos {
+    .cf-passos-simples .cf-lista {
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .cf-cartas-empilhadas .cf-item {
+      position: sticky;
+      top: calc(110px + var(--i) * 14px);
+      padding: 32px 40px;
+      box-shadow:
+        inset 0 0 0 1px var(--color-linha),
+        0 24px 40px -30px rgb(20 38 32 / 0.4);
     }
   }
 </style>

@@ -13,18 +13,18 @@ export const cliente = {
   fontes: [
     {
       provider: fontProviders.google(),
-      name: 'Fraunces',
+      name: 'Newsreader',
       cssVariable: '--fonte-titulo',
-      weights: ['300 700'],
-      styles: ['normal', 'italic'],
+      weights: ['300 500'],
+      styles: ['normal'],
       subsets: ['latin'],
       fallbacks: ['Georgia', 'serif'],
     },
     {
       provider: fontProviders.google(),
-      name: 'Hanken Grotesk',
+      name: 'Geist',
       cssVariable: '--fonte-texto',
-      weights: ['300 700'],
+      weights: ['400 600'],
       styles: ['normal'],
       subsets: ['latin'],
       fallbacks: ['Arial', 'sans-serif'],

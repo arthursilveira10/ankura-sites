@@ -35,3 +35,4 @@ Antes da reunião: releia a pesquisa prévia e marque quais perguntas ela já re
 
 - Recapitule em voz alta 3–4 pontos centrais e pergunte: "faltou algo importante?"
 - Combine o que o cliente precisa enviar (fotos, logo, acessos).
+  - Para o design, o mais importante: **uma foto de meio corpo do médico em fundo liso** (que recorta bem), em alta resolução, e o **logo** em arquivo vetorial ou PNG. Pergunte as cores de roupa que ele costuma usar nas fotos: o figurino entra na paleta do site (ver `site-build/references/imagens.md`).

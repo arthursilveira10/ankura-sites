@@ -14,13 +14,13 @@ const ctx = Astro.locals.ctx;
 const ano = new Date().getFullYear();
 ---
 
-<footer class="rodape escuro bloco" data-esconde-barra>
+<footer class="rodape escuro" data-esconde-barra>
   <div class="wrap rd-grade">
     <div class="rd-marca">
       <Marca claro />
       <p class="rd-id">
-        {nomeCompleto(m)} · {m.especialidade}<br />
-        CRM {m.crm}{m.rqe && <> · RQE {m.rqe}</>}
+        {nomeCompleto(m)}, {m.especialidade}<br />
+        CRM {m.crm}{m.rqe && <>, RQE {m.rqe}</>}
       </p>
     </div>
 

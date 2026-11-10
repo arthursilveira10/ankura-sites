@@ -6,8 +6,12 @@ Foco da Ankura: médicos que querem desenvolver a atuação **particular**. Púb
 
 Todo projeto de médico usa esta estrutura. Não proponha LP avulsa, site institucional diferente ou LPs por campanha como entregas separadas — são recortes ou usos desta mesma estrutura.
 
-1. **Home (institucional enxuta)** — espinha completa: o que o médico resolve + quem ele é, identificação, procedimentos como portas de entrada, como funciona a consulta, prova social, FAQ, contato.
+1. **Home (institucional enxuta)** — espinha completa. Ordem padrão (aprovada no demo): topo → identificação → **o médico** → como funciona a consulta → procedimentos como portas de entrada → prova social → FAQ → CTA final.
+   - O médico sobe: logo depois da identificação, antes da consulta e dos procedimentos. No fim da página ele se perde.
+   - **FAQ e CTA final são sempre as duas últimas seções**, nessa ordem, em todas as páginas.
 2. **Páginas de procedimento** — uma por procedimento principal. **A quantidade é definida pelo Arthur em cada projeto**, a partir da conversa com o médico; não sugira nem limite o número por conta própria. Cada página segue a espinha com a dose do procedimento (urgente/eletivo) e funciona também como destino de campanha.
+   - Como pode receber anúncio direto, **toda página de procedimento tem a seção do médico**, logo antes do FAQ (o topo com a foto não substitui o "quem é ele").
+   - "Como é a consulta/avaliação" aparece em todas as páginas com o mesmo formato da home, adaptado ao procedimento.
 3. **Variante "modo LP"** de cada página de procedimento — mesmo conteúdo, com o menu sem links (só logo e botão), usada como destino dos anúncios. A barra fixa de CTA no celular vale para todas as páginas, não só para o modo LP. Não é uma página nova.
 
 Médico que só quer uma LP = recorte do padrão (uma página de procedimento em modo LP, sem a home).

@@ -1,0 +1,54 @@
+---
+// Seta de rolagem: uma "curvinha" centralizada no topo de um bloco ou faixa, com uma seta para baixo.
+// Incentiva a continuar lendo. A cor do fundo da curvinha é a do bloco (variável --seta-fundo).
+import Icone from './Icone.astro';
+interface Props {
+  alvo: string; // id do bloco para onde a seta leva
+}
+const { alvo } = Astro.props;
+---
+
+<a class="seta-rolagem" href={`#${alvo}`} aria-label="Continuar lendo">
+  <Icone nome="seta-baixo" tamanho={20} />
+</a>
+
+<style>
+  .seta-rolagem {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    top: 0;
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--seta-fundo, var(--color-superficie-2));
+    color: var(--color-acao);
+    text-decoration: none;
+    box-shadow: 0 -10px 24px -18px rgb(20 38 32 / 0.35);
+    transition: transform 0.4s var(--ease-ankura);
+  }
+  .seta-rolagem :global(svg) {
+    margin-top: -18px;
+    animation: chama 2.4s ease-in-out infinite;
+  }
+  .seta-rolagem:hover {
+    transform: translate(-50%, -54%);
+  }
+  @keyframes chama {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(4px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .seta-rolagem :global(svg) {
+      animation: none;
+    }
+  }
+</style>

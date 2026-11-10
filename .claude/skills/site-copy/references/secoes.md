@@ -30,6 +30,8 @@ Primeira pessoa, humano, com fatos.
 - Como ele trabalha de um jeito que faz diferença para o leitor.
 - Provas: formação, títulos, experiência, mostradas como fatos simples.
 - Evite currículo em lista longa. Escolha o que importa para quem está lendo.
+- Tamanho: 90 a 150 palavras, até 3 parágrafos. É a seção com mais texto da página, mas no celular mais que isso vira parede de texto. Detalhe concreto (uma cena do consultório, o motivo da escolha da especialidade) vale mais que adjetivo.
+- Fatos de prova (até 3) são sobre o médico: formação, título, anos de atuação, instituição. Retorno, horário e preço ficam em outras seções.
 
 ## 4. Serviços
 

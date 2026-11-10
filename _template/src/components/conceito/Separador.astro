@@ -1,14 +1,18 @@
 ---
-// SEPARADOR (por cliente): marquee e listas. Demo: pequeno ponto de mapa.
+// SEPARADOR (por cliente): entre itens do marquee e das listas. Demo "Luz de janela": um pequeno sol.
 ---
 
-<svg class="decor sep" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-  <circle cx="7" cy="7" r="5.6" fill="none" stroke="var(--color-destaque)" stroke-width="1.1"></circle>
-  <circle cx="7" cy="7" r="2" fill="var(--color-destaque)"></circle>
-</svg>
+<span class="sep decor" aria-hidden="true"></span>
 
 <style>
   .sep {
+    display: inline-block;
     flex: none;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--color-luz);
+    box-shadow: 0 0 10px 2px rgb(242 212 155 / 0.55);
+    vertical-align: middle;
   }
 </style>

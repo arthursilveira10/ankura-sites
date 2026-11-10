@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Prancha B: Camadas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&family=Gloock&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="prancha.css">
+<style>
+  :root {
+    --fundo: #F7F1EF; --c1: #EEDDD8; --c2: #DFC2BB; --c3: #C49A91; --linha: rgba(43, 26, 30, .13);
+    --tinta: #2B1A1E; --texto: #57454A; --apagado: #75616A;
+    --acao: #7A2C42; --acao-hover: #621F33;
+    --vinho: #3A1B24; --vinho-texto: #F7ECEE; --vinho-apagado: #D2B5BC;
+    --fonte: 'Geist', system-ui, sans-serif; --destaque: 'Gloock', Georgia, serif;
+    --largura: 1240px; --margem: clamp(20px, 4vw, 48px);
+    --curva: cubic-bezier(.16, 1, .3, 1);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fundo); color: var(--texto); font: 400 17px/1.6 var(--fonte); }
+  h1, h2, h3 { color: var(--tinta); font-weight: 500; margin: 0; text-wrap: balance; letter-spacing: -.035em; }
+  p { margin: 0; }
+  .wrap { width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; }
+
+  .botao { display: inline-flex; align-items: center; gap: 14px; height: 56px; padding: 0 8px 0 26px; border-radius: 999px;
+    background: var(--acao); color: #fff; font: 500 16px/1 var(--fonte); text-decoration: none; position: relative; overflow: hidden;
+    transition: transform .3s var(--curva), background .3s; }
+  .botao:hover { transform: translateY(-2px); background: var(--acao-hover); }
+  .botao:active { transform: scale(.97); }
+  .botao .ico { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.16); display: grid; place-items: center; position: relative; z-index: 1; }
+  .botao .ico svg { width: 20px; height: 20px; }
+  .botao > span:first-child { position: relative; z-index: 1; }
+  /* assinatura: camadas sobem dentro do botão no hover */
+  .botao::before, .botao::after { content: ''; position: absolute; left: -10%; right: -10%; height: 140%; border-radius: 50% 50% 0 0;
+    background: rgba(255,255,255,.08); top: 100%; transition: top .5s var(--curva); }
+  .botao::after { background: rgba(255,255,255,.07); transition-delay: .06s; }
+  .botao:hover::before { top: 38%; }
+  .botao:hover::after { top: 62%; }
+  .botao.contorno { background: transparent; color: var(--tinta); box-shadow: inset 0 0 0 1.5px var(--tinta); }
+  .botao.contorno .ico { background: var(--tinta); color: #fff; }
+  .botao.contorno::before, .botao.contorno::after { background: rgba(43,26,30,.06); }
+  .botao.claro { background: #fff; color: var(--vinho); }
+  .botao.claro .ico { background: var(--acao); color: #fff; }
+
+  .header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 0; }
+  .marca { font: 500 19px/1 var(--fonte); color: var(--tinta); letter-spacing: -.02em; }
+  .menu { display: flex; gap: 6px; padding: 5px; border-radius: 999px; background: rgba(255,255,255,.6); box-shadow: inset 0 0 0 1px var(--linha); font-size: 15px; }
+  .menu span { padding: 8px 16px; border-radius: 999px; color: var(--tinta); }
+  .menu span:first-child { background: var(--tinta); color: #fff; }
+  .header .botao { justify-self: end; height: 46px; font-size: 15px; padding-left: 20px; }
+  .header .botao .ico { width: 32px; height: 32px; }
+
+  /* topo centrado + foto panorâmica que afunda nas camadas */
+  .topo { text-align: center; padding: 56px 0 0; }
+  .topo h1 { font-size: clamp(42px, 6vw, 92px); line-height: .98; max-width: 11.5em; margin: 0 auto; }
+  .topo h1 em { font: 400 1em/1 var(--destaque); letter-spacing: -.02em; font-style: normal; }
+  .topo .sub { font-size: clamp(17px, 1.3vw, 20px); max-width: 32em; margin: 24px auto 32px; }
+  .palco { position: relative; margin-top: 64px; }
+  .palco .foto-vazia { width: min(100% - 2 * var(--margem), 1100px); margin: 0 auto; aspect-ratio: 21 / 9; border-radius: 28px 28px 0 0; background-color: var(--c1); color: var(--apagado); }
+  .camadas { position: relative; display: block; width: 100%; height: clamp(90px, 11vw, 170px); margin-top: calc(-1 * clamp(60px, 8vw, 120px)); pointer-events: none; }
+  .camadas path { transform-box: fill-box; animation: sobe 1.4s var(--curva) both; }
+  .camadas path:nth-child(2) { animation-delay: .12s; }
+  .camadas path:nth-child(3) { animation-delay: .24s; }
+  @keyframes sobe { from { transform: translateY(40%); } }
+  .dados { background: var(--vinho); color: var(--vinho-texto); }
+  .dados dl { display: grid; grid-template-columns: repeat(4, 1fr); margin: 0; padding: 26px 0 34px; }
+  .dados div { padding: 0 24px; border-left: 1px solid rgba(255,255,255,.16); }
+  .dados div:first-child { border-left: 0; padding-left: 0; }
+  .dados dt { font-size: 13px; color: var(--vinho-apagado); }
+  .dados dd { margin: 2px 0 0; font-size: 16px; font-weight: 500; }
+
+  /* identificação: frases soltas, alternadas */
+  .ident { padding: 128px 0 120px; }
+  .ident h2 { font-size: clamp(32px, 4.4vw, 62px); line-height: 1.02; max-width: 12em; }
+  .frases { list-style: none; margin: 72px 0 0; padding: 0; display: grid; gap: 56px; }
+  .frases li { max-width: 30em; }
+  .frases li:nth-child(even) { justify-self: end; text-align: right; }
+  .frases li:nth-child(2) { margin-right: 8%; }
+  .frases li:nth-child(3) { margin-left: 14%; }
+  .frases h3 { font-size: clamp(26px, 2.8vw, 40px); line-height: 1.08; font-weight: 400; }
+  .frases p { margin-top: 10px; }
+
+  /* manifesto em faixa com borda de camada */
+  .faixa { position: relative; background: var(--c1); }
+  .borda { position: absolute; left: 0; right: 0; bottom: 100%; width: 100%; height: 70px; display: block; pointer-events: none; }
+  .manifesto { padding: 72px 0 120px; }
+  .manifesto p { font: 400 clamp(30px, 4vw, 58px)/1.12 var(--destaque); color: var(--tinta); letter-spacing: -.02em; max-width: 21em; }
+
+  /* como funciona: trilho horizontal */
+  .como { padding: 128px 0 140px; }
+  .como h2 { font-size: clamp(32px, 4.2vw, 58px); line-height: 1.02; max-width: 12em; }
+  .trilho { list-style: none; margin: 64px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px; position: relative; }
+  .trilho::before, .trilho::after { content: ''; position: absolute; top: 15px; left: 0; right: 0; height: 2px; background: var(--c2); }
+  .trilho::after { height: 4px; top: 14px; background: var(--acao); transform-origin: left; transform: scaleX(var(--p, 0)); border-radius: 4px; }
+  .trilho li { position: relative; padding-top: 52px; }
+  .trilho .num { position: absolute; top: 0; left: 0; width: 32px; height: 32px; border-radius: 50%; background: var(--fundo); box-shadow: inset 0 0 0 2px var(--c3);
+    display: grid; place-items: center; font: 500 13px/1 var(--fonte); color: var(--apagado); z-index: 1; transition: all .4s var(--curva); }
+  .trilho li.feito .num { background: var(--acao); color: #fff; box-shadow: 0 0 0 6px rgba(122,44,66,.14); }
+  .trilho h3 { font-size: 21px; line-height: 1.2; letter-spacing: -.02em; color: var(--apagado); transition: color .4s; }
+  .trilho li.feito h3 { color: var(--tinta); }
+  .trilho p { margin-top: 8px; font-size: 15.5px; }
+  .como .cta-meio { margin-top: 56px; }
+
+  /* cta final: bloco vinho com camadas */
+  .final { position: relative; background: var(--vinho); color: var(--vinho-texto); border-radius: 32px; overflow: hidden; text-align: center;
+    padding: clamp(72px, 9vw, 128px) clamp(24px, 5vw, 72px) clamp(150px, 16vw, 220px); }
+  .final h2 { color: #fff; font-size: clamp(34px, 4.6vw, 66px); line-height: 1.02; max-width: 12em; margin: 0 auto; }
+  .final p { margin: 22px auto 34px; max-width: 30em; color: var(--vinho-apagado); }
+  .final .apoio { margin: 16px auto 0; font-size: 14px; }
+  .final .camadas-cta { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: clamp(110px, 13vw, 180px); pointer-events: none; }
+  .rodape { padding: 40px 0 120px; font-size: 14px; color: var(--apagado); }
+
+  @media (max-width: 860px) {
+    .header { grid-template-columns: 1fr auto; padding: 14px 0; }
+    .menu { display: none; }
+    .header .botao { display: none; }
+    .topo { display: flex; flex-direction: column; padding-top: 0; }
+    .topo .palco { order: -1; margin-top: 4px; }
+    .palco .foto-vazia { aspect-ratio: auto; height: 236px; width: calc(100% - 24px); border-radius: 22px 22px 0 0; }
+    .camadas { height: 70px; margin-top: -50px; }
+    .topo h1 { font-size: 38px; margin-top: 22px; padding: 0 var(--margem); }
+    .topo .sub { font-size: 17px; margin: 14px auto 22px; padding: 0 var(--margem); }
+    .camadas path:nth-child(3) { fill: var(--fundo); }
+    .dados { order: 1; margin-top: 40px; }
+    .dados dl { grid-template-columns: 1fr 1fr; gap: 14px 0; padding: 18px 0 22px; }
+    .dados div:nth-child(3) { border-left: 0; padding-left: 0; }
+    .ident { padding: 80px 0; }
+    .frases { gap: 36px; }
+    .frases li, .frases li:nth-child(even) { justify-self: start; text-align: left; margin: 0; }
+    .frases li:nth-child(even) { padding-left: 28px; }
+    .trilho { grid-template-columns: 1fr; gap: 36px; padding-left: 52px; }
+    .trilho::before, .trilho::after { top: 6px; bottom: 6px; left: 15px; right: auto; width: 2px; height: auto; }
+    .trilho::after { width: 4px; left: 14px; transform-origin: top; transform: scaleY(var(--p, 0)); }
+    .trilho li { padding-top: 0; }
+    .trilho .num { left: -52px; }
+    .final { margin-inline: 12px; border-radius: 24px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .camadas path { animation: none; } }
+</style>
+</head>
+<body>
+
+<nav class="pr-barra" aria-label="Pranchas"><span>Prancha</span><a href="a.html">A</a><a href="b.html" aria-current="page">B</a><a href="c.html">C</a></nav>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="zap" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></symbol>
+</svg>
+
+<div class="wrap">
+  <header class="header">
+    <div class="marca">Arthur Silveira</div>
+    <nav class="menu"><span>Início</span><span>Toxina botulínica</span><span>Melasma</span><span>Contato</span></nav>
+    <a class="botao" href="#"><span>Agendar consulta</span><span class="ico"><svg><use href="#zap"/></svg></span></a>
+  </header>
+</div>
+
+<section class="topo">
+  <h1>Sua pele tem uma <em>história</em>. Eu começo por ela.</h1>
+  <p class="sub">Sou o Arthur, dermatologista em Campinas. Na primeira consulta, a gente conversa com calma antes de qualquer tratamento.</p>
+  <div class="acao"><a class="botao" href="#"><span>Agendar consulta</span><span class="ico"><svg><use href="#zap"/></svg></span></a></div>
+  <div class="palco">
+    <div class="foto-vazia">[FOTO: o médico no consultório, plano aberto, olhando para a câmera]</div>
+    <svg class="camadas" viewBox="0 0 1440 170" preserveAspectRatio="none" aria-hidden="true">
+      <path fill="#EEDDD8" d="M0 70C220 20 420 20 640 55s460 55 800 0V170H0Z"/>
+      <path fill="#DFC2BB" d="M0 105C260 70 520 75 760 98s440 30 680-8V170H0Z"/>
+      <path fill="#3A1B24" d="M0 140C300 118 560 120 820 132s420 14 620-6V170H0Z"/>
+    </svg>
+  </div>
+  <div class="dados">
+    <dl class="wrap">
+      <div><dt>CRM</dt><dd>000000-SP</dd></div>
+      <div><dt>RQE</dt><dd>00000, Dermatologia</dd></div>
+      <div><dt>Onde</dt><dd>Campinas, SP</dd></div>
+      <div><dt>Atendimento</dt><dd>Presencial</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="ident wrap">
+  <h2>Você já tentou de tudo e a pele continua do mesmo jeito?</h2>
+  <ul class="frases">
+    <li><h3>O armário cheio de produtos.</h3><p>Você compra o que viu no vídeo, usa por duas semanas e não sabe se funcionou.</p></li>
+    <li><h3>A mancha que volta todo verão.</h3><p>Melhora no inverno, volta com o sol, e você já nem sabe mais o que passar.</p></li>
+    <li><h3>As linhas que deixam o rosto com ar cansado.</h3><p>Você se sente bem, mas o espelho conta outra história.</p></li>
+    <li><h3>A consulta de cinco minutos.</h3><p>Você saiu com uma receita e nenhuma explicação sobre a sua pele.</p></li>
+  </ul>
+</section>
+
+<section class="faixa">
+  <svg class="borda" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path fill="#EEDDD8" d="M0 40C300 0 560 0 820 26s420 34 620 8V70H0Z"/></svg>
+  <div class="manifesto wrap"><p>Pele não se trata com pressa. Eu prefiro entender a sua rotina, o seu histórico e o que te incomoda de verdade, para montar um plano que você consegue seguir.</p></div>
+</section>
+
+<section class="como" data-progresso="h">
+  <div class="wrap">
+    <h2>Do primeiro contato ao plano na sua mão.</h2>
+    <ol class="trilho">
+      <li data-passo><span class="num">1</span><h3>Você chama no WhatsApp</h3><p>A minha equipe te ajuda a encontrar um horário e manda as orientações.</p></li>
+      <li data-passo><span class="num">2</span><h3>A gente conversa</h3><p>Cerca de 50 minutos. Começo ouvindo sua história e sua rotina.</p></li>
+      <li data-passo><span class="num">3</span><h3>Eu examino a sua pele</h3><p>Com dermatoscópio quando precisa, explicando o que encontro.</p></li>
+      <li data-passo><span class="num">4</span><h3>Você sai com um plano</h3><p>Por escrito, com o que fazer em casa e o que considerar.</p></li>
+      <li data-passo><span class="num">5</span><h3>Eu acompanho de perto</h3><p>O retorno está incluído para ajustarmos o plano.</p></li>
+    </ol>
+    <div class="cta-meio"><a class="botao contorno" href="#"><span>Quero agendar minha consulta</span><span class="ico"><svg><use href="#zap"/></svg></span></a></div>
+  </div>
+</section>
+
+<div class="wrap" style="width:min(100% - 2*12px, 1340px)">
+  <section class="final">
+    <h2>Sua pele merece uma consulta sem pressa.</h2>
+    <p>Me chama no WhatsApp. A minha equipe responde em horário comercial e te ajuda a escolher o melhor dia.</p>
+    <a class="botao claro" href="#"><span>Agendar pelo WhatsApp</span><span class="ico"><svg><use href="#zap"/></svg></span></a>
+    <p class="apoio">Segunda a sexta, das 8h às 18h. [FICTÍCIO]</p>
+    <svg class="camadas-cta" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true">
+      <path fill="#4D2632" d="M0 60C260 20 520 25 780 55s420 40 660 5V180H0Z"/>
+      <path fill="#62303F" d="M0 105C300 75 560 80 820 100s400 25 620-5V180H0Z"/>
+      <path fill="#7A3F4F" d="M0 145C320 125 600 128 860 140s380 10 580-8V180H0Z"/>
+    </svg>
+  </section>
+</div>
+<footer class="rodape wrap">Dr. Arthur Silveira [FICTÍCIO], CRM 000000-SP, RQE 00000.</footer>
+
+<section class="pr-ficha">
+  <h2>B. Camadas</h2>
+  <p class="pr-porque">A pele tem camadas, e a consulta também: primeiro a conversa, depois o exame, depois o plano. As ondas em tons de pele são o elemento memorável: sustentam a foto do topo, terminam na faixa vinho de CRM e RQE e viram a transição entre seções. Uma fonte só (Geist) para tudo, sóbria, e uma serifada de alto contraste (Gloock) só na palavra do topo e no manifesto.</p>
+  <div class="pr-grade">
+    <div>
+      <h3>Paleta</h3>
+      <div class="pr-cores">
+        <div class="pr-cor"><i style="background:#F7F1EF"></i><b>Superfície</b><small>#F7F1EF fundo</small></div>
+        <div class="pr-cor"><i style="background:#EEDDD8"></i><b>Epiderme</b><small>#EEDDD8 faixa</small></div>
+        <div class="pr-cor"><i style="background:#DFC2BB"></i><b>Derme</b><small>#DFC2BB camada</small></div>
+        <div class="pr-cor"><i style="background:#2B1A1E"></i><b>Tinta</b><small>#2B1A1E títulos</small></div>
+        <div class="pr-cor"><i style="background:#57454A"></i><b>Texto</b><small>#57454A corrido</small></div>
+        <div class="pr-cor"><i style="background:#7A2C42"></i><b>Vinho claro</b><small>#7A2C42 só CTAs</small></div>
+        <div class="pr-cor"><i style="background:#3A1B24"></i><b>Vinho</b><small>#3A1B24 dados e CTA final</small></div>
+      </div>
+      <h3 style="margin-top:28px">Tipografia</h3>
+      <ul class="pr-lista">
+        <li>Títulos e texto: Geist (300 a 600), uma família só, como na ref 03</li>
+        <li>Destaque: Gloock, só na palavra do topo e no manifesto</li>
+        <li>Palavra-chave: só no título do topo</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Elemento memorável</h3>
+      <p>As camadas. Sobem uma vez ao abrir a página, por baixo da foto. No botão, duas camadas sobem dentro dele no hover (assinatura).</p>
+      <h3 style="margin-top:24px">Ritmo de fundos</h3>
+      <ul class="pr-lista">
+        <li>Topo: superfície, terminando nas camadas</li>
+        <li>Dados: faixa vinho de borda a borda</li>
+        <li>Identificação: superfície</li>
+        <li>Manifesto: faixa epiderme com borda em onda</li>
+        <li>Como funciona: superfície</li>
+        <li>CTA final: bloco vinho arredondado com camadas</li>
+      </ul>
+      <h3 style="margin-top:24px">Cortado na autocrítica</h3>
+      <ul class="pr-lista">
+        <li>Rótulos em maiúsculas acima dos títulos</li>
+        <li>Cards na identificação: viraram frases soltas, alternadas</li>
+        <li>Fotos no meio do manifesto</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Topo no celular (390 × 664)</h3>
+      <div class="pr-celular"><iframe src="b.html" title="Topo no celular" loading="lazy"></iframe></div>
+      <p class="pr-nota">No celular, a foto vem primeiro e a faixa vinho de CRM e RQE desce para logo depois do botão, para o botão caber na primeira tela.</p>
+    </div>
+  </div>
+</section>
+<script src="prancha.js"></script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 ---
-// CTA FINAL (seção 6, coragem para agir): bloco escuro arredondado. A barra fixa some aqui.
+// CTA FINAL (seção 6, coragem para agir): bloco escuro arredondado na largura do conteúdo,
+// com o elemento do conceito (demo: o pôr do sol). A barra fixa do celular some aqui.
 import Botao from '../base/Botao.astro';
 import DecorCta from '../conceito/DecorCta.astro';
 import { titulo } from '../../lib/texto';
@@ -11,14 +12,14 @@ const { dados: d } = Astro.props;
 ---
 
 <section class="ctaf" id="contato" data-esconde-barra>
-  <div class="bloco escuro ctaf-bloco">
-    <DecorCta />
-    <div class="wrap ctaf-conteudo">
-      <h2 class="t-h2 medida-titulo" data-revela set:html={titulo(d.titulo)} />
-      <p class="t-lead medida" data-revela style="--atraso:1">{d.texto}</p>
-      <div class="ctaf-acoes" data-revela style="--atraso:2">
-        <Botao texto={d.botao.texto} posicao="final" />
-        {d.apoio && <p class="t-pequeno">{d.apoio}</p>}
+  <div class="wrap">
+    <div class="escuro ctaf-bloco">
+      <DecorCta />
+      <div class="ctaf-conteudo">
+        <h2 class="t-h2 medida-titulo" set:html={titulo(d.titulo)} />
+        <p class="ctaf-texto medida">{d.texto}</p>
+        <Botao texto={d.botao.texto} posicao="final" estilo="claro" />
+        {d.apoio && <p class="ctaf-apoio">{d.apoio}</p>}
       </div>
     </div>
   </div>
@@ -26,29 +27,39 @@ const { dados: d } = Astro.props;
 
 <style>
   .ctaf {
-    padding-block: calc(var(--secao) / 2) clamp(8px, 1.4vw, 20px);
+    padding-block: clamp(24px, 4vw, 48px);
   }
   .ctaf-bloco {
     position: relative;
-    overflow: hidden;
-    isolation: isolate;
-    padding-block: clamp(72px, 12vw, 180px);
+    overflow: clip;
+    margin-inline: calc(-1 * var(--margem) + 12px);
+    padding: clamp(64px, 8vw, 112px) clamp(22px, 5.5vw, 88px) clamp(120px, 12vw, 168px);
+    border-radius: var(--radius-bloco);
+    text-align: center;
   }
   .ctaf-conteudo {
     position: relative;
     z-index: 1;
     display: grid;
-    gap: 22px;
     justify-items: center;
-    text-align: center;
   }
-  .ctaf-conteudo :is(.medida, .medida-titulo) {
-    margin-inline: auto;
+  .ctaf-conteudo h2 {
+    color: #fff;
+    font-size: clamp(2.25rem, 1.4rem + 3.4vw, 4.25rem);
+    line-height: 1.02;
+    max-width: 12em;
   }
-  .ctaf-acoes {
-    display: grid;
-    gap: 12px;
-    justify-items: center;
-    margin-top: 8px;
+  .ctaf-texto {
+    margin: 22px auto 34px;
+    max-width: 30em;
+  }
+  .ctaf-apoio {
+    margin-top: 16px;
+    font-size: 0.875rem;
+  }
+  @media (min-width: 1024px) {
+    .ctaf-bloco {
+      margin-inline: 0;
+    }
   }
 </style>

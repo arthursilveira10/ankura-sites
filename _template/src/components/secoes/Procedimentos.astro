@@ -1,6 +1,8 @@
 ---
 // PROCEDIMENTOS (home): portas de entrada para as páginas de procedimento.
-// lista-em-linhas (padrão) | lista-com-imagem (desktop: imagem ao lado; celular: acordeão) | cards
+// lista-com-imagem (padrão, no espírito do Bonança): ícone, miniatura, nome (um peso só), descrição e botão
+//   redondo; o item aberto faz a foto crescer e mostra o detalhe e o link. Desktop abre no hover; celular no toque.
+// lista-em-linhas: linhas simples com seta. cards: 2 a 4 cards com foto.
 import Cabecalho from '../base/Cabecalho.astro';
 import Foto from '../base/Foto.astro';
 import Icone from '../base/Icone.astro';
@@ -17,6 +19,8 @@ const itens =
   (await procedimentos()).map((p) => ({
     nome: p.data.nome,
     descricao: p.data.resumo ?? '',
+    detalhe: p.data.detalhe,
+    icone: p.data.icone,
     link: lp ? `/lp/${p.id}` : `/${p.id}`,
     foto: p.data.foto,
   }));
@@ -24,13 +28,45 @@ const itens =
 
 <section class="secao secao-abaixo procs" id="procedimentos">
   <div class="wrap">
-    <Cabecalho rotulo={d.rotulo} titulo={d.titulo} texto={d.texto} />
+    <Cabecalho rotulo={d.rotulo} titulo={d.titulo} texto={d.texto} lado />
 
     {
-      d.variante === 'cards' ? (
-        <ul class="procs-cards">
+      d.variante === 'lista-com-imagem' ? (
+        <div class="pi-lista" data-abre-no-hover>
           {itens.map((it, i) => (
-            <li data-revela style={`--atraso:${i}`}>
+            <details name="procedimentos" open={i === 0}>
+              <summary>
+                <span class="pi-ico">
+                  <IconeProcedimento nome={it.icone} indice={i} />
+                </span>
+                <span class="pi-mini">
+                  <Foto foto={it.foto} sizes="(min-width: 1024px) 340px, 90vw" larguras={[340, 680]} />
+                </span>
+                <span class="pi-txt">
+                  <span class="pi-nome">{it.nome}</span>
+                  <span class="pi-resumo">{it.descricao}</span>
+                  <span class="pi-extra">
+                    <span>
+                      {it.detalhe && <span class="pi-detalhe">{it.detalhe}</span>}
+                      {it.link && (
+                        <a href={it.link} class="pi-ver">
+                          Ver como funciona <Icone nome="seta" tamanho={16} />
+                        </a>
+                      )}
+                    </span>
+                  </span>
+                </span>
+                <span class="pi-mais" aria-hidden="true">
+                  <Icone nome="mais" tamanho={20} />
+                </span>
+              </summary>
+            </details>
+          ))}
+        </div>
+      ) : d.variante === 'cards' ? (
+        <ul class="procs-cards">
+          {itens.map((it) => (
+            <li>
               <a href={it.link} class="card">
                 <div class="card-foto">
                   <Foto foto={it.foto} sizes="(min-width: 1024px) 380px, 90vw" proporcao="4/3" />
@@ -38,55 +74,24 @@ const itens =
                 <div class="card-corpo">
                   <h3 class="t-h3">{it.nome}</h3>
                   <p class="t-pequeno">{it.descricao}</p>
-                  <span class="card-seta" aria-hidden="true">
-                    <Icone nome="seta" tamanho={18} />
-                  </span>
                 </div>
               </a>
             </li>
           ))}
         </ul>
-      ) : d.variante === 'lista-com-imagem' ? (
-        <div class="procs-img">
-          {itens.map((it, i) => (
-            <details class="pi" name="procedimentos" open={i === 0} data-revela style={`--atraso:${i}`}>
-              <summary class="pi-linha">
-                <span class="pi-num">{String(i + 1).padStart(2, '0')}</span>
-                <span class="pi-nome">{it.nome}</span>
-                <span class="pi-mais" aria-hidden="true">
-                  <Icone nome="mais" tamanho={18} />
-                </span>
-              </summary>
-              <div class="pi-corpo">
-                <div class="pi-foto">
-                  <Foto foto={it.foto} sizes="(min-width: 1024px) 460px, 90vw" proporcao="4/3" />
-                </div>
-                <p>{it.descricao}</p>
-                {it.link && (
-                  <a href={it.link} class="pi-link">
-                    Ver como funciona <Icone nome="seta" tamanho={16} />
-                  </a>
-                )}
-              </div>
-            </details>
-          ))}
-        </div>
       ) : (
         <ul class="procs-linhas">
           {itens.map((it, i) => (
-            <li data-revela style={`--atraso:${i}`}>
+            <li>
               <a href={it.link} class="pl">
-                <span class="pl-ico" data-desenha>
-                  <IconeProcedimento indice={i} />
-                </span>
-                <span class="pl-foto">
-                  <Foto foto={it.foto} sizes="96px" larguras={[120, 200]} proporcao="1/1" />
+                <span class="pi-ico">
+                  <IconeProcedimento nome={it.icone} indice={i} />
                 </span>
                 <span class="pl-texto">
-                  <span class="pl-nome">{it.nome}</span>
-                  <span class="pl-desc t-pequeno">{it.descricao}</span>
+                  <span class="pi-nome">{it.nome}</span>
+                  <span class="pi-resumo">{it.descricao}</span>
                 </span>
-                <span class="pl-seta" aria-hidden="true">
+                <span class="pi-mais" aria-hidden="true">
                   <Icone nome="seta" tamanho={18} />
                 </span>
               </a>
@@ -100,173 +105,214 @@ const itens =
 
 <style>
   .procs .wrap > :global(.cab) {
-    margin-bottom: clamp(32px, 5vw, 56px);
+    margin-bottom: clamp(36px, 5vw, 56px);
   }
-  /* Lista em linhas */
+
+  /* ---------- lista com imagem ---------- */
+  .pi-lista {
+    border-top: 1px solid var(--color-linha);
+  }
+  .pi-lista details {
+    border-bottom: 1px solid var(--color-linha);
+  }
+  summary {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 46px;
+    gap: 14px;
+    align-items: start;
+    padding: 22px 0;
+    cursor: pointer;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .pi-ico,
+  .pi-mini {
+    display: none;
+  }
+  .pi-ico {
+    color: var(--color-acao);
+    justify-self: center;
+    margin-top: 12px;
+  }
+  .pi-mini {
+    position: relative;
+    width: 168px;
+    height: 104px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--color-superficie-2);
+    transition:
+      width 0.7s var(--ease-ankura),
+      height 0.7s var(--ease-ankura);
+  }
+  .pi-mini :global(.foto-reservada) {
+    font-size: 0;
+  }
+  .pi-txt {
+    display: grid;
+  }
+  .pi-nome {
+    font-family: var(--font-titulo);
+    font-size: clamp(1.75rem, 1.3rem + 1.5vw, 2.5rem);
+    font-weight: 450;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--color-muda);
+    transition: color 0.4s;
+  }
+  .pi-resumo {
+    margin-top: 6px;
+    color: var(--color-apagado);
+  }
+  .pi-extra {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+      grid-template-rows 0.7s var(--ease-ankura),
+      opacity 0.5s;
+  }
+  .pi-extra > span {
+    overflow: hidden;
+  }
+  details[open] .pi-extra {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  .pi-detalhe {
+    display: block;
+    margin-top: 16px;
+    max-width: 34em;
+  }
+  .pi-ver {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 16px;
+    padding-bottom: 2px;
+    color: var(--color-acao);
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklab, var(--color-acao) 30%, transparent);
+  }
+  .pi-ver:hover {
+    border-color: var(--color-acao);
+  }
+  .pi-mais {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    margin-top: 6px;
+    border-radius: 50%;
+    color: var(--color-tinta);
+    box-shadow: inset 0 0 0 1px var(--color-linha);
+    transition: all 0.4s var(--ease-ankura);
+  }
+  .pi-mais :global(svg) {
+    transition: transform 0.4s var(--ease-ankura);
+  }
+  summary:hover .pi-nome,
+  details[open] .pi-nome {
+    color: var(--color-tinta);
+  }
+  summary:hover .pi-mais {
+    box-shadow: inset 0 0 0 1px var(--color-tinta);
+  }
+  details[open] .pi-mais {
+    background: var(--color-luz);
+    box-shadow: none;
+  }
+  details[open] .pi-mais :global(svg) {
+    transform: rotate(45deg);
+  }
+  @media (min-width: 1024px) {
+    summary {
+      grid-template-columns: 56px auto 1fr 48px;
+      gap: 32px;
+      padding: 26px 0;
+    }
+    .pi-ico,
+    .pi-mini {
+      display: block;
+    }
+    details[open] .pi-mini {
+      width: 340px;
+      height: 232px;
+    }
+    .pi-txt {
+      padding-top: 8px;
+    }
+  }
+
+  /* ---------- lista em linhas ---------- */
   .procs-linhas {
     border-top: 1px solid var(--color-linha);
   }
   .pl {
     display: grid;
-    grid-template-columns: 64px minmax(0, 1fr) 40px;
+    grid-template-columns: 1fr 46px;
     align-items: center;
-    gap: 14px;
-    padding-block: 16px;
+    gap: 16px;
+    padding: 22px 0;
     border-bottom: 1px solid var(--color-linha);
     color: inherit;
     text-decoration: none;
   }
-  .pl-ico {
-    display: none;
-    color: var(--color-destaque);
-  }
-  .pl-foto {
-    width: 64px;
-    height: 64px;
-    border-radius: var(--radius-mini);
-    overflow: hidden;
-  }
-  .pl-foto :global(.foto-reservada) {
-    font-size: 0;
-  }
   .pl-texto {
     display: grid;
-    gap: 2px;
   }
-  .pl-nome {
-    font-family: var(--font-titulo);
-    font-size: clamp(1.25rem, 1rem + 0.9vw, 1.75rem);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
+  .pl:hover .pi-nome {
     color: var(--color-tinta);
   }
-  .pl-desc {
-    color: var(--color-apagado);
+  .pl:hover .pi-mais {
+    background: var(--color-acao);
+    color: #fff;
+    box-shadow: none;
   }
-  .pl-seta {
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    box-shadow: inset 0 0 0 1px var(--color-linha);
-    color: var(--color-tinta);
-    transition:
-      background-color 0.4s ease,
-      color 0.4s ease,
-      transform 0.5s var(--ease-ankura);
-  }
-  @media (hover: hover) {
-    .pl:hover .pl-seta {
-      background: var(--color-tinta);
-      color: var(--color-fundo);
-      transform: rotate(45deg);
-    }
-  }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .pl {
-      grid-template-columns: 40px 88px minmax(0, 1fr) 44px;
-      gap: 24px;
-      padding-block: 20px;
+      grid-template-columns: 56px 1fr 48px;
+      gap: 32px;
     }
-    .pl-ico {
+    .pl .pi-ico {
       display: block;
-    }
-    .pl-foto {
-      width: 88px;
-      height: 88px;
+      margin-top: 0;
     }
   }
 
-  /* Lista com imagem (acordeão no celular, imagem ao lado no desktop) */
-  .procs-img {
-    border-top: 1px solid var(--color-linha);
-  }
-  .pi {
-    border-bottom: 1px solid var(--color-linha);
-  }
-  .pi-linha {
-    display: grid;
-    grid-template-columns: 32px minmax(0, 1fr) 40px;
-    align-items: center;
-    gap: 12px;
-    min-height: 64px;
-    padding-block: 12px;
-    cursor: pointer;
-    list-style: none;
-  }
-  .pi-linha::-webkit-details-marker {
-    display: none;
-  }
-  .pi-num {
-    font-size: var(--t-rotulo);
-    font-variant-numeric: tabular-nums;
-    color: var(--color-apagado);
-  }
-  .pi-nome {
-    font-family: var(--font-titulo);
-    font-size: clamp(1.25rem, 1rem + 0.9vw, 1.75rem);
-    color: var(--color-tinta);
-  }
-  .pi-mais {
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    box-shadow: inset 0 0 0 1px var(--color-linha);
-    transition: transform 0.4s var(--ease-ankura);
-  }
-  .pi[open] .pi-mais {
-    transform: rotate(45deg);
-  }
-  .pi-corpo {
-    display: grid;
-    gap: 14px;
-    padding: 0 0 24px 44px;
-  }
-  .pi-foto {
-    border-radius: var(--radius-card);
-    overflow: hidden;
-  }
-  .pi-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 44px;
-    font-weight: 600;
-    color: var(--color-tinta);
-  }
-
-  /* Cards */
+  /* ---------- cards ---------- */
   .procs-cards {
     display: grid;
-    gap: var(--gap);
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   }
   .card {
-    display: grid;
-    height: 100%;
-    border-radius: var(--radius-bloco);
+    display: block;
     overflow: hidden;
+    border-radius: var(--radius-card);
     background: var(--color-superficie);
     box-shadow: inset 0 0 0 1px var(--color-linha);
     color: inherit;
     text-decoration: none;
+    transition: transform 0.5s var(--ease-ankura);
+  }
+  .card:hover {
+    transform: translateY(-4px);
   }
   .card-corpo {
-    position: relative;
     display: grid;
     gap: 6px;
-    padding: 22px 64px 24px 22px;
+    padding: 20px 22px 24px;
   }
-  .card-seta {
-    position: absolute;
-    right: 18px;
-    bottom: 22px;
-  }
-  @media (min-width: 768px) {
-    .procs-cards {
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  @media (prefers-reduced-motion: reduce) {
+    .pi-mini,
+    .pi-extra,
+    .pi-nome,
+    .pi-mais {
+      transition: none;
     }
   }
 </style>

@@ -4,44 +4,45 @@
   Papéis das cores: .claude/skills/site-build/references/direcao-visual.md (seção 3).
   Fontes: cliente.config.mjs (--fonte-titulo e --fonte-texto).
 
-  Demo: Dr. Arthur Silveira [FICTÍCIO], conceito "Leitura da pele" (ver direcao-visual.md).
+  Demo: Dr. Arthur Silveira [FICTÍCIO], conceito "Luz de janela" (ver direcao-visual.md).
 */
 
 @theme {
   /* Cores (contraste conferido em direcao-visual.md) */
-  --color-fundo: #f4eee6; /* areia */
-  --color-superficie: #faf6f0;
-  --color-superficie-2: #eadfd0;
-  --color-tinta: #2b231d;
-  --color-texto: #51463d;
-  --color-apagado: #6b5e52;
-  --color-linha: rgb(43 35 29 / 0.14);
-  --color-acao: #a04b2b; /* argila: só CTAs */
-  --color-acao-texto: #fff8f1;
-  --color-acao-hover: #86391d;
-  --color-destaque: #566440; /* sálvia */
-  --color-escuro: #2b2520;
-  --color-escuro-texto: #f4eee6;
-  --color-escuro-apagado: rgb(244 238 230 / 0.7);
-  --color-escuro-linha: rgb(244 238 230 / 0.14);
+  --color-fundo: #f3f4ef; /* manhã */
+  --color-superficie: #fbfbf8;
+  --color-superficie-2: #e3e8e0; /* névoa: faixas de seção */
+  --color-parede: #dce3d8;
+  --color-tinta: #142620;
+  --color-texto: #44524c;
+  --color-apagado: #5d6b64;
+  --color-muda: #7a8780; /* títulos grandes inativos (lista de tratamentos) */
+  --color-linha: rgb(20 38 32 / 0.12);
+  --color-acao: #1e4a3c; /* mata: só CTAs */
+  --color-acao-texto: #ffffff;
+  --color-acao-hover: #2b6753;
+  --color-destaque: #2b6753;
+  --color-luz: #f2d49b; /* luz: brilho, marcadores, hover do ícone. Nunca texto sobre fundo claro */
+  --color-luz-forte: #fff1d2;
+  --color-escuro: #142b25; /* floresta: blocos escuros e rodapé */
+  --color-escuro-texto: #edf1ec;
+  --color-escuro-apagado: #a3b6ad;
+  --color-escuro-linha: rgb(237 241 236 / 0.16);
 
   /* Fontes */
   --font-titulo: var(--fonte-titulo), Georgia, serif;
   --font-texto: var(--fonte-texto), Arial, sans-serif;
 
-  /* Forma: perfil médio */
-  --radius-bloco: 24px;
-  --radius-card: 16px;
-  --radius-mini: 10px;
+  /* Forma: perfil suave */
+  --radius-bloco: 32px;
+  --radius-card: 20px;
+  --radius-mini: 14px;
   --radius-pilula: 999px;
 }
 
 :root {
   --titulo-peso: 400;
-  --titulo-destaque-peso: 400;
-  --titulo-destaque-estilo: italic;
-  --titulo-espacamento: -0.03em;
-
-  /* Recorte da foto principal */
-  --recorte-foto: 32px;
+  --titulo-destaque-peso: 500;
+  --titulo-destaque-estilo: normal;
+  --titulo-espacamento: -0.02em;
 }

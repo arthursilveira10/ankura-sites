@@ -1,9 +1,18 @@
 ---
-// MARCADOR (por cliente): passos e linha do tempo. Demo: ponto de mapa (alvo).
+// MARCADOR (por cliente): ponto de linha do tempo e de listas de passos simples. Demo: um pequeno sol.
 ---
 
-<svg width="17" height="17" viewBox="0 0 17 17" aria-hidden="true">
-  <circle cx="8.5" cy="8.5" r="7.6" fill="var(--color-fundo)" stroke="currentColor" stroke-width="1.2"></circle>
-  <circle cx="8.5" cy="8.5" r="2.6" fill="currentColor"></circle>
-  <path d="M8.5 0.9v2.2M8.5 13.9v2.2M0.9 8.5h2.2M13.9 8.5h2.2" stroke="currentColor" stroke-width="1.2"></path>
-</svg>
+<span class="marcador decor" aria-hidden="true"></span>
+
+<style>
+  .marcador {
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-luz);
+    box-shadow:
+      0 0 0 5px rgb(242 212 155 / 0.18),
+      0 0 14px 3px rgb(242 212 155 / 0.45);
+  }
+</style>

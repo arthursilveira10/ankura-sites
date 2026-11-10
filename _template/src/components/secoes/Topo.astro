@@ -1,176 +1,264 @@
 ---
-// TOPO. Celular: foto compacta → headline → subtítulo → botão (botão inteiro até ~620px).
-// O texto nunca depende de animação; só a foto e os selos animam a entrada.
-import Foto from '../base/Foto.astro';
+// TOPO: o médico é o destaque. Foto recortada (fundo transparente) grande e ancorada na base,
+// textura de luz (imagem gerada) cobrindo a seção inteira, elemento do conceito atrás do médico
+// e os dados de identificação encaixados na base da foto.
+// Celular: foto centralizada que surge com degradê, texto e botão centralizados, tudo na primeira tela.
+import { Picture } from 'astro:assets';
 import Botao from '../base/Botao.astro';
+import Icone from '../base/Icone.astro';
+import Dados from '../base/Dados.astro';
 import DecorTopo from '../conceito/DecorTopo.astro';
-import SobreFoto from '../conceito/SobreFoto.astro';
-import { titulo } from '../../lib/texto';
+import { titulo as fmtTitulo } from '../../lib/texto';
 import type { Secao } from '../../lib/dados';
 
 interface Props {
   dados: Extract<Secao, { tipo: 'topo' }>;
 }
 const { dados: d } = Astro.props;
-const colagem = d.variante === 'colagem' && d.fotosExtras.length > 0;
+// No celular, o título quebra em duas linhas no ponto final (ex.: "Sua pele tem uma história." / "Eu começo por ela.").
+const linhas = d.titulo.split(/(?<=[.!?])\s+/);
+const longo = d.titulo.length > 46; // títulos longos ganham fonte menor e coluna mais larga no desktop
 ---
 
-<section class:list={['topo', colagem && 'topo-colagem']} data-topo aria-labelledby="titulo-topo">
-  <div class="wrap topo-grade">
-    <div class="topo-visual">
-      <DecorTopo />
-      <div class="topo-foto" data-revela-foto>
-        <Foto foto={d.foto} sizes="(min-width: 1024px) 460px, 80vw" larguras={[360, 520, 720, 920]} prioridade proporcao="4/5" />
-      </div>
-      <SobreFoto />
-      {
-        colagem &&
-          d.fotosExtras.map((f, i) => (
-            <div class:list={['topo-extra', `topo-extra-${i + 1}`]} data-revela-foto>
-              <Foto foto={f} sizes="180px" larguras={[200, 360]} prioridade proporcao="3/4" />
-            </div>
-          ))
-      }
-      {
-        d.selos.map((s, i) => (
-          <span class:list={['selo', `selo-${i + 1}`]} data-revela style={`--atraso:${i + 3}`}>
-            {s}
-          </span>
-        ))
-      }
-    </div>
-
-    <div class="topo-texto">
-      {d.rotulo && <p class="rotulo">{d.rotulo}</p>}
-      <h1 id="titulo-topo" class="t-display medida-titulo" set:html={titulo(d.titulo)} />
-      <p class="t-lead topo-sub medida">{d.subtitulo}</p>
-      <div class="topo-acoes">
+<section class:list={['topo', longo && 'topo-longo']} data-topo>
+  <div class="topo-fundo decor" aria-hidden="true">
+    {
+      d.fundo?.src && (
+        <Picture src={d.fundo.src} alt="" widths={[800, 1400, 2000]} sizes="100vw" formats={['avif', 'webp']}
+                fallbackFormat="webp" loading="eager" class="topo-fundo-img" pictureAttributes={{ class: 'contents' }} />
+      )
+    }
+  </div>
+  <div class="wrap">
+    <div class="topo-grade">
+      <div class="topo-texto">
+        <h1 class="topo-titulo">
+          {linhas.map((l) => <span class="linha" set:html={fmtTitulo(l) + ' '} />)}
+        </h1>
+        <p class="topo-sub">{d.subtitulo}</p>
         <Botao texto={d.botao.texto} posicao="topo" />
-        {d.apoio && <p class="t-pequeno topo-apoio">{d.apoio}</p>}
+        {
+          d.apoio && (
+            <p class="topo-apoio">
+              <Icone nome="relogio" tamanho={20} />
+              {d.apoio}
+            </p>
+          )
+        }
+      </div>
+      <div class="cena">
+        <DecorTopo />
+        <div class="medico">
+          {
+            d.foto.src ? (
+              <Picture
+                src={d.foto.src}
+                alt={d.foto.alt}
+                widths={[480, 720, 1000].filter((w) => w <= d.foto.src!.width)}
+                sizes="(min-width: 1024px) 46vw, 90vw"
+                formats={['avif', 'webp']}
+                fallbackFormat="webp"
+                loading="eager"
+                fetchpriority="high"
+                class="medico-img"
+                pictureAttributes={{ class: 'contents' }}
+              />
+            ) : (
+              <div class="foto-reservada medico-vazio">[FOTO: {d.foto.reservado ?? 'médico recortado, meio corpo'}]</div>
+            )
+          }
+        </div>
       </div>
     </div>
+    {d.dados && <Dados class="topo-dados" />}
   </div>
 </section>
 
 <style>
   .topo {
     position: relative;
-    padding-top: calc(var(--header) + 12px);
-    padding-bottom: clamp(32px, 6vw, 72px);
-    overflow-x: clip;
+    overflow: clip;
+  }
+  .topo-fundo {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 372px;
+    background: linear-gradient(180deg, #d8dfd3, #c9d2c3);
+  }
+  .topo-fundo :global(.topo-fundo-img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 64% 30%;
+  }
+  .topo-fundo::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 190px;
+    background: linear-gradient(to bottom, transparent, color-mix(in oklab, var(--color-fundo) 75%, transparent) 55%, var(--color-fundo));
   }
   .topo-grade {
-    display: grid;
-    gap: 18px;
-  }
-  .topo-visual {
-    position: relative;
-    justify-self: center;
-    width: min(50vw, 190px);
-  }
-  .topo-foto {
     position: relative;
     z-index: 1;
-    aspect-ratio: 4/5;
-    border-radius: var(--recorte-foto);
-    overflow: hidden;
-    background: var(--color-superficie-2);
-  }
-  .topo-extra {
-    position: absolute;
-    z-index: 2;
-    width: 38%;
-    border-radius: var(--radius-card);
-    overflow: hidden;
-    box-shadow: 0 0 0 5px var(--color-fundo);
-  }
-  .topo-extra-1 {
-    right: -30%;
-    top: 8%;
-  }
-  .topo-extra-2 {
-    left: -30%;
-    bottom: 6%;
-  }
-  .selo {
-    position: absolute;
-    z-index: 3;
-    padding: 7px 12px;
-    border-radius: var(--radius-pilula);
-    background: var(--color-superficie);
-    box-shadow:
-      0 0 0 1px var(--color-linha),
-      0 10px 24px -14px rgb(0 0 0 / 0.35);
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--color-tinta);
-    white-space: nowrap;
-  }
-  .selo-1 {
-    left: -18%;
-    top: 16%;
-  }
-  .selo-2 {
-    right: -20%;
-    top: 52%;
-  }
-  .selo-3 {
-    left: -10%;
-    bottom: 4%;
-  }
-  .topo-texto {
     display: grid;
-    gap: 14px;
-    justify-items: center;
-    text-align: center;
-  }
-  .topo-texto :is(.medida, .medida-titulo) {
-    margin-inline: auto;
-  }
-  .topo-sub {
-    color: var(--color-texto);
-    max-width: 30em;
-  }
-  .topo-acoes {
-    display: grid;
-    gap: 10px;
-    justify-items: center;
-    margin-top: 2px;
-  }
-  .topo-apoio {
-    color: var(--color-apagado);
   }
 
+  /* celular */
+  .cena {
+    order: -1;
+    position: relative;
+    height: 344px;
+    margin-inline: calc(-1 * var(--margem));
+    overflow: clip;
+  }
+  .medico {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 70px;
+    height: 500px;
+    translate: -59% 0;
+    -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 54.5%);
+    mask-image: linear-gradient(to bottom, #000 40%, transparent 54.5%);
+    animation: sobe-foto 1.4s 0.15s var(--ease-ankura) both;
+  }
+  .medico :global(.medico-img) {
+    height: 100%;
+    width: auto;
+    max-width: none;
+  }
+  .medico-vazio {
+    width: 333px;
+    height: 100%;
+    border-radius: 999px 999px 0 0;
+  }
+  .topo-texto {
+    text-align: center;
+  }
+  .topo-titulo {
+    margin-top: 26px;
+    font-size: clamp(1.6875rem, 7.6vw, 1.9375rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+  .topo-titulo .linha {
+    display: block;
+  }
+  .topo-sub {
+    max-width: 21em;
+    margin: 10px auto 18px;
+    font-size: 1rem;
+    color: #3b4943;
+  }
+  .topo-apoio {
+    display: none;
+  }
+  .topo :global(.topo-dados) {
+    margin-top: 56px;
+  }
+  @keyframes sobe-foto {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+
+  /* desktop: a foto ocupa a metade direita inteira, a textura cobre a seção */
   @media (min-width: 1024px) {
     .topo {
-      padding-top: calc(var(--header) + 56px);
-      min-height: min(100svh, 940px);
-      display: flex;
-      align-items: center;
+      padding-top: 120px;
+    }
+    .topo-longo .topo-grade {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+    .topo-longo .topo-titulo {
+      font-size: clamp(2.5rem, 4.3vw, 4rem);
+      line-height: 1.04;
+    }
+    .topo-fundo {
+      inset: 0 0 64px 0;
+      height: auto;
+    }
+    .topo-fundo :global(.topo-fundo-img) {
+      object-position: 62% 40%;
+    }
+    .topo-fundo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(90deg, rgb(243 244 239 / 0.86) 0%, rgb(243 244 239 / 0.62) 30%, rgb(243 244 239 / 0) 52%);
+    }
+    .topo-fundo::after {
+      z-index: 1;
+      height: 140px;
+      background: linear-gradient(to bottom, transparent, var(--color-fundo));
     }
     .topo-grade {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-      align-items: center;
-      gap: clamp(40px, 5vw, 88px);
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(24px, 4vw, 64px);
+      min-height: clamp(600px, 78vh, 760px);
     }
-    .topo-visual {
-      order: 2;
-      width: min(100%, 440px);
+    .cena {
+      order: 0;
+      height: auto;
+      margin: 0;
+      clip-path: inset(-30% -40% 0 -40%);
+      overflow: visible;
+    }
+    .medico {
+      left: auto;
+      right: -2%;
+      top: -1%;
+      height: 143%;
+      translate: none;
+      -webkit-mask-image: none;
+      mask-image: none;
+      filter: drop-shadow(-30px 30px 40px rgb(20 38 32 / 0.25));
     }
     .topo-texto {
-      justify-items: start;
+      align-self: center;
+      padding-bottom: 64px;
       text-align: left;
-      gap: 22px;
     }
-    .topo-texto :is(.medida, .medida-titulo) {
-      margin-inline: 0;
+    .topo-titulo {
+      margin-top: 0;
+      font-size: clamp(2.75rem, 5.6vw, 5.25rem);
+      font-weight: 350;
+      line-height: 1;
+      letter-spacing: -0.028em;
     }
-    .topo-acoes {
-      justify-items: start;
+    .topo-titulo .linha {
+      display: inline;
     }
-    .selo {
-      font-size: 0.8125rem;
-      padding: 9px 16px;
+    .topo-sub {
+      margin: 28px 0 36px;
+      max-width: 28em;
+      font-size: var(--t-lead);
+    }
+    .topo-apoio {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+      font-size: 0.9375rem;
+      color: var(--color-apagado);
+    }
+    .topo-apoio :global(svg) {
+      color: var(--color-acao);
+    }
+    .topo :global(.topo-dados) {
+      margin-top: -40px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .medico {
+      animation: none;
     }
   }
 </style>

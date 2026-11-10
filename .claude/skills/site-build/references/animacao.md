@@ -23,6 +23,7 @@ Movimento existe para explicar, guiar o olhar ou dar vida ao conceito. Se não f
 - Entrada da foto do médico no topo.
 - Text reveal no manifesto.
 - Linha que se preenche no "como funciona" e na linha do tempo.
+  - **Precisa ser vista na primeira rolagem.** Traço de 3 a 4px na cor de ação ou destaque sobre trilho claro de 1 a 2px; o passo ativo muda de forma clara (marcador cresce e preenche, título ganha cor cheia); os passos já percorridos ficam marcados como feitos. Traço de 1px em tom pastel passa despercebido (aconteceu no primeiro demo).
 - Cartas empilhadas com sticky.
 - Ícones e elementos do conceito em traço que se desenham.
 - Marquee (um por página).

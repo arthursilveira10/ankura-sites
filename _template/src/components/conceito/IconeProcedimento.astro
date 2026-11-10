@@ -1,18 +1,24 @@
 ---
-// ÍCONES DOS PROCEDIMENTOS (por cliente): traço único, pathLength="1" para se desenharem ao aparecer.
-// Demo "Leitura da pele": 0 = linhas de expressão (toxina), 1 = mancha com curvas de nível (melasma), 2 = lente.
+// ÍCONES DOS PROCEDIMENTOS (por cliente): traço fino, mesmo peso dos ícones de base.
+// O nome vem do conteúdo (campo "icone" da página de procedimento). Sem nome, usa a ordem da lista.
 interface Props {
-  indice: number;
+  nome?: string;
+  indice?: number;
+  tamanho?: number;
 }
-const { indice } = Astro.props;
-const formas: string[][] = [
-  ['M4 8c2.7-1.6 5.3-1.6 8 0s5.3 1.6 8 0', 'M4 12c2.7-1.6 5.3-1.6 8 0s5.3 1.6 8 0', 'M6 16c2-1.2 4-1.2 6 0s4 1.2 6 0'],
-  ['M12 4.5c4.6 0 7.5 3 7.5 7s-3.4 8-7.8 8S4.5 16 4.5 12 7.4 4.5 12 4.5z', 'M12 8.5c2.4 0 3.8 1.5 3.8 3.4S14 15.8 11.8 15.8 8.3 14 8.3 12s1.3-3.5 3.7-3.5z', 'M12 11.2a0.8 0.8 0 1 0 0.01 0'],
-  ['M10.5 4a6.5 6.5 0 1 0 0 13 6.5 6.5 0 1 0 0-13z', 'M15.3 15.3L20 20', 'M10.5 7.5v6M7.5 10.5h6'],
-];
-const desenho = formas[indice % formas.length];
+const { nome, indice = 0, tamanho = 30 } = Astro.props;
+const formas: Record<string, string[]> = {
+  linhas: ['M4 8c2.5-1.6 5.5-1.6 8 0s5.5 1.6 8 0', 'M4 13c2.5-1.6 5.5-1.6 8 0s5.5 1.6 8 0', 'M7 18c1.7-1 3.3-1 5 0s3.3 1 5 0'],
+  mancha: ['M8.5 6.5c2-2 5.5-1.8 7.6.2 2.4 2.3 2.9 5.4 1.2 8.1-1.8 2.9-5.8 4.1-8.8 2.4-2.6-1.5-3.7-4.4-2.8-7 .5-1.4 1.6-2.5 2.8-3.7Z', 'M17.5 4.1a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 1 0 0-2.8Z', 'M5 16.5a1 1 0 1 0 0 2 1 1 0 1 0 0-2Z'],
+  lupa: ['M10.5 4a6.5 6.5 0 1 0 0 13 6.5 6.5 0 1 0 0-13Z', 'M10.5 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 1 0 0-5Z', 'm15.5 15.5 5 5'],
+  gota: ['M12 3.5s6 6.4 6 10.6a6 6 0 0 1-12 0C6 9.9 12 3.5 12 3.5Z', 'M9.5 14.5a2.6 2.6 0 0 0 2.5 2.5'],
+  sol: ['M12 8a4 4 0 1 0 0 8 4 4 0 1 0 0-8Z', 'M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.5 1.5M17.2 17.2l1.5 1.5M5.3 18.7l1.5-1.5M17.2 6.8l1.5-1.5'],
+  folha: ['M5 19C5 10 10 5 19 5c0 9-5 14-14 14Z', 'M5 19 13 11'],
+};
+const ordem = Object.keys(formas);
+const desenho = formas[nome ?? ''] ?? formas[ordem[indice % ordem.length]];
 ---
 
-<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  {desenho.map((d, i) => <path d={d} pathLength="1" style={`--atraso:${i}`} />)}
+<svg width={tamanho} height={tamanho} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {desenho.map((d) => <path d={d} />)}
 </svg>

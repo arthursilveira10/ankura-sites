@@ -42,9 +42,17 @@ html {
   scroll-padding-top: calc(var(--header) + 16px);
 }
 @media (prefers-reduced-motion: no-preference) {
-  html {
+  html:not(.lenis) {
     scroll-behavior: smooth;
   }
+}
+/* Scroll suave (Lenis, só desktop com mouse; ver fx.ts) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
 body {
@@ -81,7 +89,7 @@ figcaption {
 }
 
 ::selection {
-  background: var(--color-superficie-2);
+  background: var(--color-luz);
   color: var(--color-tinta);
 }
 
@@ -120,7 +128,8 @@ img {
 }
 .t-display {
   font-size: var(--t-display);
-  line-height: 1.02;
+  font-weight: 350;
+  line-height: 1;
   letter-spacing: calc(var(--titulo-espacamento) - 0.01em);
 }
 .t-h2 {
@@ -145,17 +154,20 @@ img {
   align-items: center;
   gap: 10px;
   font-family: var(--font-texto);
-  font-size: var(--t-rotulo);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-apagado);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-acao);
 }
 .rotulo::before {
   content: '';
-  width: 22px;
-  height: 1px;
-  background: currentColor;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-luz);
+  box-shadow: 0 0 10px 2px rgb(242 212 155 / 0.6);
+}
+.escuro .rotulo {
+  color: var(--color-luz);
 }
 
 /* Palavra-chave dos títulos (**palavra** no conteúdo) */

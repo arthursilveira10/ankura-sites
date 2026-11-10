@@ -2,13 +2,16 @@
 tipo: procedimento
 nome: Melasma
 resumo: Um plano para controlar as manchas que voltam com o sol, sem promessas mágicas.
+icone: mancha
+detalhe: Melasma não tem cura definitiva, tem controle. O plano junta proteção solar, cuidados em casa e, quando faz sentido, procedimentos no consultório.
 ordem: 2
 foto:
-  alt: Consulta de avaliação de manchas
-  reservado: detalhe de consulta
+  src: ../../assets/procedimento-melasma.webp
+  alt: ''
 seo:
   titulo: Tratamento de melasma em Campinas | Dr. Arthur Silveira
   descricao: Melasma tem controle. Avaliação completa, plano de cuidados em casa e procedimentos quando indicados. Campinas, SP.
+  imagem: ../../assets/compartilhamento.png
 cta:
   botaoMenu: Agendar avaliação
   barra: Quero cuidar do meu melasma
@@ -16,69 +19,126 @@ cta:
 
 secoes:
   - tipo: topo
-    variante: foto-compacta
-    rotulo: Melasma
-    titulo: Melasma tem **controle**. E começa por entender a sua pele.
+    titulo: Melasma tem controle. E começa por entender a sua pele.
     subtitulo: Eu monto um plano que cabe na sua rotina, com o que fazer em casa e procedimentos quando forem indicados.
     foto:
-      alt: Dr. Arthur Silveira
-      reservado: foto do médico, meio corpo
-    selos:
-      - Dermatologia · RQE 00000
-      - Campinas, SP
+      src: ../../assets/medico-recorte.webp
+      alt: Dr. Arthur Silveira, de braços cruzados, sorrindo
+    fundo:
+      src: ../../assets/fundo-topo.webp
+      alt: ''
     botao:
       texto: Agendar avaliação
-    apoio: Você fala direto com a minha equipe.
-
-  - tipo: faixa-dados
+    apoio: A avaliação vem antes de qualquer procedimento
 
   - tipo: identificacao
     variante: lista
-    rotulo: Você não está sozinha
-    titulo: Se você **já** passou por isso...
+    titulo: Se você já passou por isso...
     itens:
       - titulo: A mancha que volta todo verão
+        icone: sol
         texto: Você trata, clareia, e com o primeiro sol forte ela aparece de novo.
       - titulo: O corretivo como obrigação
+        icone: rosto
         texto: Sair sem base virou exceção, e isso cansa.
       - titulo: O ácido que irritou a pele
+        icone: frasco
         texto: Você tentou sozinha e a pele ficou vermelha, sensível ou até mais manchada.
     cta:
       texto: Quero entender o meu caso
       posicao: meio-1
 
   - tipo: o-que-e
-    rotulo: O que é
-    titulo: Uma condição **crônica**, que pede acompanhamento.
+    faixa: true
+    seta: true
+    titulo: Uma condição crônica, que pede acompanhamento.
     texto: |-
       O melasma é uma mancha escura que aparece principalmente no rosto. Sol, hormônios e calor estão entre os gatilhos mais comuns.
 
       Ele não tem cura definitiva, mas tem controle. O que funciona é um plano contínuo, ajustado ao longo do ano, e não um tratamento isolado.
+    foto:
+      src: ../../assets/procedimento-melasma.webp
+      alt: ''
 
   - tipo: como-funciona
+    faixa: true
     variante: passos-simples
-    rotulo: O plano
-    titulo: Três frentes que **trabalham** juntas.
+    titulo: Três frentes que trabalham juntas.
     passos:
       - titulo: Proteção
+        icone: sol
         texto: Protetor certo para a sua pele e para a sua rotina, inclusive dentro de casa.
       - titulo: Cuidados em casa
+        icone: frasco
         texto: Uma rotina simples, com ativos escolhidos para o seu tipo de pele e o seu momento.
       - titulo: Procedimentos
+        icone: lupa
         texto: Quando indicados, para potencializar o plano. Sempre com cuidado para não irritar a pele.
 
+  - tipo: como-funciona
+    variante: passos-com-linha
+    titulo: Como é a avaliação do melasma.
+    texto: Sem pressa e sem promessa. É assim que a gente começa.
+    passos:
+      - quando: Antes
+        titulo: Você chama no WhatsApp
+        texto: A minha equipe agenda a avaliação e te pede para vir sem maquiagem, se puder. [FICTÍCIO]
+      - quando: Na consulta
+        titulo: Eu entendo a sua história
+        texto: Quando a mancha começou, o que piora, o que você já usou e como é a sua rotina com o sol.
+      - quando: No exame
+        titulo: Eu examino a sua pele
+        texto: Com luz adequada e, quando precisa, com dermatoscópio, para ver a profundidade da mancha.
+      - quando: No fim
+        titulo: Você sai com um plano
+        texto: Por escrito, com proteção, cuidados em casa e, se fizer sentido, procedimentos.
+      - quando: Depois
+        titulo: Eu acompanho as estações
+        texto: Nos retornos eu ajusto o plano conforme o sol, o calor e a resposta da sua pele.
+    cta:
+      texto: Quero agendar minha avaliação
+      posicao: meio-2
+
   - tipo: antes-depois
-    rotulo: Casos
-    titulo: Acompanhamento ao longo dos **meses**.
+    titulo: Acompanhamento ao longo dos meses.
     casos:
-      - antes: { alt: Antes do tratamento, reservado: 'ANTES [exemplo, sem paciente real]' }
-        depois: { alt: Depois de 6 meses de acompanhamento, reservado: 'DEPOIS [exemplo, sem paciente real]' }
+      - antes: { alt: Antes do tratamento, reservado: 'ANTES [foto real com autorização]' }
+        depois: { alt: Depois do acompanhamento, reservado: 'DEPOIS [foto real com autorização]' }
+        legenda: Após 4 meses de acompanhamento. Caso ilustrativo [FICTÍCIO].
+      - antes: { alt: Antes do tratamento, reservado: 'ANTES [foto real com autorização]' }
+        depois: { alt: Depois do acompanhamento, reservado: 'DEPOIS [foto real com autorização]' }
         legenda: Após 6 meses de acompanhamento. Caso ilustrativo [FICTÍCIO].
+      - antes: { alt: Antes do tratamento, reservado: 'ANTES [foto real com autorização]' }
+        depois: { alt: Depois do acompanhamento, reservado: 'DEPOIS [foto real com autorização]' }
+        legenda: Após 9 meses de acompanhamento. Caso ilustrativo [FICTÍCIO].
     avisoLegal: Imagens publicadas com autorização do paciente. Os resultados variam de pessoa para pessoa e não representam promessa ou garantia de resultado. Responsável técnico Dr. Arthur Silveira, CRM 000000-SP, RQE 00000 [FICTÍCIO].
 
+  - tipo: profissional
+    titulo: Prazer, eu sou o Arthur.
+    texto: |-
+      Escolhi a dermatologia porque a pele mexe com a forma como a gente se vê. Na residência, percebi que muita gente chegava ao consultório depois de anos tentando resolver sozinha, com produtos indicados por amigos ou pela internet.
+
+      Por isso a minha consulta começa pela conversa. Pergunto da sua rotina e do que você já usou. Examino com calma e, quando precisa, te mostro no dermatoscópio o que estou vendo.
+
+      Você sai sabendo o porquê de cada passo, com o plano por escrito. Muitas vezes o começo é mais simples do que você imagina. [FICTÍCIO]
+    foto:
+      src: ../../assets/sobre-composicao.webp
+      alt: Dr. Arthur Silveira sorrindo, de camisa verde, em frente a um fundo de luz quente
+    composicao: true
+    fatos:
+      - valor: 12 anos
+        rotulo: de formado [FICTÍCIO]
+        icone: chapeu
+      - valor: RQE
+        rotulo: título de especialista em dermatologia
+        icone: selo
+      - valor: Desde 2019
+        rotulo: atendendo em Campinas [FICTÍCIO]
+        icone: local
+
   - tipo: faq
-    rotulo: Dúvidas
-    titulo: O que as pacientes mais **perguntam**.
+    faixa: true
+    titulo: O que as pacientes mais perguntam.
     perguntas:
       - pergunta: Melasma tem cura?
         resposta: Não existe cura definitiva, mas existe controle. Com acompanhamento, a maioria das pessoas consegue manter as manchas bem mais leves.
@@ -90,7 +150,8 @@ secoes:
         resposta: Em alguns casos ajuda, em outros piora. Por isso eu só indico depois de avaliar a sua pele.
 
   - tipo: cta-final
-    titulo: Vamos montar o **seu** plano?
+    faixa: true
+    titulo: Vamos montar o seu plano?
     texto: Me chama no WhatsApp. Na avaliação eu entendo a sua pele e te explico cada passo.
     botao:
       texto: Agendar avaliação

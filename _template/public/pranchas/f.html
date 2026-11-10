@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Prancha F: Fio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Schibsted+Grotesk:wght@400..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="prancha.css">
+<style>
+  :root {
+    --fundo: #EEEFEC; --branco: #FAFAF8; --pedra: #E0E3DE; --linha: rgba(24, 32, 45, .13);
+    --tinta: #18202D; --texto: #464D58; --apagado: #5E6672;
+    --acao: #1F2F4A; --acao-hover: #15223A;
+    --noite: #141B27; --noite-2: #1C2535; --n-texto: #ECEEF2; --n-apagado: #A7AFBD; --n-linha: rgba(236,238,242,.14);
+    --fio: #7D93BA;
+    --titulo: 'Libre Caslon Display', Georgia, serif; --corpo: 'Schibsted Grotesk', system-ui, sans-serif;
+    --largura: 1240px; --margem: clamp(20px, 4vw, 48px); --gap: clamp(32px, 6vw, 96px);
+    --curva: cubic-bezier(.16, 1, .3, 1);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fundo); color: var(--texto); font: 400 17px/1.62 var(--corpo); }
+  h1, h2 { font-family: var(--titulo); color: var(--tinta); font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+  h3 { font: 500 21px/1.25 var(--corpo); color: var(--tinta); margin: 0; letter-spacing: -.01em; }
+  p { margin: 0; }
+  .wrap { width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; position: relative; z-index: 1; }
+  .ico { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .ancora { position: absolute; width: 1px; height: 1px; pointer-events: none; }
+
+  /* o fio */
+  #fio { position: absolute; top: 0; left: 0; z-index: 0; pointer-events: none; overflow: visible; }
+  #fio .base { stroke: var(--fio); stroke-opacity: .22; }
+  #fio .vivo { stroke: var(--fio); }
+  #fio .no { fill: var(--branco); stroke: var(--fio); stroke-width: 2; }
+  #fio .no-dentro { fill: var(--acao); }
+
+  /* botão: o fio dá uma volta no ícone */
+  .botao { display: inline-flex; align-items: center; gap: 14px; height: 56px; padding: 0 8px 0 26px; border-radius: 999px;
+    background: var(--acao); color: #fff; font: 500 16px/1 var(--corpo); text-decoration: none; transition: transform .35s var(--curva), background .35s; }
+  .botao:hover { background: var(--acao-hover); transform: translateY(-2px); }
+  .botao:active { transform: scale(.97); }
+  .botao .circ { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; position: relative; background: rgba(255,255,255,.12); }
+  .botao .circ > svg:first-child { width: 20px; height: 20px; }
+  .botao .volta { position: absolute; inset: -6px; width: calc(100% + 12px); height: calc(100% + 12px); fill: none; stroke: var(--fio); stroke-width: 1.5; }
+  .botao .volta circle { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .6s var(--curva); transform: rotate(-90deg); transform-origin: center; }
+  .botao:hover .volta circle { stroke-dashoffset: 0; }
+  .botao.claro { background: var(--n-texto); color: var(--tinta); }
+  .botao.claro:hover { background: #fff; }
+  .botao.claro .circ { background: var(--acao); color: #fff; }
+  .botao.contorno { background: transparent; color: var(--tinta); box-shadow: inset 0 0 0 1.5px rgba(24,32,45,.5); }
+  .botao.contorno .circ { background: var(--acao); color: #fff; }
+
+  /* topo noite, de borda a borda */
+  .topo { background: var(--noite); color: var(--n-apagado); position: relative; padding-bottom: 120px; }
+  .header { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+  .marca { font: 400 24px/1 var(--titulo); color: #fff; }
+  .marca small { display: block; font: 400 13px/1.4 var(--corpo); color: var(--n-apagado); margin-top: 4px; }
+  .menu { display: flex; gap: 4px; padding: 5px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--n-linha); font-size: 15px; }
+  .menu span { padding: 8px 16px; border-radius: 999px; color: var(--n-texto); }
+  .menu span:first-child { background: rgba(236,238,242,.1); }
+  .header .botao { height: 46px; font-size: 15px; padding-left: 20px; }
+  .header .botao .circ { width: 32px; height: 32px; }
+  .topo-grade { display: grid; grid-template-columns: 1.15fr .85fr; gap: var(--gap); align-items: end; padding: 48px 0 56px; }
+  .topo h1 { color: #fff; font-size: clamp(46px, 6vw, 92px); line-height: 1.0; }
+  .topo .sub { font-size: clamp(17px, 1.3vw, 20px); max-width: 29em; margin: 28px 0 36px; }
+  .moldura { padding: 10px; border-radius: 28px; box-shadow: inset 0 0 0 1px var(--n-linha); }
+  .moldura .foto-vazia { aspect-ratio: 4 / 5; border-radius: 20px; background-color: var(--noite-2); color: var(--n-apagado); }
+  .dados { display: grid; grid-template-columns: repeat(4, 1fr); margin: 0; border-top: 1px solid var(--n-linha); }
+  .dados div { display: flex; gap: 14px; align-items: center; padding: 22px 20px 0; }
+  .dados div:first-child { padding-left: 0; }
+  .dados .ico { color: var(--fio); width: 26px; height: 26px; }
+  .dados dt { font-size: 13px; color: var(--n-apagado); line-height: 1.3; }
+  .dados dd { margin: 0; color: #fff; font-weight: 500; line-height: 1.35; }
+  .topo .a1 { left: 50%; bottom: -64px; }
+  .curva { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 56px; display: block; pointer-events: none; }
+
+  /* identificação: estações ao longo do fio */
+  .ident { padding: 72px 0 120px; }
+  .ident h2 { font-size: clamp(34px, 4.4vw, 60px); line-height: 1.05; max-width: 9.5em; }
+  .zig { list-style: none; margin: 40px 0 0; padding: 0; position: relative; }
+  .zig .a2 { left: 50%; top: 0; } .zig .a3 { left: 50%; bottom: 0; }
+  .zig li { display: grid; grid-template-columns: 1fr 120px 1fr; align-items: start; }
+  .zig li + li { margin-top: -8px; }
+  .zig .estacao { grid-column: 2; justify-self: center; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; color: var(--acao);
+    background: var(--fundo); box-shadow: inset 0 0 0 1.5px rgba(125,147,186,.6); transition: all .5s var(--curva); position: relative; z-index: 1; }
+  .zig .estacao .ico { width: 26px; height: 26px; }
+  .zig li.feito .estacao { background: var(--acao); color: #fff; box-shadow: 0 0 0 6px rgba(125,147,186,.18); }
+  .zig .txt { padding-top: 10px; max-width: 26em; padding-bottom: 64px; }
+  .zig li:nth-child(odd) .txt { grid-column: 1; grid-row: 1; justify-self: end; text-align: right; }
+  .zig li:nth-child(even) .txt { grid-column: 3; }
+  .zig h3 { font: 400 clamp(24px, 2.3vw, 32px)/1.15 var(--titulo); }
+  .zig p { margin-top: 8px; }
+
+  /* como funciona: faixa pedra com cantos */
+  .faixa { background: var(--pedra); border-radius: 48px 48px 0 0; padding: clamp(72px, 9vw, 128px) 0; }
+  .como { display: grid; grid-template-columns: .85fr 1.15fr; gap: var(--gap); }
+  .como .fixo { position: sticky; top: 72px; align-self: start; }
+  .como h2 { font-size: clamp(34px, 4.2vw, 58px); line-height: 1.05; }
+  .como .fixo p { margin-top: 20px; max-width: 24em; }
+  .passos { list-style: none; margin: 0; padding: 0 0 0 64px; position: relative; }
+  .passos .a4 { left: 20px; top: 6px; } .col-passos { position: relative; } .col-passos .a5 { left: 20px; bottom: 0; }
+  .como .cta-meio { padding-left: 64px; }
+  .passos li { position: relative; padding: 0 0 56px; }
+  .passos li:last-child { padding-bottom: 0; }
+  .passos .no-passo { position: absolute; left: -52px; top: 2px; width: 24px; height: 24px; border-radius: 50%; background: var(--pedra); box-shadow: inset 0 0 0 1.5px var(--fio); transition: all .5s var(--curva); z-index: 1; }
+  .passos .no-passo::after { content: ''; position: absolute; inset: 7px; border-radius: 50%; background: var(--acao); transform: scale(0); transition: transform .5s var(--curva); }
+  .passos li.feito .no-passo { box-shadow: inset 0 0 0 2px var(--acao), 0 0 0 6px rgba(31,47,74,.08); }
+  .passos li.feito .no-passo::after { transform: scale(1); }
+  .passos .quando { font-size: 13px; color: var(--apagado); letter-spacing: .01em; }
+  .passos h3 { font: 400 clamp(24px, 2.2vw, 31px)/1.15 var(--titulo); margin-top: 2px; }
+  .passos p { margin-top: 8px; max-width: 32em; }
+  .como .cta-meio { margin-top: 48px; }
+
+  /* tratamentos */
+  .trat { background: var(--pedra); padding: 0 0 128px; }
+  .trat .a6a { left: -36px; top: -40px; } .trat .a6 { left: -36px; top: 140px; } .trat .a6b { left: -36px; bottom: 0; }
+  .trat .ate-a-borda { background: var(--fundo); border-radius: 48px 48px 0 0; padding-top: 112px; }
+  .trat h2 { font-size: clamp(34px, 4.2vw, 58px); line-height: 1.05; }
+  .trat .lista { list-style: none; margin: 48px 0 0; padding: 0; border-top: 1px solid var(--linha); }
+  .trat a { display: grid; grid-template-columns: auto 1fr 1.2fr auto; gap: 0 28px; align-items: center; padding: 28px 24px; margin: 0 -24px; border-radius: 22px; color: inherit; text-decoration: none;
+    border-bottom: 1px solid var(--linha); transition: background .5s var(--curva), color .5s, padding .5s var(--curva); }
+  .trat .miniatura { padding: 0; white-space: nowrap; width: 0; height: 104px; border-radius: 14px; overflow: hidden; transition: width .55s var(--curva), margin .55s var(--curva); background-color: var(--noite-2); color: var(--n-apagado); font-size: 11px; margin-right: -28px; }
+  .trat a h3 { font: 400 clamp(26px, 2.6vw, 38px)/1.1 var(--titulo); transition: color .5s; }
+  .trat .seta { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; box-shadow: inset 0 0 0 1px var(--linha); transition: all .4s var(--curva); }
+  @media (hover: hover) {
+    .trat a:hover { background: var(--noite); color: var(--n-apagado); padding: 36px 32px; border-color: transparent; }
+    .trat a:hover h3 { color: #fff; }
+    .trat a:hover .miniatura { width: 156px; margin-right: 0; }
+    .trat a:hover .seta { background: var(--n-texto); color: var(--tinta); box-shadow: none; }
+  }
+
+  /* sobre */
+  .sobre-sec { padding: 0 0 136px; background: var(--fundo); }
+  .sobre { display: grid; grid-template-columns: .85fr 1.15fr; gap: var(--gap); align-items: start; }
+  .sobre .a7a { left: calc((100% - var(--gap)) * .425 + var(--gap) / 2); top: 0; }
+  .sobre .a7b { left: calc((100% - var(--gap)) * .425 + var(--gap) / 2); bottom: 0; }
+  .sobre .moldura { box-shadow: inset 0 0 0 1px var(--linha); }
+  .sobre .foto-vazia { aspect-ratio: 4 / 5; border-radius: 20px; background-color: var(--pedra); color: var(--apagado); }
+  .sobre h2 { font-size: clamp(34px, 4.2vw, 58px); line-height: 1.05; }
+  .sobre .texto { margin-top: 28px; display: grid; gap: 18px; max-width: 36em; }
+  .fatos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--linha); }
+  .fatos div { display: grid; gap: 6px; }
+  .fatos .ico { color: var(--fio); }
+  .fatos b { font: 400 28px/1.1 var(--titulo); color: var(--tinta); }
+  .fatos span { font-size: 14px; line-height: 1.4; }
+
+  /* cta final: o fio termina na conversa */
+  .casca { width: min(100% - 24px, 1340px); margin-inline: auto; }
+  .final { background: var(--noite); border-radius: 32px; color: var(--n-apagado); position: relative; overflow: hidden; padding: clamp(72px, 9vw, 128px) 48px clamp(72px, 9vw, 128px) 120px; }
+  .final .a8 { left: 94px; top: 0; }
+  .final .conteudo { position: relative; z-index: 1; max-width: 40em; }
+  .final h2 { color: #fff; font-size: clamp(36px, 4.8vw, 70px); line-height: 1.02; max-width: 12em; }
+  .final p { margin: 22px 0 34px; max-width: 30em; }
+  .final .apoio { margin: 16px 0 0; font-size: 14px; }
+  .fim { position: relative; display: inline-block; }
+  .fim .a9 { left: -26px; top: 50%; }
+  .final .tramas { position: absolute; right: -80px; top: 50%; transform: translateY(-50%); width: 560px; height: 560px; pointer-events: none; z-index: 0; }
+  .rodape { padding: 40px 0 120px; font-size: 14px; color: var(--apagado); }
+
+  @media (max-width: 860px) {
+    .menu, .header .botao { display: none; }
+    .header { padding: 14px 0; }
+    .topo { padding-bottom: 72px; }
+    .topo-grade { grid-template-columns: 1fr; gap: 0; padding: 0 0 32px; }
+    .moldura { order: -1; padding: 6px; border-radius: 22px; }
+    .topo .moldura .foto-vazia { aspect-ratio: auto; height: 208px; border-radius: 17px; }
+    .topo h1 { font-size: 40px; margin-top: 20px; line-height: 1.02; }
+    .topo .sub { font-size: 17px; margin: 14px 0 22px; }
+    .dados { grid-template-columns: 1fr 1fr; }
+    .dados div { padding: 16px 0 0; gap: 10px; }
+    .dados .ico { width: 22px; height: 22px; }
+    .topo .a1 { left: -10px; bottom: -40px; }
+    .ident { padding: 48px 0 72px; }
+    .zig .a2, .zig .a3 { left: -10px; }
+    .zig li { grid-template-columns: 48px 1fr; gap: 16px; padding-left: 14px; }
+    .zig li + li { margin-top: 0; }
+    .zig .estacao { grid-column: 1; width: 48px; height: 48px; }
+    .zig li:nth-child(odd) .txt, .zig li:nth-child(even) .txt { grid-column: 2; grid-row: 1; justify-self: start; text-align: left; padding: 6px 0 36px; }
+    .faixa { border-radius: 28px 28px 0 0; }
+    .como, .sobre { grid-template-columns: 1fr; }
+    .como .fixo { position: static; }
+    .passos { padding-left: 34px; }
+    .passos .a4, .col-passos .a5 { left: -10px; }
+    .como .cta-meio { padding-left: 34px; }
+    .passos .no-passo { left: -46px; }
+    .trat .ate-a-borda { border-radius: 28px 28px 0 0; padding-top: 72px; }
+    .trat .a6a, .trat .a6, .trat .a6b { left: -10px; }
+    .trat a { grid-template-columns: 1fr auto; gap: 8px 16px; padding: 24px 0 24px 14px; margin: 0; }
+    .trat a p { grid-column: 1 / -1; grid-row: 2; }
+    .trat .miniatura { display: none; }
+    .sobre .a7a, .sobre .a7b { left: -10px; }
+    .sobre { padding-left: 14px; }
+    .fatos { grid-template-columns: 1fr; }
+    .final { border-radius: 24px; padding: 64px 22px 72px 44px; }
+    .final .a8 { left: 18px; }
+    .final .tramas { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="pr-barra" aria-label="Pranchas"><span>Prancha</span><a href="e.html">E</a><a href="f.html" aria-current="page">F</a></nav>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="zap" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></symbol>
+  <symbol id="i-crm" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="11" r="2.2"/><path d="M6 16.2c.7-1.5 1.8-2.2 3-2.2s2.3.7 3 2.2M14.5 10h4M14.5 13h3"/></symbol>
+  <symbol id="i-rqe" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5.5"/><path d="m9.2 13.8-1.2 7.2 4-2 4 2-1.2-7.2M10 9l1.4 1.4L14.2 7.6"/></symbol>
+  <symbol id="i-local" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.7-6.5-10.8a6.5 6.5 0 0 1 13 0C18.5 15.3 12 21 12 21Z"/><circle cx="12" cy="10.2" r="2.3"/></symbol>
+  <symbol id="i-porta" viewBox="0 0 24 24"><path d="M4 21h16M7 21V3.5h10V21"/><path d="M14.2 12.2v.1"/></symbol>
+  <symbol id="i-frasco" viewBox="0 0 24 24"><path d="M10 3h4v3.2l2.2 2.3V20a1 1 0 0 1-1 1H8.8a1 1 0 0 1-1-1V8.5L10 6.2V3Z"/><path d="M7.8 12.5h8.4"/></symbol>
+  <symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.5 1.5M17.2 17.2l1.5 1.5M5.3 18.7l1.5-1.5M17.2 6.8l1.5-1.5"/></symbol>
+  <symbol id="i-rosto" viewBox="0 0 24 24"><path d="M12 3c3.9 0 6.5 3 6.5 7.3S15.8 21 12 21s-6.5-6.4-6.5-10.7S8.1 3 12 3Z"/><path d="M8.8 7.6c1 .4 2.1.4 3.2 0M12 7.6c1.1.4 2.2.4 3.2 0M9.5 15.2c1.6 1 3.4 1 5 0"/></symbol>
+  <symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-seta" viewBox="0 0 24 24"><path d="M5 12h13M13 6.5l5.5 5.5-5.5 5.5"/></symbol>
+  <symbol id="i-chapeu" viewBox="0 0 24 24"><path d="m2.5 9 9.5-4.5L21.5 9 12 13.5 2.5 9Z"/><path d="M6.5 11v4.5c1.5 1.4 3.4 2 5.5 2s4-.6 5.5-2V11M21.5 9v5"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+</svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="volta" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24.5" pathLength="1"/></symbol></svg>
+
+<section class="topo">
+  <div class="wrap">
+    <header class="header">
+      <div class="marca">Arthur Silveira<small>Dermatologista em Campinas</small></div>
+      <nav class="menu"><span>Início</span><span>Toxina botulínica</span><span>Melasma</span><span>Contato</span></nav>
+      <a class="botao claro" href="#"><span>Agendar consulta</span><span class="circ"><svg><use href="#zap"/></svg></span></a>
+    </header>
+    <div class="topo-grade">
+      <div>
+        <h1>Sua pele tem uma história. Eu começo por ela.</h1>
+        <p class="sub">Sou o Arthur, dermatologista em Campinas. Na primeira consulta, a gente conversa com calma antes de qualquer tratamento.</p>
+        <a class="botao claro" href="#"><span>Agendar consulta</span><span class="circ"><svg><use href="#zap"/></svg><svg class="volta" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24.5" pathLength="1"/></svg></span></a>
+      </div>
+      <div class="moldura"><div class="foto-vazia">[FOTO: o médico, meio corpo, olhando para a câmera]</div></div>
+    </div>
+    <dl class="dados">
+      <div><svg class="ico"><use href="#i-crm"/></svg><span><dt>CRM</dt><dd>000000-SP</dd></span></div>
+      <div><svg class="ico"><use href="#i-rqe"/></svg><span><dt>Especialista</dt><dd>RQE 00000</dd></span></div>
+      <div><svg class="ico"><use href="#i-local"/></svg><span><dt>Consultório</dt><dd>Campinas, SP</dd></span></div>
+      <div><svg class="ico"><use href="#i-porta"/></svg><span><dt>Atendimento</dt><dd>Presencial</dd></span></div>
+    </dl>
+    <i class="ancora a1" data-fio="1"></i>
+  </div>
+  <svg class="curva" viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><path fill="#EEEFEC" d="M0 56C300 6 1140 6 1440 56Z"/></svg>
+</section>
+
+<section class="ident">
+  <div class="wrap">
+    <h2>Você já tentou de tudo e a pele continua do mesmo jeito?</h2>
+    <ul class="zig" data-progresso>
+      <i class="ancora a2" data-fio="2"></i><i class="ancora a3" data-fio="3"></i>
+      <li data-passo><span class="estacao"><svg class="ico"><use href="#i-frasco"/></svg></span><div class="txt"><h3>O armário cheio de produtos</h3><p>Você compra o que viu no vídeo, usa por duas semanas e não sabe se funcionou.</p></div></li>
+      <li data-passo><span class="estacao"><svg class="ico"><use href="#i-sol"/></svg></span><div class="txt"><h3>A mancha que volta todo verão</h3><p>Melhora no inverno, volta com o sol, e você já nem sabe mais o que passar.</p></div></li>
+      <li data-passo><span class="estacao"><svg class="ico"><use href="#i-rosto"/></svg></span><div class="txt"><h3>As linhas que deixam o rosto com ar cansado</h3><p>Você se sente bem, mas o espelho conta outra história.</p></div></li>
+      <li data-passo><span class="estacao"><svg class="ico"><use href="#i-relogio"/></svg></span><div class="txt"><h3>A consulta de cinco minutos</h3><p>Você saiu com uma receita e nenhuma explicação sobre a sua pele.</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="faixa">
+  <div class="wrap como">
+    <div class="fixo">
+      <h2>Do primeiro contato ao plano na sua mão.</h2>
+      <p>Sem pressa e sem surpresa. É assim que a consulta acontece.</p>
+    </div>
+    <div class="col-passos">
+      <ol class="passos" data-progresso>
+        <i class="ancora a4" data-fio="4"></i>
+        <li data-passo><span class="no-passo"></span><p class="quando">Antes</p><h3>Você chama no WhatsApp</h3><p>A minha equipe te ajuda a encontrar um horário e manda as orientações para o dia.</p></li>
+        <li data-passo><span class="no-passo"></span><p class="quando">Primeiros minutos</p><h3>A gente conversa</h3><p>A consulta dura cerca de 50 minutos. Começo ouvindo sua história e sua rotina de cuidados.</p></li>
+        <li data-passo><span class="no-passo"></span><p class="quando">No exame</p><h3>Eu examino a sua pele</h3><p>Com calma e com dermatoscópio quando precisa. Vou te mostrando e explicando o que encontro.</p></li>
+        <li data-passo><span class="no-passo"></span><p class="quando">No fim da consulta</p><h3>Você sai com um plano</h3><p>Por escrito, com o que fazer em casa e, se fizer sentido, quais procedimentos considerar.</p></li>
+        <li data-passo><span class="no-passo"></span><p class="quando">Depois</p><h3>Eu acompanho de perto</h3><p>O retorno está incluído para ajustarmos o plano conforme a sua pele responde.</p></li>
+      </ol>
+      <div class="cta-meio"><a class="botao contorno" href="#"><span>Quero agendar minha consulta</span><span class="circ"><svg><use href="#zap"/></svg></span></a></div>
+      <i class="ancora a5" data-fio="5"></i>
+    </div>
+  </div>
+</section>
+
+<section class="trat">
+  <div class="ate-a-borda">
+    <div class="wrap">
+      <i class="ancora a6a" data-fio="6"></i><i class="ancora a6" data-fio="7"></i><i class="ancora a6b" data-fio="8"></i>
+      <h2>Por onde você quer começar?</h2>
+      <ul class="lista">
+        <li><a href="#"><span class="miniatura foto-vazia">[FOTO]</span><h3>Toxina botulínica</h3><p>Suavizar linhas de expressão mantendo o seu jeito de sorrir e de falar.</p><span class="seta"><svg class="ico"><use href="#i-seta"/></svg></span></a></li>
+        <li><a href="#"><span class="miniatura foto-vazia">[FOTO]</span><h3>Melasma</h3><p>Um plano para controlar as manchas que voltam com o sol, sem promessas mágicas.</p><span class="seta"><svg class="ico"><use href="#i-seta"/></svg></span></a></li>
+        <li><a href="#"><span class="miniatura foto-vazia">[FOTO]</span><h3>Avaliação de pintas</h3><p>Exame com dermatoscópio para acompanhar as pintas ao longo do tempo. [FICTÍCIO]</p><span class="seta"><svg class="ico"><use href="#i-seta"/></svg></span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sobre-sec">
+  <div class="wrap sobre">
+    <i class="ancora a7a" data-fio="9"></i><i class="ancora a7b" data-fio="10"></i>
+    <div class="moldura"><div class="foto-vazia">[FOTO: o médico em atendimento, explicando algo ao paciente]</div></div>
+    <div>
+      <h2>Prazer, eu sou o Arthur.</h2>
+      <div class="texto">
+        <p>Escolhi a dermatologia porque a pele mexe com a forma como a gente se vê. E isso pesa no dia a dia mais do que parece. Na residência, percebi que muita gente chegava ao consultório depois de anos tentando resolver sozinha, com produtos indicados por amigos ou pela internet.</p>
+        <p>Por isso a minha consulta começa pela conversa. Pergunto da sua rotina, do que você já usou, do que funcionou e do que não funcionou. Examino com calma e, quando precisa, uso o dermatoscópio e te mostro o que estou vendo.</p>
+        <p>Você sai sabendo o porquê de cada passo e com o plano por escrito. Não indico procedimento antes de entender a sua pele, e muitas vezes o começo é mais simples do que você imagina.</p>
+        <p>Atendo em Campinas desde 2019. O retorno faz parte da consulta, porque a pele muda com o tempo, com as estações e com a vida, e o plano precisa acompanhar. [FICTÍCIO]</p>
+      </div>
+      <div class="fatos">
+        <div><svg class="ico"><use href="#i-chapeu"/></svg><b>12 anos</b><span>de formado [FICTÍCIO]</span></div>
+        <div><svg class="ico"><use href="#i-rqe"/></svg><b>RQE</b><span>título de especialista em dermatologia</span></div>
+        <div><svg class="ico"><use href="#i-cal"/></svg><b>Retorno</b><span>incluído no acompanhamento</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="casca">
+  <section class="final">
+    <i class="ancora a8" data-fio="11"></i>
+    <svg class="tramas" viewBox="0 0 560 560" aria-hidden="true">
+      <circle cx="280" cy="280" r="270" fill="#18202E"/><circle cx="280" cy="280" r="205" fill="#1C2535"/><circle cx="280" cy="280" r="140" fill="#212B3D"/>
+      <circle cx="280" cy="280" r="140" fill="none" stroke="#7D93BA" stroke-opacity=".35"/>
+    </svg>
+    <div class="conteudo">
+      <h2>Sua pele merece uma consulta sem pressa.</h2>
+      <p>Me chama no WhatsApp. A minha equipe responde em horário comercial e te ajuda a escolher o melhor dia.</p>
+      <span class="fim"><i class="ancora a9" data-fio="12"></i><a class="botao claro" href="#"><span>Agendar pelo WhatsApp</span><span class="circ"><svg><use href="#zap"/></svg><svg class="volta" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24.5" pathLength="1"/></svg></span></a></span>
+      <p class="apoio">Segunda a sexta, das 8h às 18h. [FICTÍCIO]</p>
+    </div>
+  </section>
+</div>
+<footer class="rodape wrap">Dr. Arthur Silveira [FICTÍCIO], CRM 000000-SP, RQE 00000.</footer>
+
+<section class="pr-ficha">
+  <h2>F. Fio</h2>
+  <p class="pr-porque">"Sua pele tem uma história" vira um fio contínuo que atravessa o site inteiro: nasce no fim do topo, passa pelas situações do paciente como estações, vira a linha da consulta, contorna a lista de tratamentos e termina no botão do WhatsApp, porque a história continua numa conversa. Ele se desenha junto com a rolagem. Base noturna e editorial (azul-noite, serifada clássica), com o fio como única ousadia.</p>
+  <div class="pr-grade">
+    <div>
+      <h3>Paleta</h3>
+      <div class="pr-cores">
+        <div class="pr-cor"><i style="background:#EEEFEC"></i><b>Osso</b><small>#EEEFEC fundo</small></div>
+        <div class="pr-cor"><i style="background:#E0E3DE"></i><b>Pedra</b><small>#E0E3DE faixa</small></div>
+        <div class="pr-cor"><i style="background:#18202D"></i><b>Tinta</b><small>#18202D títulos</small></div>
+        <div class="pr-cor"><i style="background:#464D58"></i><b>Texto</b><small>#464D58 corrido</small></div>
+        <div class="pr-cor"><i style="background:#1F2F4A"></i><b>Marinho</b><small>#1F2F4A só CTAs</small></div>
+        <div class="pr-cor"><i style="background:#141B27"></i><b>Noite</b><small>#141B27 topo e CTA final</small></div>
+        <div class="pr-cor"><i style="background:#7D93BA"></i><b>Fio</b><small>#7D93BA o fio e os ícones</small></div>
+      </div>
+      <h3 style="margin-top:28px">Tipografia</h3>
+      <ul class="pr-lista">
+        <li>Títulos: Libre Caslon Display (serifada clássica, editorial)</li>
+        <li>Texto e títulos pequenos: Schibsted Grotesk 400 a 500</li>
+        <li>Sem fonte de destaque e sem palavra destacada</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Elemento memorável</h3>
+      <p>O fio, com um nó na ponta que acompanha a rolagem. Por onde ele passa, as estações (ícones) e as etapas da consulta se fecham. No botão, o fio dá uma volta no ícone no hover (assinatura).</p>
+      <h3 style="margin-top:24px">Ritmo de fundos</h3>
+      <ul class="pr-lista">
+        <li>Topo: noite de borda a borda, com curva para o osso</li>
+        <li>Identificação: osso, estações em zigue-zague no eixo do fio</li>
+        <li>Como funciona: faixa pedra com cantos arredondados no alto</li>
+        <li>Tratamentos e sobre: osso, que volta por cima da pedra com cantos</li>
+        <li>CTA final: bloco noite com círculos em tons de azul</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Topo no celular (390 × 664)</h3>
+      <div class="pr-celular"><iframe src="f.html" title="Topo no celular" loading="lazy"></iframe></div>
+      <p class="pr-nota">No celular, o fio corre pela margem esquerda.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // O fio: liga as âncoras (data-fio) em ordem e se desenha com a rolagem.
+  (() => {
+    const NS = 'http://www.w3.org/2000/svg';
+    const reduzido = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const svg = document.createElementNS(NS, 'svg');
+    svg.id = 'fio'; svg.setAttribute('aria-hidden', 'true');
+    svg.innerHTML = '<path class="base" fill="none" stroke-width="2"/><path class="vivo" fill="none" stroke-width="2.5" stroke-linecap="round"/><g class="ponta"><circle class="no" r="8"/><circle class="no-dentro" r="3"/></g>';
+    document.body.appendChild(svg);
+    const [base, vivo] = svg.querySelectorAll('path');
+    const ponta = svg.querySelector('.ponta');
+    let total = 0, amostras = [];
+
+    const montar = () => {
+      const pts = [...document.querySelectorAll('[data-fio]')]
+        .sort((a, b) => a.dataset.fio - b.dataset.fio)
+        .map((el) => { const r = el.getBoundingClientRect(); return [r.left + scrollX, r.top + scrollY]; });
+      svg.setAttribute('width', document.documentElement.scrollWidth);
+      svg.setAttribute('height', document.documentElement.scrollHeight);
+      let d = `M${pts[0][0]} ${pts[0][1]}`;
+      for (let i = 1; i < pts.length; i++) {
+        const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], k = (y1 - y0) / 2;
+        d += ` C${x0} ${y0 + k} ${x1} ${y1 - k} ${x1} ${y1}`;
+      }
+      base.setAttribute('d', d); vivo.setAttribute('d', d);
+      total = vivo.getTotalLength();
+      vivo.style.strokeDasharray = total;
+      amostras = [];
+      for (let i = 0; i <= 800; i++) { const l = (i / 800) * total; amostras.push([l, vivo.getPointAtLength(l)]); }
+      desenhar();
+    };
+    const desenhar = () => {
+      const alvo = scrollY + innerHeight * 0.62;
+      let l = reduzido ? total : 0, p = amostras[0][1];
+      if (!reduzido) for (const [len, pt] of amostras) { if (pt.y > alvo) break; l = len; p = pt; }
+      else p = amostras[amostras.length - 1][1];
+      vivo.style.strokeDashoffset = total - l;
+      ponta.setAttribute('transform', `translate(${p.x} ${p.y})`);
+    };
+    let pendente = false;
+    addEventListener('scroll', () => { if (pendente) return; pendente = true; requestAnimationFrame(() => { desenhar(); pendente = false; }); }, { passive: true });
+    addEventListener('resize', montar);
+    document.fonts.ready.then(montar);
+    addEventListener('load', montar);
+  })();
+</script>
+<script src="prancha.js"></script>
+</body>
+</html>

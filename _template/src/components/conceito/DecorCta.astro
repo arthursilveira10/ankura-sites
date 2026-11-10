@@ -1,27 +1,32 @@
 ---
-// DECORAÇÃO DO CTA FINAL (por cliente). Demo: curvas de nível claras no fundo escuro.
-import { curvasFechadas } from './topografia';
-const curvas = curvasFechadas({ cx: 400, cy: 400, raio: 390, niveis: 12, semente: 29, irregular: 0.2 });
+// FUNDO DO CTA FINAL (por cliente). Demo "Luz de janela": o pôr do sol, em arcos de verde com um fio de luz.
+// Faz par com o sol que nasce atrás do médico no topo.
 ---
 
-<svg class="decor decor-cta" viewBox="0 0 800 800" aria-hidden="true">
-  {curvas.map((d) => <path d={d} />)}
+<svg class="poente decor" viewBox="0 0 1500 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <defs>
+    <radialGradient id="poente-brilho" cx="50%" cy="100%" r="50%">
+      <stop offset="0" stop-color="#F2D49B" stop-opacity=".5"></stop>
+      <stop offset=".55" stop-color="#F2D49B" stop-opacity=".07"></stop>
+      <stop offset="1" stop-color="#F2D49B" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+  <circle cx="750" cy="520" r="520" fill="#18322B"></circle>
+  <circle cx="750" cy="520" r="420" fill="#1D3A32"></circle>
+  <circle cx="750" cy="520" r="330" fill="#24443A"></circle>
+  <circle cx="750" cy="520" r="250" fill="#2C5045"></circle>
+  <rect width="1500" height="260" fill="url(#poente-brilho)"></rect>
+  <circle cx="750" cy="520" r="250" fill="none" stroke="#F2D49B" stroke-opacity=".55" stroke-width="1.5"></circle>
 </svg>
 
 <style>
-  .decor-cta {
+  .poente {
     position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 1500px;
+    height: 260px;
+    transform: translateX(-50%);
     z-index: 0;
-    left: 70%;
-    top: 55%;
-    width: max(110%, 900px);
-    transform: translate(-50%, -50%);
-    fill: none;
-    stroke: var(--color-escuro-texto);
-    stroke-width: 1;
-    opacity: 0.12;
-  }
-  .decor-cta path {
-    vector-effect: non-scaling-stroke;
   }
 </style>

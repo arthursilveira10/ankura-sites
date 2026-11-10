@@ -1,26 +1,104 @@
 ---
-// DECORAÇÃO DO TOPO (por cliente). Demo "Leitura da pele": curvas de nível atrás da foto.
-// Sempre decorativo: aria-hidden, atrás do conteúdo, sem bloquear clique.
-import { curvasFechadas } from './topografia';
-const curvas = curvasFechadas({ cx: 250, cy: 250, raio: 245, niveis: 9, semente: 11 });
+// DECORAÇÃO DO TOPO (por cliente). Demo "Luz de janela": o sol de fim de tarde nascendo atrás do médico.
+// Brilho suave + discos dourados translúcidos e anéis finos, na cor da luz da imagem de fundo.
+// Regra: o elemento atrás do médico casa com a cor da imagem gerada (verde sólido sobre a luz amarela destoou).
 ---
 
-<svg class="decor decor-topo" viewBox="0 0 500 500" aria-hidden="true" data-desenha>
-  {curvas.map((d, i) => <path d={d} pathLength="1" style={`--atraso:${i}`} />)}
+<div class="brilho decor" aria-hidden="true"></div>
+<svg class="sol-topo decor" viewBox="0 0 800 400" aria-hidden="true">
+  <defs>
+    <radialGradient id="sol-topo-g" cx="50%" cy="100%" r="100%">
+      <stop offset="0" stop-color="#FFF0CC"></stop>
+      <stop offset=".55" stop-color="#F3D497"></stop>
+      <stop offset="1" stop-color="#E2B867"></stop>
+    </radialGradient>
+  </defs>
+  <circle class="disco" cx="400" cy="400" r="392" fill="url(#sol-topo-g)" fill-opacity=".36"></circle>
+  <circle class="disco" cx="400" cy="400" r="306" fill="url(#sol-topo-g)" fill-opacity=".5"></circle>
+  <circle class="disco" cx="400" cy="400" r="224" fill="url(#sol-topo-g)" fill-opacity=".72"></circle>
+  <circle class="anel" cx="400" cy="400" r="392"></circle>
+  <circle class="anel" cx="400" cy="400" r="306"></circle>
+  <circle class="anel forte" cx="400" cy="400" r="224"></circle>
 </svg>
 
 <style>
-  .decor-topo {
+  .brilho {
     position: absolute;
     z-index: 0;
     left: 50%;
-    top: 50%;
-    width: 175%;
-    height: auto;
+    top: 196px;
+    width: 340px;
+    aspect-ratio: 1;
     transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(255 244 214 / 0.95) 0%, rgb(250 226 170 / 0.62) 26%, rgb(242 212 155 / 0.26) 48%, rgb(242 212 155 / 0) 68%);
+    animation: brilha 2s 0.1s var(--ease-ankura) both;
+  }
+  .sol-topo {
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    bottom: 0;
+    width: 270px;
+    aspect-ratio: 2 / 1;
+    transform: translateX(-50%);
+    overflow: visible;
+    -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+  }
+  .disco,
+  .anel {
+    transform-origin: 50% 100%;
+    transform-box: view-box;
+    animation: nasce 1.8s var(--ease-ankura) both;
+  }
+  .disco:nth-of-type(2) {
+    animation-delay: 0.08s;
+  }
+  .disco:nth-of-type(3) {
+    animation-delay: 0.16s;
+  }
+  .anel {
     fill: none;
-    stroke: var(--color-destaque);
-    stroke-width: 1.3;
-    opacity: 0.4;
+    stroke: #c9963a;
+    stroke-width: 1.4;
+    stroke-opacity: 0.6;
+    animation-duration: 2.2s;
+    animation-delay: 0.2s;
+  }
+  .anel.forte {
+    stroke-opacity: 0.85;
+  }
+  @keyframes nasce {
+    from {
+      transform: scale(0.7);
+      opacity: 0;
+    }
+  }
+  @keyframes brilha {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+    }
+  }
+  @media (min-width: 1024px) {
+    .brilho {
+      left: 62%;
+      top: 34%;
+      width: 118%;
+    }
+    .sol-topo {
+      left: 58%;
+      width: min(140%, 820px);
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .brilho,
+    .disco,
+    .anel {
+      animation: none;
+    }
   }
 </style>

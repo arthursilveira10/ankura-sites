@@ -1,10 +1,12 @@
 # HOME (demo [FICTÍCIO]). Cada item de "secoes" é uma seção, na ordem em que aparece.
-# Tipos e variantes: .claude/skills/site-build/references/componentes.md
+# Tipos e variantes: .claude/skills/site-build/references/template.md
+# Seções com "faixa: true" seguidas dividem a mesma faixa de fundo (entra com o horizonte do conceito).
 tipo: home
 nome: Início
 seo:
   titulo: Dr. Arthur Silveira, dermatologista em Campinas
   descricao: Dermatologia clínica e estética em Campinas. Consulta com tempo para entender sua pele e um plano que cabe na sua rotina.
+  imagem: ../../assets/compartilhamento.png
 cta:
   botaoMenu: Agendar consulta
   barra: Agendar consulta
@@ -12,116 +14,91 @@ cta:
 
 secoes:
   - tipo: topo
-    variante: foto-compacta
-    titulo: Sua pele tem uma **história**. Eu começo por ela.
+    titulo: Sua pele tem uma história. Eu começo por ela.
     subtitulo: Sou o Arthur, dermatologista em Campinas. Na primeira consulta, a gente conversa com calma antes de qualquer tratamento.
     foto:
-      alt: Dr. Arthur Silveira no consultório
-      reservado: foto do médico, meio corpo, olhando para a câmera
-    selos:
-      - Dermatologia · RQE 00000
-      - Campinas, SP
+      src: ../../assets/medico-recorte.webp
+      alt: Dr. Arthur Silveira, de braços cruzados, sorrindo
+    fundo:
+      src: ../../assets/fundo-topo.webp
+      alt: ''
     botao:
       texto: Agendar consulta
-    apoio: Você fala direto com a minha equipe pelo WhatsApp.
-
-  - tipo: faixa-dados
+    apoio: Consulta de 50 minutos, com retorno incluído
 
   - tipo: identificacao
-    variante: cartas
-    rotulo: Talvez seja você
-    titulo: Você já tentou de tudo e a pele **continua** do mesmo jeito?
+    titulo: Você já tentou de tudo e a pele continua do mesmo jeito?
+    texto: Se você se reconhece em alguma dessas situações, a primeira consulta foi pensada para você.
     itens:
       - titulo: O armário cheio de produtos
+        icone: frasco
         texto: Você compra o que viu no vídeo, usa por duas semanas e não sabe se funcionou.
       - titulo: A mancha que volta todo verão
+        icone: sol
         texto: Melhora no inverno, volta com o sol, e você já nem sabe mais o que passar.
       - titulo: As linhas que deixam o rosto com ar cansado
+        icone: rosto
         texto: Você se sente bem, mas o espelho conta outra história.
       - titulo: A consulta de cinco minutos
+        icone: relogio
         texto: Você saiu com uma receita e nenhuma explicação sobre a sua pele.
 
-  - tipo: manifesto
-    rotulo: Como eu trabalho
-    frase: Pele não se trata com pressa. Eu prefiro entender a sua rotina, o seu histórico e o que te incomoda de verdade, para montar um plano que você consegue seguir.
-    fotos:
-      - aposPalavra: 5
-        foto:
-          alt: ''
-          reservado: detalhe do consultório
-
   - tipo: profissional
-    variante: com-linha-do-tempo
-    rotulo: Quem vai te atender
-    titulo: Prazer, eu sou o **Arthur**.
+    faixa: true
+    titulo: Prazer, eu sou o Arthur.
     texto: |-
-      Escolhi a dermatologia porque a pele mexe com a forma como a gente se vê. E isso pesa no dia a dia mais do que parece.
+      Escolhi a dermatologia porque a pele mexe com a forma como a gente se vê. Na residência, percebi que muita gente chegava ao consultório depois de anos tentando resolver sozinha, com produtos indicados por amigos ou pela internet.
 
-      No consultório, eu explico o que estou vendo, o que cada tratamento faz e o que esperar de forma realista. Você sai sabendo o porquê de cada passo.
+      Por isso a minha consulta começa pela conversa. Pergunto da sua rotina e do que você já usou. Examino com calma e, quando precisa, te mostro no dermatoscópio o que estou vendo.
+
+      Você sai sabendo o porquê de cada passo, com o plano por escrito. Muitas vezes o começo é mais simples do que você imagina. [FICTÍCIO]
     foto:
-      alt: Dr. Arthur Silveira conversando com uma paciente
-      reservado: médico em atendimento, sem olhar para a câmera
+      src: ../../assets/sobre-composicao.webp
+      alt: Dr. Arthur Silveira sorrindo, de camisa verde, em frente a um fundo de luz quente
+    composicao: true
     fatos:
-      - valor: '12'
-        rotulo: anos de formado [FICTÍCIO]
+      - valor: 12 anos
+        rotulo: de formado [FICTÍCIO]
+        icone: chapeu
       - valor: RQE
         rotulo: título de especialista em dermatologia
-    marcos:
-      - quando: '2013'
-        titulo: Formatura em Medicina
-        onde: Universidade Exemplo [FICTÍCIO]
-      - quando: '2017'
-        titulo: Residência em Dermatologia
-        onde: Hospital Exemplo [FICTÍCIO]
-      - quando: '2019'
-        titulo: Título de especialista e RQE
-        onde: Sociedade Exemplo [FICTÍCIO]
-      - quando: '2021'
-        titulo: Abertura do consultório em Campinas
-
-  - tipo: divisor
-
-  - tipo: procedimentos
-    variante: lista-em-linhas
-    rotulo: Tratamentos
-    titulo: Por onde você quer **começar**?
-    texto: Cada tratamento tem uma página explicando como funciona, para quem é indicado e o que esperar.
+        icone: selo
+      - valor: Desde 2019
+        rotulo: atendendo em Campinas [FICTÍCIO]
+        icone: local
 
   - tipo: como-funciona
     variante: passos-com-linha
-    rotulo: Como é a consulta
-    titulo: Do primeiro contato ao **plano** na sua mão.
+    titulo: Do primeiro contato ao plano na sua mão.
+    texto: Sem pressa e sem surpresa. É assim que a consulta acontece.
     passos:
-      - titulo: Você chama no WhatsApp
+      - quando: Antes
+        titulo: Você chama no WhatsApp
         texto: A minha equipe te ajuda a encontrar um horário e manda as orientações para o dia.
-      - titulo: A gente conversa
+      - quando: Primeiros minutos
+        titulo: A gente conversa
         texto: A consulta dura cerca de 50 minutos. Começo ouvindo sua história e sua rotina de cuidados.
-      - titulo: Eu examino a sua pele
+      - quando: No exame
+        titulo: Eu examino a sua pele
         texto: Com calma e com dermatoscópio quando precisa. Vou te mostrando e explicando o que encontro.
-      - titulo: Você sai com um plano
+      - quando: No fim da consulta
+        titulo: Você sai com um plano
         texto: Por escrito, com o que fazer em casa e, se fizer sentido, quais procedimentos considerar.
-      - titulo: Eu acompanho de perto
+      - quando: Depois
+        titulo: Eu acompanho de perto
         texto: O retorno está incluído para ajustarmos o plano conforme a sua pele responde.
     cta:
       texto: Quero agendar minha consulta
       posicao: meio-1
 
-  - tipo: clinica
-    variante: bento
-    rotulo: O consultório
-    titulo: Um lugar **tranquilo** para cuidar de você.
-    fotos:
-      - foto: { alt: Sala de atendimento, reservado: sala de atendimento }
-        legenda: Sala de atendimento
-      - foto: { alt: Recepção do consultório, reservado: recepção }
-        legenda: Recepção
-      - foto: { alt: Detalhe do consultório, reservado: detalhe do ambiente }
-      - foto: { alt: Sala de procedimentos, reservado: sala de procedimentos }
-        legenda: Procedimentos
+  - tipo: procedimentos
+    variante: lista-com-imagem
+    titulo: Por onde você quer começar?
+    texto: Cada tratamento tem uma página explicando como funciona, para quem é indicado e o que esperar.
 
   - tipo: depoimentos
-    rotulo: Quem já passou por aqui
-    titulo: O que os pacientes **contam**.
+    faixa: true
+    titulo: O que os pacientes contam.
     nota:
       valor: '5,0'
       total: 120 avaliações [FICTÍCIO]
@@ -139,12 +116,9 @@ secoes:
       texto: Quero conversar com o Dr. Arthur
       posicao: meio-2
 
-  - tipo: divisor
-    semente: 8
-
   - tipo: faq
-    rotulo: Dúvidas
-    titulo: Antes de **agendar**.
+    faixa: true
+    titulo: Antes de agendar.
     perguntas:
       - pergunta: Você atende convênio?
         resposta: O atendimento é particular. Se o seu plano tiver reembolso, eu emito o recibo para você solicitar.
@@ -158,8 +132,9 @@ secoes:
         resposta: Às vezes sim, quando é indicado e você está à vontade com a decisão. Mas eu prefiro que ela seja tranquila, nunca no impulso.
 
   - tipo: cta-final
-    titulo: Vamos entender a **sua** pele?
-    texto: Me chama no WhatsApp. A minha equipe te ajuda a escolher o melhor horário e tira suas dúvidas antes da consulta.
+    faixa: true
+    titulo: Sua pele merece uma consulta sem pressa.
+    texto: Me chama no WhatsApp. A minha equipe responde em horário comercial e te ajuda a escolher o melhor dia.
     botao:
-      texto: Agendar consulta
-    apoio: Respondemos em horário comercial.
+      texto: Agendar pelo WhatsApp
+    apoio: Segunda a sexta, das 8h às 18h. [FICTÍCIO]

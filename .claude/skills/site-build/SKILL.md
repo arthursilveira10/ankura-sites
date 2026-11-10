@@ -14,7 +14,7 @@ Esta skill cobre as etapas 4 (Design) e 5 (Build) do processo. Ela parte de:
 Se a copy não estiver aprovada, pare e diga. Desenhar em cima de texto provisório faz o layout ser refeito depois.
 
 Entregáveis, nesta ordem e com aprovação do Arthur entre eles:
-1. `direcao-visual.md` + **prancha de estilo** (página HTML de prévia) → aprovação.
+1. **Rodadas de pranchas** (3 distintas, depois 1 ou 2 novas, depois refino com materiais reais) → o Arthur aprova uma → `direcao-visual.md` → aprovação.
 2. **Briefings de imagem** (IA) e **briefing de ensaio fotográfico** (fotos reais) → Arthur providencia.
 3. **Site montado** em `sites/[cliente-pagina]/site/` a partir do `_template/` → revisão no navegador.
 4. **Checklist final** preenchido → publicação.
@@ -26,6 +26,12 @@ Um site com personalidade própria, que nasce da história do médico, e que no 
 Personalidade sem conversão é peça de portfólio. Conversão sem personalidade é template. A Ankura entrega os dois.
 
 ## Princípios
+
+### 0. Fugir do visual de IA
+Toda escolha padrão (creme + serifa + terracota, palavra em itálico em todo título, rótulo em maiúsculas em toda seção, cards iguais, numeração sem sequência) precisa de motivo escrito ou sai. Lista completa e autocrítica: `references/anti-slop-visual.md`. Leia antes de cada prancha e antes de cada apresentação.
+
+### 0b. O médico é o topo, e o site tem direção de arte
+O topo é a foto do médico, grande, recortada e sem moldura, com textura e luz cobrindo a seção e um elemento do conceito atrás dele (ref 01 é a referência de presença). Layout correto sem camada artística fica "chapado". A seriedade fica na base (tipografia sóbria, cor firme, espaço); a personalidade fica no ofício: uma ideia só, visível, em poucos lugares. Ver `references/processo-design.md`.
 
 ### 1. Conceito antes de layout
 Toda direção visual começa por um **conceito-mãe**: uma metáfora curta tirada do briefing (a história do médico, o nome, a forma como ele trabalha, o que o paciente sente). Dele saem de 3 a 4 elementos visuais com função no site e 1 microinteração-assinatura no botão. Referências: a bússola do Lucas (ref. 03) e o sistema inteiro do Bonança (ref. 07). Como fazer: `references/direcao-visual.md`.
@@ -70,33 +76,38 @@ Cada seção existe para a copy, não o contrário. Máximo de uma grade bento p
 
 ## Processo
 
-### Etapa A. Direção visual (aprovação antes de codar)
-1. Releia briefing.md, copy.md (com as sugestões de formato de cada seção) e revisao.md.
-2. Leia `_referencias/referencias.md` (seção 1, gosto da Ankura) e `_referencias/extracao-tecnica.md` (padrões).
-3. Proponha **2 conceitos-mãe** com 1 linha de justificativa cada e recomende um. Siga `references/direcao-visual.md`.
-4. Escreva `direcao-visual.md` na pasta do cliente com: conceito, vocabulário visual e onde cada elemento entra, paleta (tokens com papel), tipografia, forma e textura, assinatura do botão, **mapa de componentes por seção** (qual componente e variante de `references/componentes.md` cada seção da copy usa) e o que o site **não** vai ter.
-5. Gere a **prancha de estilo**: página HTML única com paleta, tipos, botões nos 3 estilos, um card, o topo no celular e os elementos do conceito. Mostre no navegador em 390px e 1440px.
-6. Espere aprovação. Ajuste e só então siga.
+O processo completo, com o que deu certo e errado no primeiro demo, está em `references/processo-design.md`. Leia antes de começar a Etapa A. Resumo:
+
+### Etapa A. Direção visual em rodadas (aprovação antes de codar)
+1. Releia briefing.md, copy.md e revisao.md. Leia `_referencias/referencias.md` (seção 1, inclusive "O que o Arthur busca"), `_referencias/extracao-tecnica.md` e `references/anti-slop-visual.md`.
+2. **Peça os materiais reais já no início:** foto do médico (de preferência já recortada, sem fundo), logo e cores da marca, se houver. Prancha com foto listrada não deixa o Arthur julgar a direção.
+3. **Rodada 1:** 3 pranchas realmente distintas (`references/direcao-visual.md`, seção 8), com autocrítica de cada uma (anti-slop-visual.md, seção 3) em 390px e 1440px.
+4. **Leia o feedback pelo desejo, não pela frase** (`processo-design.md`, seção 2). Resuma o desejo em 3 a 5 linhas e registre em `_referencias/referencias.md`.
+5. **Rodada 2:** 1 ou 2 pranchas novas, do zero, que atendem ao desejo. Nunca uma prancha feita de pedaços das anteriores.
+6. **Rodadas de refino** sobre a prancha escolhida: direção de arte com os materiais reais (foto recortada, figurino na paleta, imagens geradas por briefing), acabamento e celular.
+7. **Teste no celular de verdade** antes de aprovar: link temporário (`processo-design.md`, seção 5).
+8. Escreva `direcao-visual.md` na pasta do cliente a partir da prancha aprovada: conceito, vocabulário visual, paleta (tokens com papel), tipografia, forma e textura, assinatura do botão, ritmo de fundos, mapa de componentes por seção e o que o site não vai ter.
 
 ### Etapa B. Imagens
 1. Liste todas as imagens do site por seção: as que existem, as que faltam e quem providencia.
-2. Fotos reais faltando ou fracas: escreva o **briefing de ensaio fotográfico** (`references/imagens.md`).
-3. Elementos por IA: escreva um **briefing de imagem** por peça, com prompt pronto.
-4. Enquanto as imagens não chegam, use espaços reservados com a proporção certa e a etiqueta `[FOTO: ...]`. Nunca uma foto de banco.
+2. **Foto do médico:** recorte sem fundo para o topo; composição pronta (painel + recorte, feita no Canva) para o "sobre". Figurino na paleta (recolorir é permitido). Ver `references/imagens.md`.
+3. **Imagens geradas** (luz, parede, tecido, textura): briefing com prompt pronto; o Arthur gera 4 variações no GPT e você escolhe e justifica. Modelo: `_template/briefings-imagem-demo.md`.
+4. Fotos reais faltando ou fracas: **briefing de ensaio fotográfico**, com orientação de figurino.
+5. Enquanto as imagens não chegam, espaço reservado com a proporção certa e a etiqueta `[FOTO: ...]`. Nunca foto de banco.
 
 ### Etapa C. Montagem
-Procedimento técnico detalhado em `references/template.md` (copiar o template, repositório do cliente, onde fica cada coisa).
+Procedimento técnico em `references/template.md`.
 1. Copie o `_template/` para `sites/[cliente-pagina]/site/` e crie o repositório próprio do cliente.
-2. Aplique o tema (tokens da direção visual) num arquivo só.
-3. Preencha o conteúdo nos arquivos de dados a partir da copy.md, sem reescrever texto. Divergência entre copy e layout: aponte, não edite a copy por conta própria.
-4. Monte cada página escolhendo componentes e variantes do mapa aprovado.
-5. Faça os elementos do conceito em SVG e a assinatura do botão.
-6. Gere home, páginas de procedimento e modo LP de cada página de procedimento.
+2. Leve a prancha aprovada para o tema (`tema.css`, `cliente.config.mjs`) e para `src/components/conceito/`.
+3. Preencha o conteúdo a partir da copy.md, sem reescrever texto. Divergência entre copy e layout: aponte, não edite a copy por conta própria.
+4. Monte cada página com os componentes e variantes do mapa aprovado. Use `faixa: true` para planejar o ritmo de fundos.
+5. Gere home, páginas de procedimento e modo LP de cada página.
 
 ### Etapa D. Verificação
-1. Abra no navegador em 390×664, 390×844, 768 e 1440.
-2. Passe o checklist de `references/qualidade.md` inteiro, incluindo o teste com movimento reduzido e sem JS.
-3. Corrija e só depois apresente. Na apresentação, mostre prints do celular primeiro.
+1. Navegador em 390×664, 390×844, 768 e 1440. Celular de verdade pelo link temporário.
+2. Checklist de `references/qualidade.md` inteiro, incluindo Lighthouse no celular, movimento reduzido e sem JS.
+3. Autocrítica de `references/anti-slop-visual.md` na página inteira; corte pelo menos um elemento.
+4. Corrija e só depois apresente. Na apresentação, prints do celular primeiro, e diga o que ainda está fraco.
 
 ### Etapa E. Entrega
 - Publicação de prévia (hospedagem definida no projeto; padrão Cloudflare).
@@ -113,6 +124,8 @@ Procedimento técnico detalhado em `references/template.md` (copiar o template, 
 
 ## Referências desta skill
 
+- `references/processo-design.md`: como conduzir as rodadas de pranchas, ler o feedback do Arthur, montar os materiais (foto, imagens geradas), testar no celular de verdade e levar para o template.
+- `references/anti-slop-visual.md`: escolhas padrão que denunciam site de IA, o que fazer no lugar e a autocrítica antes de mostrar.
 - `references/direcao-visual.md`: conceito-mãe, paleta, tipografia, forma, assinatura, formato do direcao-visual.md e da prancha.
 - `references/componentes.md`: biblioteca de componentes com variantes, regras de celular e quando usar.
 - `references/animacao.md`: o que é permitido, o que é proibido e os valores padrão.

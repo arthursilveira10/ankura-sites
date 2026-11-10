@@ -10,6 +10,7 @@ Objetivo dos sites: **estratégicos e feitos para converter**, com boa copy e de
 - **Explique antes de criar.** Proponha o plano e espere aprovação antes de gerar arquivos grandes ou tomar decisões estruturais.
 - Peça validação entre as etapas do processo. Não pule etapas.
 - Seja honesto nas avaliações: aponte o que está fraco, inclusive no trabalho dele.
+- **Leia o feedback pelo desejo, não pela frase.** O Arthur descreve sintomas; resuma o que ele quer antes de mexer. Nunca junte pedaços de opções diferentes (Frankenstein) e nunca remova um elemento quando ele pediu para corrigir.
 - Nunca invente dados de cliente. Faltou informação: `[A CONFIRMAR: ...]`. Em testes, dados inventados são marcados `[FICTÍCIO]`.
 
 ## Processo (sempre nesta ordem)
@@ -17,8 +18,8 @@ Objetivo dos sites: **estratégicos e feitos para converter**, com boa copy e de
 1. **Estratégia** (skill `site-estrategia`): briefing.md + arquitetura.md
 2. **Copy** (skill `site-copy`): copy.md, com sugestão de formato por seção
 3. **Revisão** (skill `site-revisao`): relatório de riscos e ajustes antes de aprovar
-4. **Design**: direção visual a partir da identidade do cliente + `_referencias/`
-5. **Build** (skill `site-build`, em construção na Fase 4): código a partir do `_template/`
+4. **Design** (skill `site-build`): direção visual em rodadas de pranchas (3 distintas, depois 1 ou 2 novas do zero, depois refino com a foto real e imagens geradas), testada no celular de verdade. Processo em `.claude/skills/site-build/references/processo-design.md`
+5. **Build** (skill `site-build`): código a partir do `_template/`
 6. **Publicação**: deploy. O rastreamento (pixel, eventos) é implementado pelo Arthur depois, do jeito dele.
 
 ## Estrutura de pastas
@@ -66,7 +67,9 @@ Home (institucional enxuta) + páginas de procedimento (quantidade definida pelo
 
 - **Médico, consultório, equipe, equipamento e paciente: sempre foto real.** Nunca gerar por IA.
 - Imagem por IA só para elementos decorativos, texturas, mockups e ilustrações conceituais.
-- Fluxo: Claude escreve um **briefing de imagem** (onde entra, proporção, estilo, prompt pronto). Arthur gera no ChatGPT e coloca em `assets/`. Claude encaixa.
+- Fluxo: Claude escreve um **briefing de imagem** (onde entra, proporção, estilo, prompt pronto). Arthur gera no ChatGPT (4 variações) e coloca em `assets/`. Claude escolhe, justifica e encaixa.
+- Luz, sombra, parede e textura que precisam parecer reais: imagem gerada, não código. Código para formas, linhas, ícones e movimento.
+- Foto do médico: recorte sem fundo para o topo; composição pronta no Canva para o "sobre". Recolorir a roupa para a paleta é permitido; alterar rosto ou corpo, não.
 - Ícones, grafismos e formas simples: Claude faz em SVG no código.
 
 ## Padrões de design e interação

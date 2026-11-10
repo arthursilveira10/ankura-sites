@@ -2,16 +2,19 @@
 // PARA QUEM É: indicações em lista curta (indicação, nunca promessa).
 import Cabecalho from '../base/Cabecalho.astro';
 import Separador from '../conceito/Separador.astro';
+import SetaRolagem from '../base/SetaRolagem.astro';
 import { inline } from '../../lib/texto';
 import type { Secao } from '../../lib/dados';
 interface Props {
   dados: Extract<Secao, { tipo: 'para-quem' }>;
 }
-const { dados: d } = Astro.props;
+const { dados: d, indice = 0 } = Astro.props as { dados: Props['dados']; indice?: number };
+const id = `para-quem-${indice}`;
 ---
 
 <section class="secao secao-abaixo pq">
-  <div class="bloco pq-bloco">
+  <div class="bloco pq-bloco" id={id}>
+    {d.seta && <SetaRolagem alvo={id} />}
     <div class="wrap pq-grade">
       <Cabecalho rotulo={d.rotulo} titulo={d.titulo} texto={d.texto} />
       <div>
@@ -36,6 +39,10 @@ const { dados: d } = Astro.props;
     padding-block: calc(var(--secao) / 2);
   }
   .pq-bloco {
+    position: relative;
+    width: min(100% - 24px, var(--largura));
+    margin-inline: auto;
+    --seta-fundo: var(--color-superficie-2);
     background: var(--color-superficie-2);
     padding-block: clamp(48px, 7vw, 104px);
   }

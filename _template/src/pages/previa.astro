@@ -9,7 +9,6 @@ import Divisor from '../components/conceito/Divisor.astro';
 import Marcador from '../components/conceito/Marcador.astro';
 import Separador from '../components/conceito/Separador.astro';
 import IconeProcedimento from '../components/conceito/IconeProcedimento.astro';
-import SobreFoto from '../components/conceito/SobreFoto.astro';
 import DecorCta from '../components/conceito/DecorCta.astro';
 import { medico, home } from '../lib/dados';
 import { linkWhatsApp, titulo } from '../lib/texto';
@@ -93,9 +92,8 @@ const cores = [
             <div class="pr-caixa pr-topo">
               <DecorTopo />
               <div class="pr-foto foto-reservada">[FOTO]</div>
-              <SobreFoto />
             </div>
-            <figcaption class="t-pequeno">Curvas de nível + lente sobre a foto</figcaption>
+            <figcaption class="t-pequeno">Sol de fim de tarde atrás do médico</figcaption>
           </figure>
           <figure>
             <div class="pr-caixa pr-icones" data-desenha>
@@ -103,14 +101,14 @@ const cores = [
               <IconeProcedimento indice={1} />
               <IconeProcedimento indice={2} />
             </div>
-            <figcaption class="t-pequeno">Ícones de procedimento (se desenham)</figcaption>
+            <figcaption class="t-pequeno">Ícones de procedimento</figcaption>
           </figure>
           <figure>
             <div class="pr-caixa pr-icones" style="color:var(--color-destaque)">
               <Marcador />
               <Separador />
             </div>
-            <figcaption class="t-pequeno">Marcador e separador (ponto de mapa)</figcaption>
+            <figcaption class="t-pequeno">Marcador e separador (pequeno sol)</figcaption>
           </figure>
         </div>
         <Divisor />

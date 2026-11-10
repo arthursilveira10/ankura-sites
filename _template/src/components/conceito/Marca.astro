@@ -1,50 +1,96 @@
 ---
 // MARCA (por cliente): logo do header e do rodapé.
-// Padrão: logo do médico (src/content/medico) se existir; senão, nome em texto com a especialidade.
+// Usa `logo` (fundo claro) e `logoEscuro` (fundo escuro) do médico; sem logo, o nome em texto (provisório).
+// Logos em src/assets/logo/ (SVG com fundo transparente, recorte justo, texto em curvas).
 import { Image } from 'astro:assets';
-import { medico, nomeCompleto } from '../../lib/dados';
+import { medico } from '../../lib/dados';
 
 interface Props {
-  claro?: boolean;
+  claro?: boolean; // true = a marca está sobre fundo escuro
 }
 const { claro = false } = Astro.props;
 const m = await medico();
+const arquivo = claro ? (m.logoEscuro ?? m.logo) : m.logo;
+const nome = `${m.tratamento} ${m.nome}`.trim();
 ---
 
 {
-  m.logo ? (
-    <Image src={m.logo} alt={nomeCompleto(m)} height={40} class="marca-logo" loading="eager" />
+  arquivo ? (
+    <>
+      <Image src={arquivo} alt={nome} class:list={['marca-logo', claro && 'marca-logo-rodape', !claro && m.logoVertical && 'so-desktop']} loading="eager" />
+      {!claro && m.logoVertical && <Image src={m.logoVertical} alt={nome} class="marca-logo marca-vertical so-celular" loading="eager" />}
+    </>
   ) : (
     <span class:list={['marca', claro && 'marca-clara']}>
-      <span class="marca-nome">{nomeCompleto(m)}</span>
-      <span class="marca-esp">{m.especialidade}</span>
+      <span class="marca-nome">{m.nome}</span>
+      <span class="marca-esp">
+        {m.especialidade}, {m.cidade}
+      </span>
     </span>
   )
 }
 
 <style>
+  .marca-logo {
+    display: block;
+    height: 24px;
+    width: auto;
+  }
+  .marca-vertical {
+    height: 42px;
+  }
+  .marca-logo-rodape {
+    height: 40px;
+  }
+  .so-desktop {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .marca-logo {
+      height: 26px;
+    }
+    .marca-logo-rodape {
+      height: 44px;
+    }
+    .so-desktop {
+      display: block;
+    }
+    .so-celular {
+      display: none;
+    }
+  }
   .marca {
     display: grid;
-    line-height: 1.1;
+    gap: 4px;
+    line-height: 1;
   }
   .marca-nome {
     font-family: var(--font-titulo);
-    font-size: 1.125rem;
-    letter-spacing: -0.02em;
+    font-size: 1.3125rem;
+    letter-spacing: -0.01em;
     color: var(--color-tinta);
   }
   .marca-esp {
     font-size: 0.75rem;
     color: var(--color-apagado);
   }
+  @media (min-width: 1024px) {
+    .marca {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .marca-nome {
+      font-size: 1.375rem;
+    }
+    .marca-esp {
+      font-size: 0.8125rem;
+    }
+  }
   .marca-clara .marca-nome {
     color: var(--color-escuro-texto);
   }
   .marca-clara .marca-esp {
     color: var(--color-escuro-apagado);
-  }
-  .marca-logo {
-    height: 40px;
-    width: auto;
   }
 </style>

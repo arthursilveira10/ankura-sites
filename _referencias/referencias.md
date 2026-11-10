@@ -35,6 +35,45 @@ Prints na pasta `prints/`. Os comentários "Arthur" são dele; "Análise" é lei
 - **Excesso de blocos** que deixa a página pouco objetiva (alerta dele na Mônica). Blocos servem à mensagem, não ao contrário.
 - **Recursos que não servem ao paciente** (modo claro/escuro numa LP: capricho dispensável).
 
+### O que o Arthur busca (lido das rodadas de feedback do demo, 11/2026)
+
+O feedback dele descreve sintomas; o que está por trás é sempre o mesmo desejo. Leia o feedback por este filtro, não frase por frase.
+
+**O site que ele quer:** um médico adulto, sério e confiável, apresentado com acabamento de marca premium. A seriedade está na base (tipografia, cor, espaço); a personalidade está no **ofício**: uma ideia só, bem executada, que aparece no movimento, nas transições e nos detalhes. Ele quer sentir que alguém pensou aquele site para aquele médico.
+
+- **Sóbrio não é chato.** Título com serifada discreta e bem desenhada (gostou da Newsreader), cor forte permitida (gostou do verde floresta ousado no topo), mas nada que pareça agência criativa, clínica infantil ou marca de cosmético. Ousadia precisa de pedido explícito do briefing.
+- **Criatividade com propósito, não enfeite.** O padrão-ouro é o barquinho do Bonança: um elemento do conceito que se move e conta algo. Círculo com número, rabisco de caneta e seta desenhada soam amadores. A linha de progresso precisa ter elegância e personalidade, não só contraste.
+- **Coerência acima de tudo.** Tom informal ao lado de tom de planilha (caneta + ficha), ou três ideias boas juntas, viram Frankenstein. Ele percebe na hora. Uma ideia, um tom.
+- **Cor de acordo com o médico e o público.** Rosa só com público essencialmente feminino. Amarelo forte nos botões é ousado demais. A cor de ação precisa de sobriedade.
+- **Informação obrigatória com desenho.** CRM/RQE com ícones e integrados à composição, nem soltos, nem com cara de planilha.
+- **Ousadia de layout presa a uma grade.** Alinhamentos alternados funcionam se conversarem entre si e tiverem apoio visual; texto solto em posições aleatórias parece erro.
+- **Seções que se separam com charme**: troca de fundo, bloco arredondado, transição desenhada (gostou das ondas em vários tons no CTA). Página de um tom só parece inacabada.
+- **"Como funciona" com título fixo à esquerda e etapas à direita.** Cartas empilhadas ficaram pesadas.
+- **Fonte de destaque só se for bonita de verdade.** Na dúvida, nenhuma.
+
+Segunda rodada (pranchas E e F), o que ficou claro:
+
+- **Direção de arte, não só layout.** O que ele mais quer é a sensação da hero da ref 01 (Flávia): composição em camadas, elementos atrás da foto, sombra projetada, profundidade. Bloco chapado com foto em retângulo é correto, mas sem alma. A foto do médico pode e deve ser tratada como peça de arte (recorte sem fundo, composição, luz e sombra), sempre com a foto real.
+- **O conceito precisa ser percebido.** Um efeito sutil demais (a luz entrando na E) é o mesmo que não ter conceito. Se é o elemento memorável, tem que ser visto na primeira olhada.
+- **Elemento do conceito conecta no máximo duas seções.** O fio atravessando o site inteiro (F) ficou exagerado, sobretudo no celular. Ideia boa usada em todo lugar vira ruído.
+- **Seções vizinhas precisam ser diferentes entre si.** Duas seções seguidas com a mesma mecânica (linha + marcadores) parecem repetição.
+- **Acabamento é parte do design.** Ele nota: o marcador que não começa na primeira etapa nem para na última, o sticky que não prende, padding interno curto num bloco, espaço vazio demais embaixo do CTA, larguras diferentes entre blocos. Tudo na mesma largura, espaçamento proporcional, nada sobrando.
+- **Transição de fundo desenhada, nunca improvisada.** Trocar de cor sem pensar a costura (faixa que termina e bloco que começa colados) fica "bugado". A transição tem forma própria da identidade (onda, relevo, pequena seta, arco), diferente em cada site.
+- **Hover que se vê.** Botão que só sobe 2px não basta; o hover muda cor ou acrescenta algo visível. O ícone nunca pode ficar apagado no hover.
+- **Detalhes de marca em tudo:** cor de seleção de texto própria, scroll levemente suave, menu flutuante sempre presente.
+- **Tipografia de título:** a Newsreader (E) tem o charme que ele procura; a Caslon (F), mesmo parecida, não.
+- **Lista de tratamentos no estilo do Bonança** (print de referência): ícone do conceito, miniatura, título com duas pesagens (leve + palavra-chave forte), descrição curta e botão redondo de abrir; o item aberto cresce, mostra foto grande e texto de apoio; os fechados ficam com o título apagado.
+
+Terceira rodada (prancha G, com a foto real), o que ficou claro:
+
+- **A foto real mudou tudo.** Médico grande, recortado, ancorado na base do topo, com a camisa na cor da marca, foi o que deu presença de verdade ("isso foi determinante").
+- **Elemento atrás do médico, sim; cor errada, não.** Ele queria corrigir o tom, não remover. Brilho e discos na cor da luz da imagem funcionaram.
+- **Celular é outro layout, não o desktop espremido:** médico centralizado, a foto surgindo com degradê, título em 2 linhas, texto e botão centralizados, respiro entre a foto e o título. Os dados podem ficar logo abaixo da primeira dobra.
+- **Títulos centralizados no celular em todas as seções** (todos ou nenhum).
+- **"Sobre" com no máximo 3 parágrafos curtos**; no celular, texto demais cansa. Os fatos falam do médico, não do serviço.
+- **Menu do celular:** some ao rolar para baixo e volta ao subir, com o logo centralizado.
+- **Teste no celular dele** (link temporário) foi o que fechou a aprovação.
+
 ---
 
 ## 2. Referências

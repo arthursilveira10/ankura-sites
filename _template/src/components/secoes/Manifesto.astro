@@ -1,7 +1,6 @@
 ---
 // MANIFESTO com text reveal: as palavras vão da cor apagada para a cheia com a rolagem.
 // Palavras quebradas no build (sem JS no navegador); o JS só atualiza --p.
-import Foto from '../base/Foto.astro';
 import { palavras } from '../../lib/texto';
 import type { Secao } from '../../lib/dados';
 interface Props {
@@ -9,13 +8,9 @@ interface Props {
 }
 const { dados: d } = Astro.props;
 const lista = palavras(d.frase);
-const total = lista.length + d.fotos.length;
-type Peca = { tipo: 'palavra'; texto: string } | { tipo: 'foto'; foto: (typeof d.fotos)[number]['foto'] };
-const pecas: Peca[] = [];
-lista.forEach((p, i) => {
-  pecas.push({ tipo: 'palavra', texto: p });
-  d.fotos.filter((f) => f.aposPalavra === i + 1).forEach((f) => pecas.push({ tipo: 'foto', foto: f.foto }));
-});
+const total = lista.length;
+// Sem fotos no meio da frase (o Arthur não gosta).
+const pecas = lista.map((texto) => ({ tipo: 'palavra' as const, texto }));
 ---
 
 <section class="secao secao-abaixo mf">
@@ -24,19 +19,11 @@ lista.forEach((p, i) => {
     <div class="mf-frase" data-progresso style={`--n:${total}`}>
       {
         pecas.map((p, i) =>
-          p.tipo === 'palavra' ? (
             <>
               <span class="w" style={`--i:${i}`}>
                 {p.texto}
               </span>{' '}
             </>
-          ) : (
-            <>
-              <span class="w mf-foto" style={`--i:${i}`} aria-hidden="true">
-                <Foto foto={p.foto} sizes="140px" larguras={[160, 280]} proporcao="2/1" />
-              </span>{' '}
-            </>
-          ),
         )
       }
     </div>

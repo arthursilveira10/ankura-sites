@@ -60,7 +60,7 @@ A maioria das pessoas não lê a página inteira; ela escaneia. A copy precisa f
 **Orçamento de texto por seção** (referência, não lei):
 - Topo: headline + subheadline com até ~30 palavras no total.
 - Seções comuns (identificação, serviço/tratamento, experiência, inclusões): ~40 a 80 palavras.
-- Seção do profissional: até ~120 palavras. É a seção onde texto corrido mais faz sentido.
+- Seção do profissional: 90 a 150 palavras, em até 3 parágrafos curtos. É a seção de proximidade, onde texto corrido mais faz sentido: a história, o porquê e o jeito de atender, com um detalhe concreto. Confira no celular: se passar de uma tela e meia, corte. Os fatos de prova ao lado falam do médico (formação, título, tempo de atuação), não do serviço.
 - Respostas do FAQ: 2 a 3 linhas cada.
 
 Escreva, depois corte. Se uma seção estourou, corte a explicação que o leitor não precisa, nunca o detalhe específico que torna a página daquele cliente.

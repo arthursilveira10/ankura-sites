@@ -7,6 +7,9 @@ tratamento: Dr.
 especialidade: Dermatologia
 crm: 000000-SP
 rqe: '00000'
+logo: ../../assets/logo/horizontal.svg
+logoEscuro: ../../assets/logo/horizontal-escuro.svg
+logoVertical: ../../assets/logo/vertical.svg
 
 # --- Operacional (o médico pode editar) ---
 cidade: Campinas

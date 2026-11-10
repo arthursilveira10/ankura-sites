@@ -54,7 +54,11 @@ Como chegar lá: HTML estático do Astro, imagens pelo componente de imagem, `co
 ## Checklist final (preencher antes de apresentar)
 
 **Celular**
-- [ ] Em 390×664: foto do médico, headline e botão principal inteiros na primeira tela.
+- [ ] Em 390×664: foto do médico, headline e botão principal inteiros na primeira tela, com respiro entre a foto e o título (medido por JS: botão termina até ~620px).
+- [ ] Topo do celular: médico centralizado, base da foto surgindo com degradê (sem corte seco), menu nunca cobrindo o rosto.
+- [ ] Títulos de seção centralizados no celular, em todas as seções.
+- [ ] Menu do celular: logo centralizado, some ao rolar para baixo e volta ao rolar para cima.
+- [ ] Aberto no celular de verdade (link temporário, `processo-design.md`), não só no simulador.
 - [ ] Em 360px de largura: nada transborda, nenhuma rolagem lateral.
 - [ ] Texto corrido com 16px ou mais; nenhuma área de toque abaixo de 44px.
 - [ ] Barra fixa surge depois do topo, some na seção final e no rodapé, não cobre conteúdo importante, respeita a área segura.
@@ -63,6 +67,11 @@ Como chegar lá: HTML estático do Astro, imagens pelo componente de imagem, `co
 
 **Desktop**
 - [ ] Em 1440px: menu flutuante sempre visível com o botão de agendar; sticky e efeitos de rolagem funcionam.
+- [ ] Marcador do "como funciona" começa no primeiro passo e para no último; título fixo prende durante os passos.
+- [ ] Todos os blocos na mesma largura do conteúdo; padding interno proporcional; nenhum vazio sobrando (ex.: embaixo do CTA final).
+- [ ] Transições de fundo desenhadas (faixa com o divisor do conceito); nenhuma costura de faixa colada em bloco.
+- [ ] Hover de todos os botões muda de cor e mantém o ícone legível; lista de tratamentos abre no hover.
+- [ ] Cor de seleção de texto própria; scroll suave ligado só no desktop com mouse.
 - [ ] Em 768px (tablet): layout não quebra.
 
 **Movimento e robustez**
@@ -89,3 +98,5 @@ Como chegar lá: HTML estático do Astro, imagens pelo componente de imagem, `co
 - [ ] O conceito aparece nos elementos combinados no direcao-visual.md, cada um com função.
 - [ ] Cor de ação só nos CTAs.
 - [ ] Teste da troca de nome visual: o site não serviria igual para outro médico só trocando a foto.
+- [ ] O médico é o destaque do topo (grande, recortado, sem moldura) e o figurino conversa com a paleta.
+- [ ] O elemento do conceito é visível na primeira olhada, aparece em poucos lugares e casa com a cor das imagens geradas.

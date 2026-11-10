@@ -1,57 +1,73 @@
 ---
-// O PROFISSIONAL: foto com o recorte da identidade + texto + fatos. Variante com linha do tempo.
-import Cabecalho from '../base/Cabecalho.astro';
+// O PROFISSIONAL: quem é o médico, por que faz o que faz e como trabalha.
+// foto-e-texto (padrão): foto à esquerda (ou composição pronta, ver `composicao`) + texto + até 3 fatos com ícone.
+// com-linha-do-tempo: o mesmo, seguido dos marcos da trajetória.
+// Costuma entrar numa faixa de fundo (faixa: true), junto com o CTA final.
+import { Picture } from 'astro:assets';
 import Foto from '../base/Foto.astro';
-import Marcador from '../conceito/Marcador.astro';
-import { paragrafos } from '../../lib/texto';
+import Icone from '../base/Icone.astro';
+import { titulo as fmtTitulo, paragrafos } from '../../lib/texto';
 import type { Secao } from '../../lib/dados';
 interface Props {
   dados: Extract<Secao, { tipo: 'profissional' }>;
 }
 const { dados: d } = Astro.props;
-const linha = d.variante === 'com-linha-do-tempo' && d.marcos.length > 0;
 ---
 
 <section class="secao secao-abaixo prof" id="sobre">
   <div class="wrap prof-grade">
-    <div class="prof-foto" data-revela-foto>
-      <Foto foto={d.foto} sizes="(min-width: 1024px) 480px, 90vw" proporcao="4/5" />
+    <div class="prof-foto">
+      {
+        d.composicao && d.foto.src ? (
+          <Picture
+            src={d.foto.src}
+            alt={d.foto.alt}
+            widths={[400, 700, 1000].filter((w) => w <= d.foto.src!.width)}
+            sizes="(min-width: 1024px) 540px, 360px"
+            formats={['avif', 'webp']}
+                fallbackFormat="webp"
+            loading="lazy"
+            class="prof-composicao"
+            pictureAttributes={{ class: 'contents' }}
+          />
+        ) : (
+          <div class="prof-moldura">
+            <Foto foto={d.foto} sizes="(min-width: 1024px) 480px, 90vw" proporcao="4/5" />
+          </div>
+        )
+      }
     </div>
     <div class="prof-texto">
-      <Cabecalho rotulo={d.rotulo} titulo={d.titulo} />
-      <div class="texto medida" data-revela style="--atraso:2">
+      {d.rotulo && <p class="rotulo">{d.rotulo}</p>}
+      <h2 class="t-h2" set:html={fmtTitulo(d.titulo)} />
+      <div class="prof-corpo">
         {paragrafos(d.texto).map((p) => <p set:html={p} />)}
       </div>
       {
         d.fatos.length > 0 && (
-          <dl class="prof-fatos">
-            {d.fatos.map((f, i) => (
-              <div data-revela style={`--atraso:${i + 2}`}>
-                <dt class="t-pequeno">{f.rotulo}</dt>
-                <dd>{f.valor}</dd>
-              </div>
+          <ul class="fatos">
+            {d.fatos.map((f) => (
+              <li>
+                {f.icone && <Icone nome={f.icone} tamanho={22} class="fato-ico" />}
+                <span class="fato-valor">{f.valor}</span>
+                <span class="fato-rotulo">{f.rotulo}</span>
+              </li>
             ))}
-          </dl>
+          </ul>
         )
       }
     </div>
   </div>
 
   {
-    linha && (
+    d.variante === 'com-linha-do-tempo' && d.marcos.length > 0 && (
       <div class="wrap">
-        <ol class="linha" data-progresso style={`--n:${d.marcos.length}`}>
-          <span class="linha-trilho decor" aria-hidden="true">
-            <span class="linha-traco" />
-          </span>
-          {d.marcos.map((mc, i) => (
-            <li class="marco" style={`--i:${i}`}>
-              <span class="marco-ponto decor" aria-hidden="true">
-                <Marcador />
-              </span>
-              <span class="marco-quando">{mc.quando}</span>
-              <strong class="marco-titulo">{mc.titulo}</strong>
-              {mc.onde && <span class="marco-onde t-pequeno">{mc.onde}</span>}
+        <ol class="marcos">
+          {d.marcos.map((m) => (
+            <li>
+              <span class="marco-quando">{m.quando}</span>
+              <span class="marco-titulo">{m.titulo}</span>
+              {m.onde && <span class="marco-onde">{m.onde}</span>}
             </li>
           ))}
         </ol>
@@ -63,127 +79,111 @@ const linha = d.variante === 'com-linha-do-tempo' && d.marcos.length > 0;
 <style>
   .prof-grade {
     display: grid;
-    gap: clamp(32px, 5vw, 80px);
+    gap: 40px;
+    align-items: center;
   }
-  .prof-foto {
-    border-radius: var(--recorte-foto);
+  .prof-foto :global(.prof-composicao) {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    margin-inline: auto;
+    filter: drop-shadow(0 34px 44px rgb(20 38 32 / 0.18));
+  }
+  .prof-moldura {
+    max-width: 420px;
+    margin-inline: auto;
+    border-radius: var(--radius-bloco);
     overflow: hidden;
-    max-width: 480px;
-    background: var(--color-superficie-2);
   }
-  .prof-texto {
+  .prof-texto h2 {
+    text-align: center;
+  }
+  .prof-corpo {
+    display: grid;
+    gap: 18px;
+    margin-top: 28px;
+    max-width: 36em;
+  }
+  .fatos {
+    display: grid;
+    gap: 24px;
+    margin: 40px 0 0;
+    padding: 28px 0 0;
+    list-style: none;
+    border-top: 1px solid rgb(20 38 32 / 0.16);
+  }
+  .fatos li {
+    display: grid;
+    gap: 6px;
+    align-content: start;
+  }
+  .fatos :global(.fato-ico) {
+    color: var(--color-acao);
+  }
+  .fatos .fato-valor {
+    font-family: var(--font-titulo);
+    font-size: 1.6875rem;
+    line-height: 1.1;
+    color: var(--color-tinta);
+  }
+  .fatos .fato-rotulo {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+  .marcos {
     display: grid;
     gap: 22px;
-    align-content: center;
+    margin: clamp(48px, 6vw, 80px) 0 0;
+    padding: 28px 0 0;
+    list-style: none;
+    border-top: 1px solid rgb(20 38 32 / 0.16);
   }
-  .prof-fatos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 0;
-    margin-top: 8px;
-    border-top: 1px solid var(--color-linha);
-  }
-  .prof-fatos > div {
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 4px;
-    padding: 18px 14px 0 0;
-  }
-  .prof-fatos dd {
-    font-family: var(--font-titulo);
-    font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.25rem);
-    line-height: 1;
-    color: var(--color-tinta);
-    letter-spacing: -0.03em;
-  }
-  .prof-fatos dt {
-    color: var(--color-apagado);
-  }
-
-  /* Linha do tempo: o traço se preenche com a rolagem e acende os marcos */
-  .linha {
-    --k: clamp(0, calc(var(--p) * 1.25), 1);
-    position: relative;
-    display: grid;
-    gap: 28px;
-    margin-top: clamp(56px, 7vw, 96px);
-    padding-left: 36px;
-  }
-  .linha-trilho {
-    position: absolute;
-    left: 8px;
-    top: 8px;
-    bottom: 8px;
-    width: 1px;
-    background: var(--color-linha);
-  }
-  .linha-traco {
-    position: absolute;
-    inset: 0;
-    background: var(--color-destaque);
-    transform-origin: top;
-    transform: scaleY(var(--k));
-  }
-  .marco {
-    --on: clamp(0, calc((var(--k) * var(--n) - var(--i)) * 2), 1);
+  .marcos li {
     position: relative;
     display: grid;
     gap: 2px;
+    padding-left: 26px;
   }
-  .marco-titulo {
-    color: color-mix(in oklab, var(--color-tinta) calc(var(--on) * 100%), var(--color-apagado));
-  }
-  .marco-ponto {
+  .marcos li::before {
+    content: '';
     position: absolute;
-    left: -36px;
-    top: 2px;
-    width: 17px;
-    height: 17px;
-    display: grid;
-    place-items: center;
-    color: var(--color-destaque);
-    background: var(--color-fundo);
-    transform: scale(calc(0.7 + var(--on) * 0.3));
+    left: 0;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-luz);
+    box-shadow: 0 0 12px 2px rgb(242 212 155 / 0.6);
   }
   .marco-quando {
     font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--color-destaque);
-  }
-  .marco-titulo {
-    font-weight: 500;
-    line-height: 1.3;
-  }
-  .marco-onde {
     color: var(--color-apagado);
   }
-
+  .marco-titulo {
+    font-family: var(--font-titulo);
+    font-size: 1.25rem;
+    color: var(--color-tinta);
+  }
+  .marco-onde {
+    font-size: 0.875rem;
+  }
   @media (min-width: 1024px) {
     .prof-grade {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-      align-items: center;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: clamp(32px, 6vw, 96px);
     }
-    .linha {
-      grid-template-columns: repeat(var(--n), minmax(0, 1fr));
-      padding-left: 0;
-      padding-top: 36px;
-      gap: 24px;
+    .prof-foto :global(.prof-composicao) {
+      max-width: 540px;
     }
-    .linha-trilho {
-      left: 0;
-      right: 0;
-      top: 8px;
-      bottom: auto;
-      width: auto;
-      height: 1px;
+    .prof-texto h2 {
+      text-align: left;
     }
-    .linha-traco {
-      transform-origin: left;
-      transform: scaleX(var(--k));
+    .fatos {
+      grid-template-columns: repeat(3, 1fr);
     }
-    .marco-ponto {
-      left: 0;
-      top: -36px;
+    .marcos {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
   }
 </style>

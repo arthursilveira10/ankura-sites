@@ -13,7 +13,7 @@ const { dados: d } = Astro.props;
 <section class="secao secao-abaixo faq" id="duvidas">
   <div class="wrap faq-grade">
     <div class="faq-cab">
-      <Cabecalho rotulo={d.rotulo} titulo={d.titulo} />
+      <Cabecalho rotulo={d.rotulo ?? 'Perguntas frequentes'} titulo={d.titulo} />
     </div>
     <div class="faq-lista">
       {

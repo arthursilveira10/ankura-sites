@@ -66,7 +66,7 @@ Registradas em "Decisões técnicas" no `CLAUDE.md`. Resumo: Astro + Tailwind v4
 1. ✅ Organizar workspace (mover, git, .gitignore, READMEs, decisões no CLAUDE.md)
 2. ✅ Extração técnica das refs 03 a 07 (desktop e celular) → `_referencias/extracao-tecnica.md`
 3. ✅ Skill `site-build` (primeira versão; `references/template.md` completa na etapa 4)
-4. ✅ `_template/` com o demo do Dr. Arthur Silveira [FICTÍCIO] (conceito "Leitura da pele"; Lighthouse celular 98-99/100/100/100)
+4. ✅ `_template/` com o demo do Dr. Arthur Silveira [FICTÍCIO]. Primeira versão ("Leitura da pele") reprovada por cara de IA; refeito em rodadas de pranchas (A a G) até a direção "Luz de janela", com a foto real, imagens geradas e teste no iPhone. Lighthouse celular 99/100/100/100. Lições no `references/processo-design.md` da skill `site-build`.
 5. Editor (CMS, candidato: Pages CMS) testado no demo; ajuste final da skill
 
 ## Primeira mensagem sugerida

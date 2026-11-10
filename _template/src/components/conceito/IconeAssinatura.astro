@@ -1,46 +1,7 @@
 ---
-// ASSINATURA DO BOTÃO (por cliente). Demo "Leitura da pele": a lente.
-// Ícone do WhatsApp dentro de um anel com marcações de escala, que gira e se expande no hover.
+// ASSINATURA DO BOTÃO (por cliente). Demo "Luz de janela": o ícone do WhatsApp, que no hover
+// fica sobre um círculo na cor da luz (o estilo do hover está em base/Botao.astro).
 import Icone from '../base/Icone.astro';
-const marcas = Array.from({ length: 24 }, (_, i) => i * 15);
 ---
 
-<span class="assinatura">
-  <svg class="lente" viewBox="0 0 48 48" aria-hidden="true">
-    <circle cx="24" cy="24" r="22.5" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.55"></circle>
-    {
-      marcas.map((g) => (
-        <line x1="24" y1="1.5" x2="24" y2={g % 90 === 0 ? 6 : 4} stroke="currentColor" stroke-width="0.9" transform={`rotate(${g} 24 24)`} opacity="0.7" />
-      ))
-    }
-  </svg>
-  <Icone nome="whatsapp" tamanho={20} />
-</span>
-
-<style>
-  .assinatura {
-    position: relative;
-    display: grid;
-    place-items: center;
-    width: 100%;
-    height: 100%;
-  }
-  .lente {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s var(--ease-ankura);
-  }
-  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-    :global(.botao:hover) .lente {
-      transform: rotate(45deg) scale(1.12);
-    }
-  }
-  /* No toque (celular), a lente gira ao ser pressionada */
-  @media (prefers-reduced-motion: no-preference) {
-    :global(.botao:active) .lente {
-      transform: rotate(45deg) scale(1.08);
-    }
-  }
-</style>
+<Icone nome="whatsapp" tamanho={20} />

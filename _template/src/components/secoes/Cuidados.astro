@@ -1,27 +1,36 @@
 ---
-// CUIDADOS: antes e depois do procedimento, em grupos de itens curtos.
+// CUIDADOS: o que fazer antes e depois do procedimento.
+// Dois (ou três) painéis lado a lado: o primeiro claro, o último escuro, cada um com ícone e itens com marcador.
 import Cabecalho from '../base/Cabecalho.astro';
-import Separador from '../conceito/Separador.astro';
+import Icone from '../base/Icone.astro';
+import { inline } from '../../lib/texto';
 import type { Secao } from '../../lib/dados';
+import type { IconeNome } from '../../lib/icones';
 interface Props {
   dados: Extract<Secao, { tipo: 'cuidados' }>;
 }
 const { dados: d } = Astro.props;
+const icones: IconeNome[] = ['calendario', 'relogio', 'sol'];
 ---
 
 <section class="secao secao-abaixo cuid">
   <div class="wrap">
-    <Cabecalho rotulo={d.rotulo} titulo={d.titulo} />
-    <div class="cuid-grade">
+    <Cabecalho rotulo={d.rotulo} titulo={d.titulo} centro />
+    <div class="cuid-grade" style={`--n:${d.grupos.length}`}>
       {
         d.grupos.map((g, i) => (
-          <div class="cuid-card" data-revela style={`--atraso:${i}`}>
-            <h3 class="t-h3">{g.titulo}</h3>
+          <div class:list={['cuid-painel', i === d.grupos.length - 1 && d.grupos.length > 1 && 'escuro']}>
+            <div class="cuid-cab">
+              <span class="cuid-halo" aria-hidden="true">
+                <Icone nome={i === d.grupos.length - 1 && d.grupos.length > 1 ? 'sol' : icones[i % icones.length]} tamanho={24} />
+              </span>
+              <h3 class="cuid-titulo">{g.titulo}</h3>
+            </div>
             <ul>
               {g.itens.map((it) => (
                 <li>
-                  <Separador />
-                  <span>{it}</span>
+                  <span class="cuid-marca" aria-hidden="true" />
+                  <span set:html={inline(it)} />
                 </li>
               ))}
             </ul>
@@ -33,35 +42,77 @@ const { dados: d } = Astro.props;
 </section>
 
 <style>
+  .cuid .wrap > :global(.cab) {
+    margin-bottom: clamp(32px, 4vw, 52px);
+  }
   .cuid-grade {
     display: grid;
-    gap: var(--gap);
-    margin-top: clamp(32px, 5vw, 56px);
-  }
-  .cuid-card {
-    display: grid;
     gap: 16px;
-    align-content: start;
-    padding: clamp(24px, 3vw, 36px);
+  }
+  .cuid-painel {
+    padding: clamp(28px, 4vw, 48px);
     border-radius: var(--radius-bloco);
     background: var(--color-superficie);
     box-shadow: inset 0 0 0 1px var(--color-linha);
   }
-  .cuid-card ul {
-    display: grid;
-    gap: 12px;
+  .cuid-painel.escuro {
+    background: var(--color-escuro);
+    color: var(--color-escuro-apagado);
+    box-shadow: none;
   }
-  .cuid-card li {
+  .cuid-painel.escuro .cuid-titulo {
+    color: var(--color-escuro-texto);
+  }
+  .cuid-painel.escuro li {
+    border-color: var(--color-escuro-linha);
+  }
+  .cuid-cab {
     display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .cuid-halo {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    color: var(--color-acao);
+    background: radial-gradient(circle at 50% 42%, rgb(242 212 155 / 0.8), rgb(242 212 155 / 0) 70%);
+  }
+  .escuro .cuid-halo {
+    color: var(--color-luz);
+    background: radial-gradient(circle at 50% 42%, rgb(242 212 155 / 0.22), rgb(242 212 155 / 0) 70%);
+  }
+  .cuid-titulo {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  }
+  ul {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: grid;
+    grid-template-columns: 22px 1fr;
     gap: 12px;
-    align-items: baseline;
+    padding: 14px 0;
+    border-top: 1px solid var(--color-linha);
   }
-  .cuid-card li :global(svg) {
-    transform: translateY(2px);
+  .cuid-marca {
+    width: 9px;
+    height: 9px;
+    margin-top: 8px;
+    border-radius: 50%;
+    background: var(--color-luz);
+    box-shadow: 0 0 10px 2px rgb(242 212 155 / 0.5);
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .cuid-grade {
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(var(--n), 1fr);
+      gap: 20px;
     }
   }
 </style>

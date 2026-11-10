@@ -1,6 +1,6 @@
 # _template: site-base da Ankura
 
-Astro 7 + Tailwind 4, saída estática. Demo: **Dr. Arthur Silveira [FICTÍCIO]**, dermatologia, conceito "Leitura da pele".
+Astro 7 + Tailwind 4, saída estática. Demo: **Dr. Arthur Silveira [FICTÍCIO]**, dermatologia, direção "Luz de janela" (prancha G de `public/pranchas/`).
 Como usar num cliente: `.claude/skills/site-build/references/template.md`.
 
 ## Comandos
@@ -35,3 +35,4 @@ npm run preview    # serve o dist/ para testar
 - `/[procedimento]` uma página por arquivo em `src/content/paginas/` com `tipo: procedimento`
 - `/lp/[procedimento]` modo LP (menu sem links, `noindex`), destino dos anúncios
 - `/previa` prancha de estilo (só em desenvolvimento)
+- `/pranchas/a.html` a `g.html` as pranchas de direção do demo (só em desenvolvimento; `?estatico` desliga as animações)

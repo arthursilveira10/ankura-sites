@@ -1,6 +1,8 @@
 ---
-// NÚMEROS DO PROCEDIMENTO: sessões, duração, retorno. Só com dados confirmados pelo médico.
-import { titulo as fmt } from '../../lib/texto';
+// NÚMEROS DO PROCEDIMENTO: duração, tempo para o efeito, retorno. Só com dados confirmados pelo médico.
+// Um painel único, com ícone por número, e a observação de referência integrada embaixo do painel.
+import Cabecalho from '../base/Cabecalho.astro';
+import Icone from '../base/Icone.astro';
 import type { Secao } from '../../lib/dados';
 interface Props {
   dados: Extract<Secao, { tipo: 'numeros' }>;
@@ -10,72 +12,118 @@ const { dados: d } = Astro.props;
 
 <section class="secao secao-abaixo nums">
   <div class="wrap">
-    {d.titulo && <h2 class="t-h3 nums-titulo" data-revela set:html={fmt(d.titulo)} />}
-    <dl class="nums-grade">
+    {d.titulo && <Cabecalho titulo={d.titulo} centro />}
+    <div class="nums-painel">
+      <ul class="nums-grade">
+        {
+          d.itens.map((it) => (
+            <li class="num">
+              {it.icone && (
+                <span class="num-halo" aria-hidden="true">
+                  <Icone nome={it.icone} tamanho={24} />
+                </span>
+              )}
+              <span class="num-valor">{it.valor}</span>
+              <span class="num-rotulo">{it.rotulo}</span>
+            </li>
+          ))
+        }
+      </ul>
       {
-        d.itens.map((it, i) => (
-          <div class="num" data-revela style={`--atraso:${i}`}>
-            <dt>{it.rotulo}</dt>
-            <dd>{it.valor}</dd>
-          </div>
-        ))
+        d.observacao && (
+          <p class="nums-obs">
+            <Icone nome="selo" tamanho={18} />
+            {d.observacao}
+          </p>
+        )
       }
-    </dl>
-    {d.observacao && <p class="t-pequeno nums-obs medida">{d.observacao}</p>}
+    </div>
   </div>
 </section>
 
 <style>
-  .nums {
-    padding-block: calc(var(--secao) / 2);
+  .nums .wrap > :global(.cab) {
+    margin-bottom: clamp(28px, 4vw, 44px);
   }
-  .nums-titulo {
-    margin-bottom: 24px;
+  .nums-painel {
+    border-radius: var(--radius-bloco);
+    background: var(--color-superficie);
+    box-shadow:
+      inset 0 0 0 1px var(--color-linha),
+      0 30px 60px -48px rgb(20 38 32 / 0.45);
+    overflow: hidden;
   }
   .nums-grade {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    border-top: 1px solid var(--color-linha);
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
   .num {
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: flex-end;
+    display: grid;
+    justify-items: center;
     gap: 6px;
-    padding: 20px 14px 4px 0;
+    padding: 28px 16px;
+    text-align: center;
   }
   .num:nth-child(even) {
-    padding-left: 14px;
     border-left: 1px solid var(--color-linha);
   }
-  .num dd {
+  .num:nth-child(n + 3) {
+    border-top: 1px solid var(--color-linha);
+  }
+  .num-halo {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 4px;
+    border-radius: 50%;
+    color: var(--color-acao);
+    background: radial-gradient(circle at 50% 42%, rgb(242 212 155 / 0.75), rgb(242 212 155 / 0) 70%);
+  }
+  .num-valor {
     font-family: var(--font-titulo);
-    font-size: clamp(2rem, 1.4rem + 2.4vw, 3.5rem);
+    font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
     line-height: 1;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
     color: var(--color-tinta);
   }
-  .num dt {
-    font-size: var(--t-pequeno);
-    color: var(--color-apagado);
+  .num-rotulo {
+    max-width: 16em;
+    font-size: 0.875rem;
+    line-height: 1.4;
   }
   .nums-obs {
-    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 16px 20px;
+    font-size: 0.8125rem;
     color: var(--color-apagado);
+    background: var(--color-superficie-2);
+    text-align: center;
   }
-  @media (min-width: 768px) {
+  .nums-obs :global(svg) {
+    flex: none;
+    color: var(--color-acao);
+  }
+  @media (min-width: 1024px) {
     .nums-grade {
-      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-      grid-auto-flow: column;
+      grid-template-columns: repeat(var(--n, 4), 1fr);
     }
-    .num,
-    .num:nth-child(even) {
-      padding: 24px 24px 4px;
+    .num {
+      padding: 40px 24px;
+    }
+    .num:nth-child(n) {
+      border-top: 0;
       border-left: 1px solid var(--color-linha);
     }
     .num:first-child {
       border-left: 0;
-      padding-left: 0;
     }
   }
 </style>
