@@ -1,0 +1,13 @@
+---
+// Modo LP: mesmo conteúdo da página de procedimento, menu sem links, noindex. Destino dos anúncios.
+import Pagina from '../../components/Pagina.astro';
+import { procedimentos } from '../../lib/dados';
+
+export async function getStaticPaths() {
+  const lista = await procedimentos();
+  return lista.map((p) => ({ params: { slug: p.id }, props: { pagina: p } }));
+}
+const { pagina } = Astro.props;
+---
+
+<Pagina pagina={pagina} modoLP />

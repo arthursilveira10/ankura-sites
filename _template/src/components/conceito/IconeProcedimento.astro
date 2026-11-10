@@ -1,0 +1,17 @@
+---
+// ÍCONES DOS PROCEDIMENTOS (por cliente): traço único, pathLength="1" para se desenharem.
+// Recebe o índice do item; troque pelos desenhos do conceito.
+interface Props {
+  indice: number;
+}
+const { indice } = Astro.props;
+const formas = [
+  'M20 4c-8 0-14 6-14 14 0 1 .1 2 .3 3M6.3 21C12 20 20 14 20 4',
+  'M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0zM12 4v16',
+  'M4 12c3-5 13-5 16 0-3 5-13 5-16 0zM12 9.5v5',
+];
+---
+
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <path d={formas[indice % formas.length]} pathLength="1"></path>
+</svg>

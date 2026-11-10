@@ -1,0 +1,20 @@
+---
+// DECORAÇÃO DO CTA FINAL (por cliente): elemento do conceito ao fundo do bloco escuro.
+---
+
+<svg class="decor decor-cta" viewBox="0 0 800 800" aria-hidden="true">
+  <circle cx="400" cy="400" r="380" fill="none" stroke="var(--color-escuro-linha)" stroke-width="1"></circle>
+  <circle cx="400" cy="400" r="280" fill="none" stroke="var(--color-escuro-linha)" stroke-width="1"></circle>
+  <circle cx="400" cy="400" r="180" fill="none" stroke="var(--color-escuro-linha)" stroke-width="1"></circle>
+</svg>
+
+<style>
+  .decor-cta {
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    width: max(120%, 900px);
+    transform: translate(-50%, -50%);
+  }
+</style>

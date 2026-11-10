@@ -1,0 +1,50 @@
+---
+// MARCA (por cliente): logo do header e do rodapé.
+// Padrão: logo do médico (src/content/medico) se existir; senão, nome em texto com a especialidade.
+import { Image } from 'astro:assets';
+import { medico, nomeCompleto } from '../../lib/dados';
+
+interface Props {
+  claro?: boolean;
+}
+const { claro = false } = Astro.props;
+const m = await medico();
+---
+
+{
+  m.logo ? (
+    <Image src={m.logo} alt={nomeCompleto(m)} height={40} class="marca-logo" loading="eager" />
+  ) : (
+    <span class:list={['marca', claro && 'marca-clara']}>
+      <span class="marca-nome">{nomeCompleto(m)}</span>
+      <span class="marca-esp">{m.especialidade}</span>
+    </span>
+  )
+}
+
+<style>
+  .marca {
+    display: grid;
+    line-height: 1.1;
+  }
+  .marca-nome {
+    font-family: var(--font-titulo);
+    font-size: 1.125rem;
+    letter-spacing: -0.02em;
+    color: var(--color-tinta);
+  }
+  .marca-esp {
+    font-size: 0.75rem;
+    color: var(--color-apagado);
+  }
+  .marca-clara .marca-nome {
+    color: var(--color-escuro-texto);
+  }
+  .marca-clara .marca-esp {
+    color: var(--color-escuro-apagado);
+  }
+  .marca-logo {
+    height: 40px;
+    width: auto;
+  }
+</style>

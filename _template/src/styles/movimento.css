@@ -1,0 +1,70 @@
+/*
+  MOVIMENTO
+  Regras: .claude/skills/site-build/references/animacao.md
+  - Sem JS (sem a classe .js no <html>) tudo aparece no estado final.
+  - Com movimento reduzido, nada anima.
+  - O JS só liga classes e uma variável de progresso (--p); o resto é CSS.
+*/
+
+/* Entrada ao rolar: [data-revela] (+ data-atraso="1..4" para cascata) */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-revela] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.9s var(--ease-ankura),
+      transform 0.9s var(--ease-ankura);
+    transition-delay: calc(var(--atraso, 0) * 0.09s);
+  }
+  .js [data-revela].visivel {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Entrada de foto: máscara abrindo */
+  .js [data-revela-foto] {
+    clip-path: inset(10% 10% 10% 10% round var(--radius-bloco));
+    transition: clip-path 1.3s var(--ease-ankura);
+  }
+  .js [data-revela-foto].visivel {
+    clip-path: inset(0 0 0 0 round 0);
+  }
+  .js [data-revela-foto] img {
+    transform: scale(1.06);
+    transition: transform 1.6s var(--ease-ankura);
+  }
+  .js [data-revela-foto].visivel img {
+    transform: none;
+  }
+
+  /* Ícones em traço que se desenham: stroke com pathLength="1" */
+  .js [data-desenha] :is(path, line, circle, polyline, ellipse, rect) {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1.6s var(--ease-ankura);
+    transition-delay: calc(var(--atraso, 0) * 0.09s + 0.2s);
+  }
+  .js [data-desenha].visivel :is(path, line, circle, polyline, ellipse, rect) {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Progresso de rolagem: o JS escreve --p (0 a 1) nos elementos [data-progresso] */
+[data-progresso] {
+  --p: 1;
+}
+.js [data-progresso] {
+  --p: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js [data-progresso] {
+    --p: 1 !important;
+  }
+}
+
+/* Marquee */
+@keyframes ankura-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}

@@ -1,0 +1,54 @@
+---
+// CTA FINAL (seção 6, coragem para agir): bloco escuro arredondado. A barra fixa some aqui.
+import Botao from '../base/Botao.astro';
+import DecorCta from '../conceito/DecorCta.astro';
+import { titulo } from '../../lib/texto';
+import type { Secao } from '../../lib/dados';
+interface Props {
+  dados: Extract<Secao, { tipo: 'cta-final' }>;
+}
+const { dados: d } = Astro.props;
+---
+
+<section class="ctaf" id="contato" data-esconde-barra>
+  <div class="bloco escuro ctaf-bloco">
+    <DecorCta />
+    <div class="wrap ctaf-conteudo">
+      <h2 class="t-h2 medida-titulo" data-revela set:html={titulo(d.titulo)} />
+      <p class="t-lead medida" data-revela style="--atraso:1">{d.texto}</p>
+      <div class="ctaf-acoes" data-revela style="--atraso:2">
+        <Botao texto={d.botao.texto} posicao="final" />
+        {d.apoio && <p class="t-pequeno">{d.apoio}</p>}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ctaf {
+    padding-block: calc(var(--secao) / 2) clamp(8px, 1.4vw, 20px);
+  }
+  .ctaf-bloco {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    padding-block: clamp(72px, 12vw, 180px);
+  }
+  .ctaf-conteudo {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 22px;
+    justify-items: center;
+    text-align: center;
+  }
+  .ctaf-conteudo :is(.medida, .medida-titulo) {
+    margin-inline: auto;
+  }
+  .ctaf-acoes {
+    display: grid;
+    gap: 12px;
+    justify-items: center;
+    margin-top: 8px;
+  }
+</style>

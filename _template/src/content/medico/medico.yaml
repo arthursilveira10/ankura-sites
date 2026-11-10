@@ -1,0 +1,30 @@
+# DADOS DO MÉDICO
+# Demo: Dr. Arthur Silveira [FICTÍCIO]. Todos os dados abaixo são inventados para demonstração.
+
+# --- Identificação (Ankura) ---
+nome: Arthur Silveira
+tratamento: Dr.
+especialidade: Dermatologia
+crm: 000000-SP
+rqe: '00000'
+
+# --- Operacional (o médico pode editar) ---
+cidade: Campinas
+uf: SP
+modalidade: Presencial
+whatsapp: '5519900000000'
+instagram: '@drarthursilveira'
+endereco:
+  linha1: Rua Exemplo, 123, sala 45
+  linha2: Cambuí, Campinas, SP
+horarios:
+  - Segunda a sexta, das 8h às 19h
+  - Sábado, das 8h às 12h
+consulta:
+  valor: R$ 450
+  mostrarValor: false
+  convenios: []
+
+# --- Avisos ---
+demonstracao: true
+avisoImagens: true

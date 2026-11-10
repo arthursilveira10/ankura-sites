@@ -1,0 +1,131 @@
+# PÁGINA DE PROCEDIMENTO (demo [FICTÍCIO]). O nome do arquivo vira o endereço: /toxina-botulinica e /lp/toxina-botulinica
+tipo: procedimento
+nome: Toxina botulínica
+resumo: Suavizar linhas de expressão mantendo o seu jeito de sorrir e de falar.
+ordem: 1
+foto:
+  alt: Aplicação de toxina botulínica
+  reservado: detalhe do procedimento
+seo:
+  titulo: Toxina botulínica em Campinas | Dr. Arthur Silveira
+  descricao: Aplicação de toxina botulínica com avaliação cuidadosa, doses pensadas para o seu rosto e retorno incluído. Campinas, SP.
+cta:
+  botaoMenu: Agendar avaliação
+  barra: Quero avaliar meu caso
+  mensagem: Olá! Vim pelo site e quero agendar uma avaliação para toxina botulínica.
+
+secoes:
+  - tipo: topo
+    variante: foto-compacta
+    rotulo: Toxina botulínica
+    titulo: Suavizar as linhas sem **perder** a sua expressão.
+    subtitulo: Antes de aplicar, eu observo como o seu rosto se mexe. A dose é pensada para você, não para uma tabela.
+    foto:
+      alt: Dr. Arthur Silveira
+      reservado: foto do médico, meio corpo
+    selos:
+      - Dermatologia · RQE 00000
+      - Retorno incluído
+    botao:
+      texto: Agendar avaliação
+    apoio: A avaliação vem antes de qualquer aplicação.
+
+  - tipo: faixa-dados
+
+  - tipo: o-que-e
+    rotulo: O que é
+    titulo: Um relaxamento **temporário** de alguns músculos.
+    texto: |-
+      A toxina diminui a força dos músculos que formam as rugas de expressão, como as da testa e as de entre as sobrancelhas.
+
+      O efeito aparece aos poucos, em cerca de duas semanas, e vai embora naturalmente. Por isso a dose e os pontos de aplicação importam tanto.
+    foto:
+      alt: ''
+      reservado: ilustração conceitual dos músculos da face (IA)
+
+  - tipo: para-quem
+    rotulo: Para quem é
+    titulo: Pode fazer sentido para **você** se...
+    itens:
+      - As linhas da testa ou entre as sobrancelhas aparecem mesmo com o rosto relaxado
+      - Seu rosto parece cansado ou bravo mesmo quando você está bem
+      - Você quer prevenir que linhas finas fiquem marcadas
+      - Você procura um resultado discreto, que ninguém aponte
+    observacao: Na avaliação eu confiro se a toxina é indicada para o seu caso. Gestantes e lactantes não devem fazer o procedimento.
+
+  - tipo: numeros
+    itens:
+      - valor: 20 min
+        rotulo: duração média da aplicação
+      - valor: 2 sem
+        rotulo: para o efeito aparecer por completo
+      - valor: 4 a 6
+        rotulo: meses de duração média, varia de pessoa para pessoa
+      - valor: 15 dias
+        rotulo: retorno incluído para avaliar e ajustar
+    observacao: Valores de referência [FICTÍCIO]. A resposta varia de pessoa para pessoa.
+
+  - tipo: como-funciona
+    variante: cartas-empilhadas
+    rotulo: Passo a passo
+    titulo: Como é, do começo ao **retorno**.
+    passos:
+      - titulo: Avaliação
+        texto: Eu observo seu rosto em movimento, entendo o que te incomoda e explico o que a toxina consegue e o que não consegue fazer.
+      - titulo: Planejamento
+        texto: Definimos juntos os pontos e a dose. Você sabe exatamente o que vai ser feito.
+      - titulo: Aplicação
+        texto: Agulha fina, poucos minutos. A maioria das pessoas descreve como um desconforto leve.
+      - titulo: Retorno
+        texto: Em 15 dias você volta para eu avaliar o resultado e fazer ajustes se precisar.
+    cta:
+      texto: Quero agendar minha avaliação
+      posicao: meio-1
+
+  - tipo: cuidados
+    rotulo: Cuidados
+    titulo: O que fazer antes e **depois**.
+    grupos:
+      - titulo: Antes
+        itens:
+          - Evite bebida alcoólica no dia anterior
+          - Me conte sobre medicamentos que você usa
+          - Venha sem maquiagem, se puder
+      - titulo: Depois
+        itens:
+          - Fique sem deitar por 4 horas
+          - Evite atividade física intensa no dia
+          - Não massageie a região aplicada
+
+  - tipo: depoimentos
+    rotulo: Relatos
+    titulo: Quem já **fez**.
+    itens:
+      - texto: Fiquei com medo de ficar artificial, mas ele foi explicando cada ponto. Ninguém percebeu que eu fiz, só falaram que eu estava descansada.
+        autor: C. M. [FICTÍCIO]
+        origem: Google
+      - texto: O retorno fez diferença. Ele ajustou um lado que tinha ficado um pouco diferente.
+        autor: P. R. [FICTÍCIO]
+        origem: Google
+
+  - tipo: faq
+    rotulo: Dúvidas
+    titulo: Perguntas que eu mais **ouço**.
+    perguntas:
+      - pergunta: Vou ficar com o rosto paralisado?
+        resposta: O objetivo é suavizar, não travar. A dose é pensada para manter a sua expressão, e o retorno serve para ajustar.
+      - pergunta: Dói?
+        resposta: A agulha é bem fina. A maioria das pessoas descreve como um desconforto leve e rápido.
+      - pergunta: Quanto tempo dura?
+        resposta: Em média de 4 a 6 meses. Varia conforme o seu organismo, a região e a dose.
+      - pergunta: Posso voltar ao trabalho no mesmo dia?
+        resposta: Sim. Só evite deitar nas primeiras 4 horas e fazer exercício intenso no dia.
+      - pergunta: Quanto custa?
+        resposta: Depende das regiões e da dose. Eu passo o valor na avaliação, depois de ver o que faz sentido para você.
+
+  - tipo: cta-final
+    titulo: Vamos ver o que faz **sentido** para o seu rosto?
+    texto: Me chama no WhatsApp. Na avaliação a gente conversa, eu examino e você decide com calma.
+    botao:
+      texto: Agendar avaliação
+    apoio: Respondemos em horário comercial.

@@ -1,0 +1,184 @@
+---
+// COMO FUNCIONA (a experiência).
+// passos-com-linha: desktop com título sticky e linha que se preenche; celular em coluna com a mesma linha.
+// cartas-empilhadas: cada passo numa carta sticky. passos-simples: grade sem efeito.
+import Cabecalho from '../base/Cabecalho.astro';
+import CtaMeio from '../base/CtaMeio.astro';
+import Marcador from '../conceito/Marcador.astro';
+import { inline } from '../../lib/texto';
+import type { Secao } from '../../lib/dados';
+interface Props {
+  dados: Extract<Secao, { tipo: 'como-funciona' }>;
+}
+const { dados: d } = Astro.props;
+const v = d.variante;
+---
+
+<section class:list={['secao secao-abaixo cf', `cf-${v}`]} id="como-funciona">
+  <div class="wrap cf-grade">
+    <div class="cf-cab">
+      <Cabecalho rotulo={d.rotulo} titulo={d.titulo} texto={d.texto} />
+      <div class="cf-cta-desk"><CtaMeio cta={d.cta} /></div>
+    </div>
+
+    <ol class="cf-passos" data-progresso={v === 'passos-com-linha' ? '' : undefined} style={`--n:${d.passos.length}`}>
+      {
+        v === 'passos-com-linha' && (
+          <span class="cf-trilho decor" aria-hidden="true">
+            <span class="cf-traco" />
+          </span>
+        )
+      }
+      {
+        d.passos.map((p, i) => (
+          <li class="cf-passo" style={`--i:${i}`} data-revela={v === 'cartas-empilhadas' ? undefined : ''}>
+            {v === 'passos-com-linha' ? (
+              <span class="cf-marca decor" aria-hidden="true">
+                <Marcador />
+              </span>
+            ) : null}
+            <span class="cf-num">{String(i + 1).padStart(2, '0')}</span>
+            <div class="cf-corpo">
+              <h3 class="t-h3">{p.titulo}</h3>
+              <p set:html={inline(p.texto)} />
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+  <div class="wrap cf-cta-cel"><CtaMeio cta={d.cta} /></div>
+</section>
+
+<style>
+  .cf-grade {
+    display: grid;
+    gap: clamp(36px, 5vw, 64px);
+  }
+  .cf-cta-desk {
+    display: none;
+  }
+  .cf-passos {
+    position: relative;
+    display: grid;
+  }
+  .cf-num {
+    font-size: var(--t-rotulo);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-destaque);
+  }
+  .cf-corpo {
+    display: grid;
+    gap: 8px;
+  }
+
+  /* passos com linha */
+  .cf-passos-com-linha .cf-passos {
+    --k: clamp(0, calc(var(--p) * 1.15), 1);
+    gap: 40px;
+    padding-left: 40px;
+  }
+  .cf-trilho {
+    position: absolute;
+    left: 8px;
+    top: 10px;
+    bottom: 10px;
+    width: 1px;
+    background: var(--color-linha);
+  }
+  .cf-traco {
+    position: absolute;
+    inset: 0;
+    background: var(--color-destaque);
+    transform-origin: top;
+    transform: scaleY(var(--k));
+  }
+  .cf-passos-com-linha .cf-passo {
+    --on: clamp(0, calc((var(--k) * var(--n) - var(--i)) * 2), 1);
+    position: relative;
+    display: grid;
+    gap: 6px;
+    opacity: calc(0.4 + var(--on) * 0.6);
+  }
+  .cf-marca {
+    position: absolute;
+    left: -40px;
+    top: 0;
+    display: grid;
+    place-items: center;
+    width: 17px;
+    height: 17px;
+    color: var(--color-destaque);
+    background: var(--color-fundo);
+    transform: scale(calc(0.7 + var(--on) * 0.3));
+  }
+
+  /* cartas empilhadas */
+  .cf-cartas-empilhadas .cf-passos {
+    gap: 14px;
+  }
+  .cf-cartas-empilhadas .cf-passo {
+    position: sticky;
+    top: calc(var(--header) + 12px + var(--i) * 14px);
+    display: grid;
+    gap: 10px;
+    min-height: 200px;
+    align-content: start;
+    padding: clamp(24px, 3vw, 36px);
+    border-radius: var(--radius-bloco);
+    background: var(--color-superficie);
+    box-shadow:
+      inset 0 0 0 1px var(--color-linha),
+      0 -18px 40px -26px rgb(0 0 0 / 0.3);
+  }
+  .cf-cartas-empilhadas .cf-passo:nth-child(even) {
+    background: var(--color-superficie-2);
+  }
+
+  /* passos simples */
+  .cf-passos-simples .cf-passos {
+    gap: var(--gap);
+  }
+  .cf-passos-simples .cf-passo {
+    display: grid;
+    gap: 10px;
+    padding: 24px;
+    border-radius: var(--radius-card);
+    box-shadow: inset 0 0 0 1px var(--color-linha);
+  }
+
+  @media (min-width: 1024px) {
+    .cf-grade {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      align-items: start;
+      gap: 64px;
+    }
+    .cf-cab {
+      position: sticky;
+      top: calc(var(--header) + 64px);
+    }
+    .cf-cta-desk {
+      display: block;
+    }
+    .cf-cta-cel {
+      display: none;
+    }
+    .cf-passos-com-linha .cf-passos {
+      gap: 88px;
+    }
+    .cf-cartas-empilhadas .cf-passo {
+      top: calc(var(--header) + 64px + var(--i) * 20px);
+      min-height: 240px;
+    }
+    .cf-passos-simples .cf-grade {
+      grid-template-columns: 1fr;
+    }
+    .cf-passos-simples .cf-cab {
+      position: static;
+    }
+    .cf-passos-simples .cf-passos {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+  }
+</style>

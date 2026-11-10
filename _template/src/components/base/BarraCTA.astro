@@ -1,0 +1,42 @@
+---
+// Barra fixa de CTA (só celular). Surge depois do topo e some no CTA final e no rodapé.
+// Substitui a bolinha flutuante do WhatsApp.
+import Botao from './Botao.astro';
+interface Props {
+  texto: string;
+}
+const { texto } = Astro.props;
+---
+
+<div class="barra" data-barra-cta data-visivel="nao">
+  <Botao texto={texto} posicao="barra-fixa" class="barra-botao" />
+</div>
+
+<style>
+  .barra {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    z-index: 40;
+    transform: translateY(calc(100% + 24px));
+    transition: transform 0.45s var(--ease-ankura);
+  }
+  .barra[data-visivel='sim'] {
+    transform: none;
+  }
+  .barra :global(.barra-botao) {
+    width: 100%;
+    box-shadow: 0 14px 34px -14px rgb(0 0 0 / 0.45);
+  }
+  @media (min-width: 1024px) {
+    .barra {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .barra {
+      transition: none;
+    }
+  }
+</style>

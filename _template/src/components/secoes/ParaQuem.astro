@@ -1,0 +1,69 @@
+---
+// PARA QUEM É: indicações em lista curta (indicação, nunca promessa).
+import Cabecalho from '../base/Cabecalho.astro';
+import Separador from '../conceito/Separador.astro';
+import { inline } from '../../lib/texto';
+import type { Secao } from '../../lib/dados';
+interface Props {
+  dados: Extract<Secao, { tipo: 'para-quem' }>;
+}
+const { dados: d } = Astro.props;
+---
+
+<section class="secao secao-abaixo pq">
+  <div class="bloco pq-bloco">
+    <div class="wrap pq-grade">
+      <Cabecalho rotulo={d.rotulo} titulo={d.titulo} texto={d.texto} />
+      <div>
+        <ul class="pq-lista">
+          {
+            d.itens.map((it, i) => (
+              <li data-revela style={`--atraso:${i}`}>
+                <Separador />
+                <span set:html={inline(it)} />
+              </li>
+            ))
+          }
+        </ul>
+        {d.observacao && <p class="t-pequeno pq-obs" data-revela>{d.observacao}</p>}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pq {
+    padding-block: calc(var(--secao) / 2);
+  }
+  .pq-bloco {
+    background: var(--color-superficie-2);
+    padding-block: clamp(48px, 7vw, 104px);
+  }
+  .pq-grade {
+    display: grid;
+    gap: clamp(28px, 4vw, 64px);
+  }
+  .pq-lista {
+    display: grid;
+  }
+  .pq-lista li {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    padding-block: 14px;
+    border-bottom: 1px solid var(--color-linha);
+    color: var(--color-tinta);
+  }
+  .pq-lista li :global(svg) {
+    transform: translateY(2px);
+  }
+  .pq-obs {
+    margin-top: 18px;
+    color: var(--color-apagado);
+  }
+  @media (min-width: 1024px) {
+    .pq-grade {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    }
+  }
+</style>

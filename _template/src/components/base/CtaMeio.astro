@@ -1,0 +1,27 @@
+---
+// Botão leve do meio da página (no máximo 2 por página, nos pontos de decisão).
+import Botao from './Botao.astro';
+interface Props {
+  cta?: { texto: string; posicao: 'meio-1' | 'meio-2' };
+  centro?: boolean;
+}
+const { cta, centro = false } = Astro.props;
+---
+
+{
+  cta && (
+    <div class:list={['cta-meio', centro && 'cta-meio-centro']} data-revela>
+      <Botao texto={cta.texto} posicao={cta.posicao} estilo="contorno" />
+    </div>
+  )
+}
+
+<style>
+  .cta-meio {
+    margin-top: clamp(32px, 4vw, 48px);
+  }
+  .cta-meio-centro {
+    display: flex;
+    justify-content: center;
+  }
+</style>

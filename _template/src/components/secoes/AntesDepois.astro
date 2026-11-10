@@ -1,0 +1,140 @@
+---
+// ANTES E DEPOIS: slider comparativo acessível (input range) + legenda legal obrigatória.
+// Só com autorização do paciente e conferência da regra vigente (CFM, Meta, Google).
+import Cabecalho from '../base/Cabecalho.astro';
+import Foto from '../base/Foto.astro';
+import type { Secao } from '../../lib/dados';
+interface Props {
+  dados: Extract<Secao, { tipo: 'antes-depois' }>;
+}
+const { dados: d } = Astro.props;
+---
+
+<section class="secao secao-abaixo ad">
+  <div class="wrap">
+    <Cabecalho rotulo={d.rotulo} titulo={d.titulo} texto={d.texto} />
+    <div class="ad-grade">
+      {
+        d.casos.map((c, i) => (
+          <figure class="ad-caso" data-revela style={`--atraso:${i}`}>
+            <div class="ad-caixa" data-antes-depois style="--corte:50%">
+              <div class="ad-img ad-depois">
+                <Foto foto={c.depois} sizes="(min-width: 1024px) 560px, 90vw" proporcao="1/1" />
+              </div>
+              <div class="ad-img ad-antes">
+                <Foto foto={c.antes} sizes="(min-width: 1024px) 560px, 90vw" proporcao="1/1" />
+              </div>
+              <span class="ad-tag ad-tag-antes">Antes</span>
+              <span class="ad-tag ad-tag-depois">Depois</span>
+              <span class="ad-linha decor" aria-hidden="true" />
+              <input type="range" min="0" max="100" value="50" aria-label={`Comparar antes e depois: ${c.legenda}`} />
+            </div>
+            <figcaption class="t-pequeno">{c.legenda}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
+    <p class="ad-aviso t-pequeno medida">{d.avisoLegal}</p>
+  </div>
+</section>
+
+<style>
+  .ad-grade {
+    display: grid;
+    gap: 28px;
+    margin-top: clamp(32px, 5vw, 56px);
+  }
+  .ad-caso {
+    display: grid;
+    gap: 12px;
+  }
+  .ad-caixa {
+    position: relative;
+    aspect-ratio: 1/1;
+    border-radius: var(--radius-bloco);
+    overflow: hidden;
+    background: var(--color-superficie-2);
+    touch-action: pan-y;
+    user-select: none;
+  }
+  .ad-img {
+    position: absolute;
+    inset: 0;
+  }
+  .ad-antes {
+    clip-path: inset(0 calc(100% - var(--corte)) 0 0);
+  }
+  .ad-tag {
+    position: absolute;
+    top: 14px;
+    z-index: 2;
+    padding: 5px 12px;
+    border-radius: var(--radius-pilula);
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgb(0 0 0 / 0.55);
+    color: #fff;
+    pointer-events: none;
+  }
+  .ad-tag-antes {
+    left: 14px;
+  }
+  .ad-tag-depois {
+    right: 14px;
+  }
+  .ad-linha {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    left: var(--corte);
+    width: 2px;
+    margin-left: -1px;
+    background: #fff;
+    box-shadow: 0 0 16px rgb(0 0 0 / 0.3);
+  }
+  .ad-linha::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    border-radius: 50%;
+    background: #fff
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M9 6l-6 6 6 6M15 6l6 6-6 6'/%3E%3C/svg%3E")
+      center no-repeat;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.25);
+  }
+  .ad-caixa input {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: ew-resize;
+  }
+  .ad-caixa:has(input:focus-visible) {
+    outline: 2px solid var(--color-tinta);
+    outline-offset: 3px;
+  }
+  .ad-caso figcaption {
+    color: var(--color-apagado);
+  }
+  .ad-aviso {
+    margin-top: 28px;
+    padding: 16px 18px;
+    border-radius: var(--radius-card);
+    background: var(--color-superficie);
+    box-shadow: inset 0 0 0 1px var(--color-linha);
+    color: var(--color-texto);
+  }
+  @media (min-width: 768px) {
+    .ad-grade {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+  }
+</style>

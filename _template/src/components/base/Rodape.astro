@@ -1,0 +1,138 @@
+---
+// Rodapé com identificação obrigatória (CRM/RQE), contato e avisos legais.
+import Icone from './Icone.astro';
+import Marca from '../conceito/Marca.astro';
+import { medico, nomeCompleto } from '../../lib/dados';
+import { linkWhatsApp } from '../../lib/texto';
+
+interface Props {
+  links: { texto: string; href: string }[];
+}
+const { links } = Astro.props;
+const m = await medico();
+const ctx = Astro.locals.ctx;
+const ano = new Date().getFullYear();
+---
+
+<footer class="rodape escuro bloco" data-esconde-barra>
+  <div class="wrap rd-grade">
+    <div class="rd-marca">
+      <Marca claro />
+      <p class="rd-id">
+        {nomeCompleto(m)} · {m.especialidade}<br />
+        CRM {m.crm}{m.rqe && <> · RQE {m.rqe}</>}
+      </p>
+    </div>
+
+    {
+      !ctx?.modoLP && links.length > 0 && (
+        <nav class="rd-col" aria-label="Rodapé">
+          <p class="rd-titulo">Navegação</p>
+          {links.map((l) => (
+            <a href={l.href}>{l.texto}</a>
+          ))}
+        </nav>
+      )
+    }
+
+    <div class="rd-col">
+      <p class="rd-titulo">Contato</p>
+      <a href={ctx?.whatsapp ?? linkWhatsApp(m.whatsapp, 'Olá!')} target="_blank" rel="noopener" data-cta="whatsapp" data-pagina={ctx?.pagina} data-posicao="rodape">
+        <Icone nome="whatsapp" tamanho={18} /> WhatsApp
+      </a>
+      {
+        m.instagram && (
+          <a href={`https://instagram.com/${m.instagram.replace('@', '')}`} target="_blank" rel="noopener">
+            <Icone nome="instagram" tamanho={18} /> {m.instagram}
+          </a>
+        )
+      }
+      <a href={m.endereco.mapa ?? '#'} target="_blank" rel="noopener">
+        <Icone nome="local" tamanho={18} />
+        <span>
+          {m.endereco.linha1}
+          {m.endereco.linha2 && (
+            <>
+              <br />
+              {m.endereco.linha2}
+            </>
+          )}
+        </span>
+      </a>
+      {
+        m.horarios.length > 0 && (
+          <p class="rd-item">
+            <Icone nome="relogio" tamanho={18} />
+            <span set:html={m.horarios.join('<br />')} />
+          </p>
+        )
+      }
+    </div>
+  </div>
+
+  <div class="wrap rd-legal">
+    {m.avisoUrgencia && <p>{m.avisoUrgencia}</p>}
+    {m.avisoImagens && <p>As imagens deste site têm caráter ilustrativo e não representam promessa ou garantia de resultado. Cada caso é avaliado individualmente em consulta.</p>}
+    <p>© {ano} {nomeCompleto(m)}. Responsável técnico: {nomeCompleto(m)}, CRM {m.crm}{m.rqe && `, RQE ${m.rqe}`}.</p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    margin-bottom: clamp(8px, 1.4vw, 20px);
+    padding-block: clamp(56px, 8vw, 96px) 32px;
+    font-size: var(--t-pequeno);
+  }
+  .rd-grade {
+    display: grid;
+    gap: 40px;
+  }
+  .rd-id {
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+  .rd-col {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+  }
+  .rd-titulo {
+    font-size: var(--t-rotulo);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-escuro-texto);
+    margin-bottom: 4px;
+  }
+  .rd-col a,
+  .rd-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    min-height: 32px;
+    color: var(--color-escuro-apagado);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .rd-col a:hover {
+    color: var(--color-escuro-texto);
+  }
+  .rd-col :global(svg) {
+    flex: none;
+    margin-top: 2px;
+  }
+  .rd-legal {
+    display: grid;
+    gap: 8px;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-escuro-linha);
+    font-size: var(--t-rotulo);
+    line-height: 1.6;
+  }
+  @media (min-width: 768px) {
+    .rd-grade {
+      grid-template-columns: 1.4fr 1fr 1.2fr;
+    }
+  }
+</style>

@@ -1,0 +1,60 @@
+---
+// MARQUEE: faixa em loop. Um por página. Para no movimento reduzido.
+import Separador from '../conceito/Separador.astro';
+import type { Secao } from '../../lib/dados';
+interface Props {
+  dados: Extract<Secao, { tipo: 'marquee' }>;
+}
+const { dados: d } = Astro.props;
+---
+
+<section class="mq" aria-label={d.itens.join(', ')}>
+  <div class="mq-trilho">
+    {
+      [0, 1].map((copia) => (
+        <ul class="mq-lista" aria-hidden="true">
+          {d.itens.map((t) => (
+            <li>
+              <span>{t}</span>
+              <Separador />
+            </li>
+          ))}
+        </ul>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .mq {
+    overflow: hidden;
+    padding-block: clamp(20px, 3vw, 32px);
+    border-block: 1px solid var(--color-linha);
+  }
+  .mq-trilho {
+    display: flex;
+    width: max-content;
+  }
+  .mq-lista {
+    display: flex;
+    flex: none;
+  }
+  .mq-lista li {
+    display: flex;
+    align-items: center;
+    gap: clamp(18px, 2.4vw, 36px);
+    padding-right: clamp(18px, 2.4vw, 36px);
+    font-family: var(--font-titulo);
+    font-size: clamp(1.25rem, 0.9rem + 1.6vw, 2.25rem);
+    color: var(--color-tinta);
+    white-space: nowrap;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mq-trilho {
+      animation: ankura-marquee 48s linear infinite;
+    }
+    .mq:hover .mq-trilho {
+      animation-play-state: paused;
+    }
+  }
+</style>

@@ -1,0 +1,142 @@
+---
+// PROVA SOCIAL: depoimentos reais (mínima edição). Carrossel com deslize no celular, grade no desktop.
+import Cabecalho from '../base/Cabecalho.astro';
+import CtaMeio from '../base/CtaMeio.astro';
+import Icone from '../base/Icone.astro';
+import type { Secao } from '../../lib/dados';
+interface Props {
+  dados: Extract<Secao, { tipo: 'depoimentos' }>;
+}
+const { dados: d } = Astro.props;
+---
+
+<section class="secao secao-abaixo dep" id="depoimentos">
+  <div class="wrap dep-topo">
+    <Cabecalho rotulo={d.rotulo} titulo={d.titulo} />
+    {
+      d.nota && (
+        <a class="dep-nota" href={d.nota.link} target="_blank" rel="noopener" data-revela>
+          <span class="dep-valor">{d.nota.valor}</span>
+          <span class="dep-estrelas" aria-hidden="true">
+            {[1, 2, 3, 4, 5].map(() => <Icone nome="estrela" tamanho={16} />)}
+          </span>
+          <span class="t-pequeno">{d.nota.total}</span>
+        </a>
+      )
+    }
+  </div>
+  <div class="dep-trilho" tabindex="0" aria-label="Depoimentos (deslize para ver mais)">
+    <ul class="dep-lista">
+      {
+        d.itens.map((it, i) => (
+          <li class="dep-card" data-revela style={`--atraso:${i}`}>
+            <blockquote>
+              <p>“{it.texto}”</p>
+            </blockquote>
+            <p class="dep-autor">
+              <strong>{it.autor}</strong>
+              {it.origem && <span>{it.origem}</span>}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <div class="wrap"><CtaMeio cta={d.cta} /></div>
+</section>
+
+<style>
+  .dep-topo {
+    display: grid;
+    gap: 24px;
+    align-items: end;
+    margin-bottom: clamp(32px, 5vw, 56px);
+  }
+  .dep-nota {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    column-gap: 12px;
+    justify-self: start;
+    padding: 14px 20px;
+    border-radius: var(--radius-card);
+    background: var(--color-superficie);
+    box-shadow: inset 0 0 0 1px var(--color-linha);
+    color: var(--color-apagado);
+    text-decoration: none;
+  }
+  .dep-valor {
+    grid-row: span 2;
+    font-family: var(--font-titulo);
+    font-size: 2.25rem;
+    line-height: 1;
+    color: var(--color-tinta);
+  }
+  .dep-estrelas {
+    display: flex;
+    gap: 2px;
+    color: var(--color-acao);
+  }
+  .dep-trilho {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-inline: var(--margem);
+    scroll-padding-inline: var(--margem);
+  }
+  .dep-trilho::-webkit-scrollbar {
+    display: none;
+  }
+  .dep-lista {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+  }
+  .dep-card {
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    width: min(82vw, 380px);
+    padding: clamp(24px, 3vw, 32px);
+    border-radius: var(--radius-bloco);
+    background: var(--color-superficie);
+    box-shadow: inset 0 0 0 1px var(--color-linha);
+  }
+  .dep-card blockquote {
+    color: var(--color-tinta);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+  .dep-autor {
+    display: grid;
+    font-size: var(--t-pequeno);
+  }
+  .dep-autor strong {
+    font-weight: 600;
+    color: var(--color-tinta);
+  }
+  .dep-autor span {
+    color: var(--color-apagado);
+  }
+  @media (min-width: 1024px) {
+    .dep-topo {
+      grid-template-columns: 1fr auto;
+    }
+    .dep-trilho {
+      overflow: visible;
+      max-width: calc(var(--largura) + 2 * var(--margem));
+      margin-inline: auto;
+    }
+    .dep-lista {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      width: auto;
+      gap: var(--gap);
+    }
+    .dep-card {
+      width: auto;
+    }
+  }
+</style>

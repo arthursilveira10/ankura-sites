@@ -1,0 +1,47 @@
+---
+// Foto otimizada (AVIF/WebP responsivo) ou espaço reservado [FOTO: ...] enquanto a real não chega.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  foto?: { src?: ImageMetadata; alt?: string; reservado?: string; foco?: string };
+  larguras?: number[];
+  sizes: string;
+  prioridade?: boolean; // true só para imagens da primeira tela
+  class?: string;
+  proporcao?: string; // ex.: "4/5" (usado no espaço reservado e para recortar)
+}
+const { foto, larguras = [400, 700, 1000, 1400], sizes, prioridade = false, class: classe, proporcao } = Astro.props;
+const estilo = proporcao ? `aspect-ratio:${proporcao}` : undefined;
+---
+
+{
+  foto?.src ? (
+    <Picture
+      src={foto.src}
+      alt={foto.alt ?? ''}
+      widths={larguras.filter((w) => w <= foto.src!.width)}
+      sizes={sizes}
+      formats={['avif', 'webp']}
+      loading={prioridade ? 'eager' : 'lazy'}
+      fetchpriority={prioridade ? 'high' : 'auto'}
+      decoding={prioridade ? 'sync' : 'async'}
+      class:list={['foto', classe]}
+      style={`object-position:${foto.foco ?? '50% 30%'};${estilo ? estilo + ';' : ''}`}
+      pictureAttributes={{ class: 'contents' }}
+    />
+  ) : (
+    <div class:list={['foto foto-reservada', classe]} style={estilo} role="img" aria-label={foto?.alt || 'Foto a definir'}>
+      [FOTO: {foto?.reservado ?? foto?.alt ?? 'a definir'}]
+    </div>
+  )
+}
+
+<style>
+  .foto {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>

@@ -1,0 +1,174 @@
+---
+// TOPO. Celular: foto compacta → headline → subtítulo → botão (botão inteiro até ~620px).
+// O texto nunca depende de animação; só a foto e os selos animam a entrada.
+import Foto from '../base/Foto.astro';
+import Botao from '../base/Botao.astro';
+import DecorTopo from '../conceito/DecorTopo.astro';
+import { titulo } from '../../lib/texto';
+import type { Secao } from '../../lib/dados';
+
+interface Props {
+  dados: Extract<Secao, { tipo: 'topo' }>;
+}
+const { dados: d } = Astro.props;
+const colagem = d.variante === 'colagem' && d.fotosExtras.length > 0;
+---
+
+<section class:list={['topo', colagem && 'topo-colagem']} data-topo aria-labelledby="titulo-topo">
+  <div class="wrap topo-grade">
+    <div class="topo-visual">
+      <DecorTopo />
+      <div class="topo-foto" data-revela-foto>
+        <Foto foto={d.foto} sizes="(min-width: 1024px) 460px, 80vw" larguras={[360, 520, 720, 920]} prioridade proporcao="4/5" />
+      </div>
+      {
+        colagem &&
+          d.fotosExtras.map((f, i) => (
+            <div class:list={['topo-extra', `topo-extra-${i + 1}`]} data-revela-foto>
+              <Foto foto={f} sizes="180px" larguras={[200, 360]} prioridade proporcao="3/4" />
+            </div>
+          ))
+      }
+      {
+        d.selos.map((s, i) => (
+          <span class:list={['selo', `selo-${i + 1}`]} data-revela style={`--atraso:${i + 3}`}>
+            {s}
+          </span>
+        ))
+      }
+    </div>
+
+    <div class="topo-texto">
+      {d.rotulo && <p class="rotulo">{d.rotulo}</p>}
+      <h1 id="titulo-topo" class="t-display medida-titulo" set:html={titulo(d.titulo)} />
+      <p class="t-lead topo-sub medida">{d.subtitulo}</p>
+      <div class="topo-acoes">
+        <Botao texto={d.botao.texto} posicao="topo" />
+        {d.apoio && <p class="t-pequeno topo-apoio">{d.apoio}</p>}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .topo {
+    position: relative;
+    padding-top: calc(var(--header) + 12px);
+    padding-bottom: clamp(32px, 6vw, 72px);
+    overflow-x: clip;
+  }
+  .topo-grade {
+    display: grid;
+    gap: 18px;
+  }
+  .topo-visual {
+    position: relative;
+    justify-self: center;
+    width: min(50vw, 190px);
+  }
+  .topo-foto {
+    position: relative;
+    z-index: 1;
+    aspect-ratio: 4/5;
+    border-radius: var(--recorte-foto);
+    overflow: hidden;
+    background: var(--color-superficie-2);
+  }
+  .topo-extra {
+    position: absolute;
+    z-index: 2;
+    width: 38%;
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    box-shadow: 0 0 0 5px var(--color-fundo);
+  }
+  .topo-extra-1 {
+    right: -30%;
+    top: 8%;
+  }
+  .topo-extra-2 {
+    left: -30%;
+    bottom: 6%;
+  }
+  .selo {
+    position: absolute;
+    z-index: 3;
+    padding: 7px 12px;
+    border-radius: var(--radius-pilula);
+    background: var(--color-superficie);
+    box-shadow:
+      0 0 0 1px var(--color-linha),
+      0 10px 24px -14px rgb(0 0 0 / 0.35);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-tinta);
+    white-space: nowrap;
+  }
+  .selo-1 {
+    left: -18%;
+    top: 16%;
+  }
+  .selo-2 {
+    right: -20%;
+    top: 52%;
+  }
+  .selo-3 {
+    left: -10%;
+    bottom: 4%;
+  }
+  .topo-texto {
+    display: grid;
+    gap: 14px;
+    justify-items: center;
+    text-align: center;
+  }
+  .topo-texto :is(.medida, .medida-titulo) {
+    margin-inline: auto;
+  }
+  .topo-sub {
+    color: var(--color-texto);
+    max-width: 30em;
+  }
+  .topo-acoes {
+    display: grid;
+    gap: 10px;
+    justify-items: center;
+    margin-top: 2px;
+  }
+  .topo-apoio {
+    color: var(--color-apagado);
+  }
+
+  @media (min-width: 1024px) {
+    .topo {
+      padding-top: calc(var(--header) + 56px);
+      min-height: min(100svh, 940px);
+      display: flex;
+      align-items: center;
+    }
+    .topo-grade {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: center;
+      gap: clamp(40px, 5vw, 88px);
+    }
+    .topo-visual {
+      order: 2;
+      width: min(100%, 440px);
+    }
+    .topo-texto {
+      justify-items: start;
+      text-align: left;
+      gap: 22px;
+    }
+    .topo-texto :is(.medida, .medida-titulo) {
+      margin-inline: 0;
+    }
+    .topo-acoes {
+      justify-items: start;
+    }
+    .selo {
+      font-size: 0.8125rem;
+      padding: 9px 16px;
+    }
+  }
+</style>

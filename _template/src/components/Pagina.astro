@@ -1,0 +1,36 @@
+---
+// Monta uma página a partir do conteúdo: define o contexto (WhatsApp, rastreamento, modo LP) e renderiza as seções.
+import Base from '../layouts/Base.astro';
+import Secoes from './Secoes.astro';
+import { medico, type Pagina } from '../lib/dados';
+import { linkWhatsApp } from '../lib/texto';
+
+interface Props {
+  pagina: Pagina;
+  modoLP?: boolean;
+}
+const { pagina, modoLP = false } = Astro.props;
+const m = await medico();
+const d = pagina.data;
+const slug = pagina.id;
+
+Astro.locals.ctx = {
+  pagina: modoLP ? `lp-${slug}` : slug,
+  whatsapp: linkWhatsApp(m.whatsapp, d.cta.mensagem),
+  modoLP,
+};
+
+const faq = d.secoes.find((s) => s.tipo === 'faq');
+---
+
+<Base
+  titulo={d.seo.titulo}
+  descricao={d.seo.descricao}
+  imagem={d.seo.imagem}
+  botaoMenu={d.cta.botaoMenu}
+  barra={d.cta.barra}
+  indexar={!modoLP}
+  faq={faq?.tipo === 'faq' ? faq.perguntas : undefined}
+>
+  <Secoes secoes={d.secoes} />
+</Base>

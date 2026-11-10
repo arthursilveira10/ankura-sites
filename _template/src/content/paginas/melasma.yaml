@@ -1,0 +1,97 @@
+# PÁGINA DE PROCEDIMENTO (demo [FICTÍCIO])
+tipo: procedimento
+nome: Melasma
+resumo: Um plano para controlar as manchas que voltam com o sol, sem promessas mágicas.
+ordem: 2
+foto:
+  alt: Consulta de avaliação de manchas
+  reservado: detalhe de consulta
+seo:
+  titulo: Tratamento de melasma em Campinas | Dr. Arthur Silveira
+  descricao: Melasma tem controle. Avaliação completa, plano de cuidados em casa e procedimentos quando indicados. Campinas, SP.
+cta:
+  botaoMenu: Agendar avaliação
+  barra: Quero cuidar do meu melasma
+  mensagem: Olá! Vim pelo site e quero agendar uma avaliação para melasma.
+
+secoes:
+  - tipo: topo
+    variante: foto-compacta
+    rotulo: Melasma
+    titulo: Melasma tem **controle**. E começa por entender a sua pele.
+    subtitulo: Eu monto um plano que cabe na sua rotina, com o que fazer em casa e procedimentos quando forem indicados.
+    foto:
+      alt: Dr. Arthur Silveira
+      reservado: foto do médico, meio corpo
+    selos:
+      - Dermatologia · RQE 00000
+      - Campinas, SP
+    botao:
+      texto: Agendar avaliação
+    apoio: Você fala direto com a minha equipe.
+
+  - tipo: faixa-dados
+
+  - tipo: identificacao
+    variante: lista
+    rotulo: Você não está sozinha
+    titulo: Se você **já** passou por isso...
+    itens:
+      - titulo: A mancha que volta todo verão
+        texto: Você trata, clareia, e com o primeiro sol forte ela aparece de novo.
+      - titulo: O corretivo como obrigação
+        texto: Sair sem base virou exceção, e isso cansa.
+      - titulo: O ácido que irritou a pele
+        texto: Você tentou sozinha e a pele ficou vermelha, sensível ou até mais manchada.
+    cta:
+      texto: Quero entender o meu caso
+      posicao: meio-1
+
+  - tipo: o-que-e
+    rotulo: O que é
+    titulo: Uma condição **crônica**, que pede acompanhamento.
+    texto: |-
+      O melasma é uma mancha escura que aparece principalmente no rosto. Sol, hormônios e calor estão entre os gatilhos mais comuns.
+
+      Ele não tem cura definitiva, mas tem controle. O que funciona é um plano contínuo, ajustado ao longo do ano, e não um tratamento isolado.
+
+  - tipo: como-funciona
+    variante: passos-simples
+    rotulo: O plano
+    titulo: Três frentes que **trabalham** juntas.
+    passos:
+      - titulo: Proteção
+        texto: Protetor certo para a sua pele e para a sua rotina, inclusive dentro de casa.
+      - titulo: Cuidados em casa
+        texto: Uma rotina simples, com ativos escolhidos para o seu tipo de pele e o seu momento.
+      - titulo: Procedimentos
+        texto: Quando indicados, para potencializar o plano. Sempre com cuidado para não irritar a pele.
+
+  - tipo: antes-depois
+    rotulo: Casos
+    titulo: Acompanhamento ao longo dos **meses**.
+    casos:
+      - antes: { alt: Antes do tratamento, reservado: 'ANTES [exemplo, sem paciente real]' }
+        depois: { alt: Depois de 6 meses de acompanhamento, reservado: 'DEPOIS [exemplo, sem paciente real]' }
+        legenda: Após 6 meses de acompanhamento. Caso ilustrativo [FICTÍCIO].
+    avisoLegal: Imagens publicadas com autorização do paciente. Os resultados variam de pessoa para pessoa e não representam promessa ou garantia de resultado. Responsável técnico Dr. Arthur Silveira, CRM 000000-SP, RQE 00000 [FICTÍCIO].
+
+  - tipo: faq
+    rotulo: Dúvidas
+    titulo: O que as pacientes mais **perguntam**.
+    perguntas:
+      - pergunta: Melasma tem cura?
+        resposta: Não existe cura definitiva, mas existe controle. Com acompanhamento, a maioria das pessoas consegue manter as manchas bem mais leves.
+      - pergunta: Posso começar o tratamento em qualquer época do ano?
+        resposta: Pode. Na consulta eu ajusto o plano para a estação em que você está.
+      - pergunta: Quanto tempo leva para ver diferença?
+        resposta: Costuma levar algumas semanas para as primeiras mudanças. O plano é pensado para meses, com retornos.
+      - pergunta: Laser resolve?
+        resposta: Em alguns casos ajuda, em outros piora. Por isso eu só indico depois de avaliar a sua pele.
+
+  - tipo: cta-final
+    titulo: Vamos montar o **seu** plano?
+    texto: Me chama no WhatsApp. Na avaliação eu entendo a sua pele e te explico cada passo.
+    botao:
+      texto: Agendar avaliação
+    apoio: Respondemos em horário comercial.

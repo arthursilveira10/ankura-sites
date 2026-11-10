@@ -1,0 +1,19 @@
+---
+// DECORAÇÃO DO TOPO (por cliente): elemento do conceito atrás da foto.
+// Sempre decorativo: aria-hidden, atrás do conteúdo, sem bloquear clique.
+// Padrão do template: um círculo suave na cor de destaque.
+---
+
+<svg class="decor decor-topo" viewBox="0 0 400 400" aria-hidden="true">
+  <circle cx="200" cy="200" r="190" fill="var(--color-superficie-2)"></circle>
+</svg>
+
+<style>
+  .decor-topo {
+    position: absolute;
+    z-index: 0;
+    inset: -12% -18%;
+    width: 136%;
+    height: auto;
+  }
+</style>

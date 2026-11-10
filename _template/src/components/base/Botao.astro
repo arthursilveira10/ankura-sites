@@ -1,0 +1,143 @@
+---
+// Botão padrão Ankura: pílula com texto à esquerda e círculo com ícone à direita.
+// Com `posicao`, vira CTA de WhatsApp da página (link, mensagem e atributos de rastreamento automáticos).
+import Icone from './Icone.astro';
+import IconeAssinatura from '../conceito/IconeAssinatura.astro';
+
+type Posicao = 'topo' | 'meio-1' | 'meio-2' | 'final' | 'barra-fixa' | 'menu' | 'rodape' | 'prancha';
+interface Props {
+  texto: string;
+  estilo?: 'acao' | 'escuro' | 'contorno' | 'link';
+  href?: string;
+  posicao?: Posicao;
+  compacto?: boolean;
+  class?: string;
+}
+const { texto, estilo = 'acao', href, posicao, compacto = false, class: classe } = Astro.props;
+const ctx = Astro.locals.ctx;
+const ehWhats = !!posicao;
+const destino = ehWhats ? ctx?.whatsapp : href;
+const rastreio = ehWhats ? { 'data-cta': 'whatsapp', 'data-pagina': ctx?.pagina, 'data-posicao': posicao } : {};
+---
+
+<a
+  href={destino}
+  class:list={['botao', `botao-${estilo}`, compacto && 'botao-compacto', classe]}
+  {...ehWhats ? { target: '_blank', rel: 'noopener' } : {}}
+  {...rastreio}
+>
+  <span class="botao-texto">{texto}</span>
+  {
+    estilo !== 'link' && (
+      <span class="botao-icone" aria-hidden="true">
+        {ehWhats ? <IconeAssinatura /> : <Icone nome="seta" tamanho={18} />}
+      </span>
+    )
+  }
+  {estilo === 'link' && <Icone nome="seta" tamanho={16} class="botao-seta" />}
+  {ehWhats && <span class="sr-only">(abre o WhatsApp)</span>}
+</a>
+
+<style>
+  .botao {
+    --h: 56px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-height: var(--h);
+    padding: 6px 6px 6px 24px;
+    border-radius: var(--radius-pilula);
+    font-family: var(--font-texto);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    isolation: isolate;
+    overflow: hidden;
+    transition:
+      transform 0.4s var(--ease-ankura),
+      background-color 0.4s ease,
+      color 0.4s ease,
+      box-shadow 0.4s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .botao-compacto {
+    --h: 48px;
+    padding-left: 20px;
+    font-size: 0.875rem;
+  }
+  .botao-icone {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: calc(var(--h) - 12px);
+    height: calc(var(--h) - 12px);
+    border-radius: 50%;
+    transition: transform 0.5s var(--ease-ankura);
+  }
+
+  .botao-acao {
+    background: var(--color-acao);
+    color: var(--color-acao-texto);
+  }
+  .botao-acao .botao-icone {
+    background: color-mix(in oklab, var(--color-acao-texto) 18%, transparent);
+  }
+  .botao-escuro {
+    background: var(--color-tinta);
+    color: var(--color-fundo);
+  }
+  .botao-escuro .botao-icone {
+    background: color-mix(in oklab, var(--color-fundo) 16%, transparent);
+  }
+  .botao-contorno {
+    background: transparent;
+    color: var(--color-tinta);
+    box-shadow: inset 0 0 0 1.5px var(--color-linha);
+  }
+  .botao-contorno .botao-icone {
+    background: var(--color-superficie-2);
+  }
+  .botao-link {
+    min-height: 44px;
+    padding: 0;
+    gap: 8px;
+    color: var(--color-tinta);
+    background: none;
+    border-radius: 0;
+    overflow: visible;
+    text-decoration: underline;
+    text-decoration-color: var(--color-linha);
+    text-underline-offset: 6px;
+    text-decoration-thickness: 1.5px;
+  }
+
+  @media (hover: hover) {
+    .botao:not(.botao-link):hover {
+      transform: translateY(-2px);
+    }
+    .botao-acao:hover {
+      background: var(--color-acao-hover);
+    }
+    .botao-contorno:hover {
+      box-shadow: inset 0 0 0 1.5px var(--color-tinta);
+    }
+    .botao-link:hover {
+      text-decoration-color: currentColor;
+    }
+    .botao:hover .botao-icone {
+      transform: rotate(-8deg) scale(1.04);
+    }
+  }
+  .botao:active {
+    transform: scale(0.97);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .botao,
+    .botao-icone {
+      transition: none;
+    }
+  }
+</style>

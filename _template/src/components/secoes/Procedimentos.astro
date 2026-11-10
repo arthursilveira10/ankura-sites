@@ -1,0 +1,272 @@
+---
+// PROCEDIMENTOS (home): portas de entrada para as páginas de procedimento.
+// lista-em-linhas (padrão) | lista-com-imagem (desktop: imagem ao lado; celular: acordeão) | cards
+import Cabecalho from '../base/Cabecalho.astro';
+import Foto from '../base/Foto.astro';
+import Icone from '../base/Icone.astro';
+import IconeProcedimento from '../conceito/IconeProcedimento.astro';
+import { procedimentos } from '../../lib/dados';
+import type { Secao } from '../../lib/dados';
+interface Props {
+  dados: Extract<Secao, { tipo: 'procedimentos' }>;
+}
+const { dados: d } = Astro.props;
+const lp = Astro.locals.ctx?.modoLP;
+const itens =
+  d.itens ??
+  (await procedimentos()).map((p) => ({
+    nome: p.data.nome,
+    descricao: p.data.resumo ?? '',
+    link: lp ? `/lp/${p.id}` : `/${p.id}`,
+    foto: p.data.foto,
+  }));
+---
+
+<section class="secao secao-abaixo procs" id="procedimentos">
+  <div class="wrap">
+    <Cabecalho rotulo={d.rotulo} titulo={d.titulo} texto={d.texto} />
+
+    {
+      d.variante === 'cards' ? (
+        <ul class="procs-cards">
+          {itens.map((it, i) => (
+            <li data-revela style={`--atraso:${i}`}>
+              <a href={it.link} class="card">
+                <div class="card-foto">
+                  <Foto foto={it.foto} sizes="(min-width: 1024px) 380px, 90vw" proporcao="4/3" />
+                </div>
+                <div class="card-corpo">
+                  <h3 class="t-h3">{it.nome}</h3>
+                  <p class="t-pequeno">{it.descricao}</p>
+                  <span class="card-seta" aria-hidden="true">
+                    <Icone nome="seta" tamanho={18} />
+                  </span>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : d.variante === 'lista-com-imagem' ? (
+        <div class="procs-img">
+          {itens.map((it, i) => (
+            <details class="pi" name="procedimentos" open={i === 0} data-revela style={`--atraso:${i}`}>
+              <summary class="pi-linha">
+                <span class="pi-num">{String(i + 1).padStart(2, '0')}</span>
+                <span class="pi-nome">{it.nome}</span>
+                <span class="pi-mais" aria-hidden="true">
+                  <Icone nome="mais" tamanho={18} />
+                </span>
+              </summary>
+              <div class="pi-corpo">
+                <div class="pi-foto">
+                  <Foto foto={it.foto} sizes="(min-width: 1024px) 460px, 90vw" proporcao="4/3" />
+                </div>
+                <p>{it.descricao}</p>
+                {it.link && (
+                  <a href={it.link} class="pi-link">
+                    Ver como funciona <Icone nome="seta" tamanho={16} />
+                  </a>
+                )}
+              </div>
+            </details>
+          ))}
+        </div>
+      ) : (
+        <ul class="procs-linhas">
+          {itens.map((it, i) => (
+            <li data-revela style={`--atraso:${i}`}>
+              <a href={it.link} class="pl">
+                <span class="pl-ico" data-desenha>
+                  <IconeProcedimento indice={i} />
+                </span>
+                <span class="pl-foto">
+                  <Foto foto={it.foto} sizes="96px" larguras={[120, 200]} proporcao="1/1" />
+                </span>
+                <span class="pl-texto">
+                  <span class="pl-nome">{it.nome}</span>
+                  <span class="pl-desc t-pequeno">{it.descricao}</span>
+                </span>
+                <span class="pl-seta" aria-hidden="true">
+                  <Icone nome="seta" tamanho={18} />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .procs .wrap > :global(.cab) {
+    margin-bottom: clamp(32px, 5vw, 56px);
+  }
+  /* Lista em linhas */
+  .procs-linhas {
+    border-top: 1px solid var(--color-linha);
+  }
+  .pl {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr) 40px;
+    align-items: center;
+    gap: 14px;
+    padding-block: 16px;
+    border-bottom: 1px solid var(--color-linha);
+    color: inherit;
+    text-decoration: none;
+  }
+  .pl-ico {
+    display: none;
+    color: var(--color-destaque);
+  }
+  .pl-foto {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-mini);
+    overflow: hidden;
+  }
+  .pl-foto :global(.foto-reservada) {
+    font-size: 0;
+  }
+  .pl-texto {
+    display: grid;
+    gap: 2px;
+  }
+  .pl-nome {
+    font-family: var(--font-titulo);
+    font-size: clamp(1.25rem, 1rem + 0.9vw, 1.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-tinta);
+  }
+  .pl-desc {
+    color: var(--color-apagado);
+  }
+  .pl-seta {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px var(--color-linha);
+    color: var(--color-tinta);
+    transition:
+      background-color 0.4s ease,
+      color 0.4s ease,
+      transform 0.5s var(--ease-ankura);
+  }
+  @media (hover: hover) {
+    .pl:hover .pl-seta {
+      background: var(--color-tinta);
+      color: var(--color-fundo);
+      transform: rotate(45deg);
+    }
+  }
+  @media (min-width: 768px) {
+    .pl {
+      grid-template-columns: 40px 88px minmax(0, 1fr) 44px;
+      gap: 24px;
+      padding-block: 20px;
+    }
+    .pl-ico {
+      display: block;
+    }
+    .pl-foto {
+      width: 88px;
+      height: 88px;
+    }
+  }
+
+  /* Lista com imagem (acordeão no celular, imagem ao lado no desktop) */
+  .procs-img {
+    border-top: 1px solid var(--color-linha);
+  }
+  .pi {
+    border-bottom: 1px solid var(--color-linha);
+  }
+  .pi-linha {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr) 40px;
+    align-items: center;
+    gap: 12px;
+    min-height: 64px;
+    padding-block: 12px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .pi-linha::-webkit-details-marker {
+    display: none;
+  }
+  .pi-num {
+    font-size: var(--t-rotulo);
+    font-variant-numeric: tabular-nums;
+    color: var(--color-apagado);
+  }
+  .pi-nome {
+    font-family: var(--font-titulo);
+    font-size: clamp(1.25rem, 1rem + 0.9vw, 1.75rem);
+    color: var(--color-tinta);
+  }
+  .pi-mais {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px var(--color-linha);
+    transition: transform 0.4s var(--ease-ankura);
+  }
+  .pi[open] .pi-mais {
+    transform: rotate(45deg);
+  }
+  .pi-corpo {
+    display: grid;
+    gap: 14px;
+    padding: 0 0 24px 44px;
+  }
+  .pi-foto {
+    border-radius: var(--radius-card);
+    overflow: hidden;
+  }
+  .pi-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    font-weight: 600;
+    color: var(--color-tinta);
+  }
+
+  /* Cards */
+  .procs-cards {
+    display: grid;
+    gap: var(--gap);
+  }
+  .card {
+    display: grid;
+    height: 100%;
+    border-radius: var(--radius-bloco);
+    overflow: hidden;
+    background: var(--color-superficie);
+    box-shadow: inset 0 0 0 1px var(--color-linha);
+    color: inherit;
+    text-decoration: none;
+  }
+  .card-corpo {
+    position: relative;
+    display: grid;
+    gap: 6px;
+    padding: 22px 64px 24px 22px;
+  }
+  .card-seta {
+    position: absolute;
+    right: 18px;
+    bottom: 22px;
+  }
+  @media (min-width: 768px) {
+    .procs-cards {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+  }
+</style>

@@ -1,0 +1,81 @@
+---
+// MANIFESTO com text reveal: as palavras vão da cor apagada para a cheia com a rolagem.
+// Palavras quebradas no build (sem JS no navegador); o JS só atualiza --p.
+import Foto from '../base/Foto.astro';
+import { palavras } from '../../lib/texto';
+import type { Secao } from '../../lib/dados';
+interface Props {
+  dados: Extract<Secao, { tipo: 'manifesto' }>;
+}
+const { dados: d } = Astro.props;
+const lista = palavras(d.frase);
+const total = lista.length + d.fotos.length;
+type Peca = { tipo: 'palavra'; texto: string } | { tipo: 'foto'; foto: (typeof d.fotos)[number]['foto'] };
+const pecas: Peca[] = [];
+lista.forEach((p, i) => {
+  pecas.push({ tipo: 'palavra', texto: p });
+  d.fotos.filter((f) => f.aposPalavra === i + 1).forEach((f) => pecas.push({ tipo: 'foto', foto: f.foto }));
+});
+---
+
+<section class="secao secao-abaixo mf">
+  <div class="wrap mf-wrap">
+    {d.rotulo && <p class="rotulo" data-revela>{d.rotulo}</p>}
+    <div class="mf-frase" data-progresso style={`--n:${total}`}>
+      {
+        pecas.map((p, i) =>
+          p.tipo === 'palavra' ? (
+            <>
+              <span class="w" style={`--i:${i}`}>
+                {p.texto}
+              </span>{' '}
+            </>
+          ) : (
+            <>
+              <span class="w mf-foto" style={`--i:${i}`} aria-hidden="true">
+                <Foto foto={p.foto} sizes="140px" larguras={[160, 280]} proporcao="2/1" />
+              </span>{' '}
+            </>
+          ),
+        )
+      }
+    </div>
+    {d.complemento && <p class="t-lead mf-comp medida" data-revela>{d.complemento}</p>}
+  </div>
+</section>
+
+<style>
+  .mf-wrap {
+    display: grid;
+    gap: 28px;
+    justify-items: center;
+    text-align: center;
+  }
+  .mf-frase {
+    max-width: 22em;
+    font-family: var(--font-titulo);
+    font-size: clamp(1.625rem, 1rem + 2.6vw, 3.25rem);
+    line-height: 1.18;
+    letter-spacing: var(--titulo-espacamento);
+    color: var(--color-tinta);
+    text-wrap: balance;
+  }
+  .w {
+    /* liga quando o progresso passa da posição da palavra */
+    --on: clamp(0, calc((var(--p) * (var(--n) + 4) - var(--i)) / 4), 1);
+    color: color-mix(in oklab, var(--color-tinta) calc(18% + var(--on) * 82%), var(--color-fundo));
+    transition: color 0.3s linear;
+  }
+  .mf-foto {
+    display: inline-block;
+    width: clamp(64px, 9vw, 120px);
+    height: clamp(32px, 4.5vw, 60px);
+    vertical-align: middle;
+    border-radius: var(--radius-pilula);
+    overflow: hidden;
+    opacity: calc(0.25 + var(--on) * 0.75);
+  }
+  .mf-comp {
+    color: var(--color-texto);
+  }
+</style>

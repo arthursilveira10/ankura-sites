@@ -1,0 +1,102 @@
+---
+// CLÍNICA: fotos reais do consultório. bento (desktop 3 colunas desiguais; celular 2×2) ou carrossel.
+import Cabecalho from '../base/Cabecalho.astro';
+import Foto from '../base/Foto.astro';
+import type { Secao } from '../../lib/dados';
+interface Props {
+  dados: Extract<Secao, { tipo: 'clinica' }>;
+}
+const { dados: d } = Astro.props;
+---
+
+<section class:list={['secao secao-abaixo cl', `cl-${d.variante}`]}>
+  <div class="wrap">
+    <Cabecalho rotulo={d.rotulo} titulo={d.titulo} texto={d.texto} />
+  </div>
+  <div class="cl-area">
+    <ul class="cl-grade">
+      {
+        d.fotos.map((f, i) => (
+          <li class="cl-item" data-revela-foto style={`--atraso:${i}`}>
+            <Foto foto={f.foto} sizes="(min-width: 1024px) 480px, 80vw" />
+            {f.legenda && <span class="cl-legenda">{f.legenda}</span>}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cl-area {
+    margin-top: clamp(32px, 5vw, 56px);
+  }
+  .cl-item {
+    position: relative;
+    border-radius: var(--radius-bloco);
+    overflow: hidden;
+    background: var(--color-superficie-2);
+  }
+  .cl-legenda {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    padding: 6px 12px;
+    border-radius: var(--radius-pilula);
+    background: color-mix(in oklab, var(--color-fundo) 88%, transparent);
+    backdrop-filter: blur(8px);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-tinta);
+  }
+
+  /* bento */
+  .cl-bento .cl-area {
+    max-width: calc(var(--largura) + 2 * var(--margem));
+    margin-inline: auto;
+    padding-inline: var(--margem);
+  }
+  .cl-bento .cl-grade {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 180px;
+    gap: 10px;
+  }
+  .cl-bento .cl-item:first-child {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  @media (min-width: 1024px) {
+    .cl-bento .cl-grade {
+      grid-template-columns: 1.3fr 1fr 1fr;
+      grid-auto-rows: 260px;
+      gap: var(--gap);
+    }
+    .cl-bento .cl-item:first-child {
+      grid-column: span 1;
+      grid-row: span 2;
+    }
+    .cl-bento .cl-item:last-child:nth-child(4) {
+      grid-column: span 2;
+    }
+  }
+
+  /* carrossel */
+  .cl-carrossel .cl-area {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-inline: var(--margem);
+    scroll-padding-inline: var(--margem);
+  }
+  .cl-carrossel .cl-grade {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+  }
+  .cl-carrossel .cl-item {
+    width: min(78vw, 420px);
+    aspect-ratio: 4/5;
+    scroll-snap-align: start;
+  }
+</style>

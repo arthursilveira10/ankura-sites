@@ -1,0 +1,86 @@
+---
+// Layout de todas as páginas: SEO, fontes, header, barra fixa, rodapé e o JS do site.
+import '../styles/global.css';
+import { Font } from 'astro:assets';
+import { getImage } from 'astro:assets';
+import Header from '../components/base/Header.astro';
+import BarraCTA from '../components/base/BarraCTA.astro';
+import Rodape from '../components/base/Rodape.astro';
+import { medico, procedimentos, nomeCompleto } from '../lib/dados';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  titulo: string;
+  descricao: string;
+  imagem?: ImageMetadata;
+  botaoMenu: string;
+  barra?: string; // texto da barra fixa; sem ele, a barra não aparece
+  indexar?: boolean;
+  faq?: { pergunta: string; resposta: string }[];
+}
+const { titulo, descricao, imagem, botaoMenu, barra, indexar = true, faq } = Astro.props;
+const m = await medico();
+const procs = await procedimentos();
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const og = imagem ? new URL((await getImage({ src: imagem, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src, Astro.site) : undefined;
+
+const links = [
+  { texto: 'Início', href: '/' },
+  ...procs.map((p) => ({ texto: p.data.nome, href: `/${p.id}` })),
+  { texto: 'Contato', href: '#contato' },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Physician',
+    name: nomeCompleto(m),
+    medicalSpecialty: m.especialidade,
+    url: Astro.site?.toString(),
+    telephone: `+${m.whatsapp}`,
+    address: { '@type': 'PostalAddress', streetAddress: m.endereco.linha1, addressLocality: m.cidade, addressRegion: m.uf, addressCountry: 'BR' },
+    identifier: `CRM ${m.crm}`,
+  },
+  faq && {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.pergunta, acceptedAnswer: { '@type': 'Answer', text: f.resposta } })),
+  },
+].filter(Boolean);
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{titulo}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={canonical} />
+    {!indexar && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonical} />
+    {og && <meta property="og:image" content={og} />}
+    <Font cssVariable="--fonte-titulo" preload />
+    <Font cssVariable="--fonte-texto" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+    {m.demonstracao && <p class="aviso-demo">Site de demonstração da Ankura. Médico, dados e depoimentos são fictícios.</p>}
+    <Header links={links} botao={botaoMenu} />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Rodape links={links} />
+    {barra && <BarraCTA texto={barra} />}
+    <script>
+      import '../scripts/fx.ts';
+    </script>
+  </body>
+</html>

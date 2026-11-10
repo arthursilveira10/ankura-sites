@@ -1,0 +1,74 @@
+---
+// FAIXA DE DADOS: identificação obrigatória (CRM/RQE) e confiança logo abaixo do topo.
+import { medico } from '../../lib/dados';
+import type { Secao } from '../../lib/dados';
+interface Props {
+  dados: Extract<Secao, { tipo: 'faixa-dados' }>;
+}
+const { dados: d } = Astro.props;
+const m = await medico();
+const itens = d.itens ?? [
+  { rotulo: 'CRM', valor: m.crm },
+  ...(m.rqe ? [{ rotulo: 'RQE', valor: `${m.rqe} · ${m.especialidade}` }] : []),
+  { rotulo: 'Local', valor: `${m.cidade} · ${m.uf}` },
+  { rotulo: 'Atendimento', valor: m.modalidade },
+];
+---
+
+<section class="faixa" aria-label="Identificação profissional">
+  <dl class="wrap faixa-grade">
+    {
+      itens.map((i, n) => (
+        <div class="faixa-item" data-revela style={`--atraso:${n}`}>
+          <dt class="rotulo">{i.rotulo}</dt>
+          <dd>{i.valor}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>
+
+<style>
+  .faixa {
+    padding-block: 8px clamp(24px, 4vw, 40px);
+  }
+  .faixa-grade {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .faixa-item {
+    display: grid;
+    gap: 4px;
+    padding: 16px 12px 16px 0;
+    border-top: 1px solid var(--color-linha);
+  }
+  .faixa-item:nth-child(even) {
+    padding-left: 14px;
+    border-left: 1px solid var(--color-linha);
+  }
+  .faixa-item .rotulo::before {
+    display: none;
+  }
+  dd {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-tinta);
+    line-height: 1.35;
+  }
+  @media (min-width: 768px) {
+    .faixa-grade {
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      grid-auto-flow: column;
+    }
+    .faixa-item,
+    .faixa-item:nth-child(even) {
+      padding: 20px 20px 4px;
+      border-left: 1px solid var(--color-linha);
+    }
+    .faixa-item:first-child {
+      border-left: 0;
+      padding-left: 0;
+    }
+  }
+</style>

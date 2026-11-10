@@ -1,0 +1,40 @@
+---
+// O QUE É (página de procedimento): explicação curta + imagem ou ilustração.
+import Cabecalho from '../base/Cabecalho.astro';
+import Foto from '../base/Foto.astro';
+import type { Secao } from '../../lib/dados';
+interface Props {
+  dados: Extract<Secao, { tipo: 'o-que-e' }>;
+}
+const { dados: d } = Astro.props;
+---
+
+<section class="secao secao-abaixo oqe">
+  <div class:list={['wrap', d.foto && 'oqe-grade']}>
+    <Cabecalho rotulo={d.rotulo} titulo={d.titulo} texto={d.texto} />
+    {
+      d.foto && (
+        <div class="oqe-foto" data-revela-foto>
+          <Foto foto={d.foto} sizes="(min-width: 1024px) 520px, 90vw" proporcao="5/4" />
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .oqe-grade {
+    display: grid;
+    gap: clamp(32px, 5vw, 72px);
+  }
+  .oqe-foto {
+    border-radius: var(--radius-bloco);
+    overflow: hidden;
+  }
+  @media (min-width: 1024px) {
+    .oqe-grade {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      align-items: center;
+    }
+  }
+</style>

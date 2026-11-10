@@ -1,0 +1,97 @@
+---
+// FAQ: acordeão nativo (<details>), funciona sem JS e com teclado.
+import Cabecalho from '../base/Cabecalho.astro';
+import Icone from '../base/Icone.astro';
+import { paragrafos } from '../../lib/texto';
+import type { Secao } from '../../lib/dados';
+interface Props {
+  dados: Extract<Secao, { tipo: 'faq' }>;
+}
+const { dados: d } = Astro.props;
+---
+
+<section class="secao secao-abaixo faq" id="duvidas">
+  <div class="wrap faq-grade">
+    <div class="faq-cab">
+      <Cabecalho rotulo={d.rotulo} titulo={d.titulo} />
+    </div>
+    <div class="faq-lista">
+      {
+        d.perguntas.map((p, i) => (
+          <details class="faq-item" name="faq" data-revela style={`--atraso:${Math.min(i, 4)}`}>
+            <summary>
+              <span>{p.pergunta}</span>
+              <span class="faq-mais" aria-hidden="true">
+                <Icone nome="mais" tamanho={18} />
+              </span>
+            </summary>
+            <div class="faq-resp texto">
+              {paragrafos(p.resposta).map((t) => (
+                <p set:html={t} />
+              ))}
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-grade {
+    display: grid;
+    gap: clamp(28px, 4vw, 56px);
+  }
+  .faq-lista {
+    border-top: 1px solid var(--color-linha);
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--color-linha);
+  }
+  .faq-item summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    min-height: 64px;
+    padding-block: 16px;
+    font-weight: 500;
+    font-size: 1.0625rem;
+    color: var(--color-tinta);
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-mais {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px var(--color-linha);
+    transition:
+      transform 0.4s var(--ease-ankura),
+      background-color 0.3s ease;
+  }
+  .faq-item[open] .faq-mais {
+    transform: rotate(45deg);
+    background: var(--color-superficie-2);
+  }
+  .faq-resp {
+    padding: 0 56px 22px 0;
+    color: var(--color-texto);
+  }
+  @media (min-width: 1024px) {
+    .faq-grade {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      align-items: start;
+    }
+    .faq-cab {
+      position: sticky;
+      top: calc(var(--header) + 64px);
+    }
+  }
+</style>

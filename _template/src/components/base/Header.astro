@@ -1,0 +1,217 @@
+---
+// Menu flutuante. Desktop: sempre visível, com botão de agendar. Celular: esconde ao descer, volta ao subir.
+// Modo LP: sem links, só marca e botão.
+import Botao from './Botao.astro';
+import Icone from './Icone.astro';
+import Marca from '../conceito/Marca.astro';
+
+interface Props {
+  links: { texto: string; href: string }[];
+  botao: string;
+}
+const { links, botao } = Astro.props;
+const modoLP = Astro.locals.ctx?.modoLP;
+---
+
+<header class="hd" data-header data-rolado="nao" data-oculto="nao">
+  <div class="hd-barra">
+    <a href={modoLP ? '#conteudo' : '/'} class="hd-marca" aria-label="Início">
+      <Marca />
+    </a>
+
+    {
+      !modoLP && (
+        <nav class="hd-nav" aria-label="Principal">
+          {links.map((l) => (
+            <a href={l.href} class="hd-link">
+              {l.texto}
+            </a>
+          ))}
+        </nav>
+      )
+    }
+
+    <div class="hd-acoes">
+      <Botao texto={botao} posicao="menu" compacto class="hd-botao" />
+      {
+        !modoLP && (
+          <button class="hd-menu" type="button" aria-expanded="false" aria-controls="painel-menu" data-botao-menu>
+            <span class="sr-only">Menu</span>
+            <Icone nome="menu" tamanho={22} class="ico-abrir" />
+            <Icone nome="fechar" tamanho={22} class="ico-fechar" />
+          </button>
+        )
+      }
+    </div>
+  </div>
+
+  {
+    !modoLP && (
+      <div class="painel" id="painel-menu" data-painel-menu>
+        <nav aria-label="Menu do celular">
+          {links.map((l) => (
+            <a href={l.href} class="painel-link">
+              {l.texto}
+            </a>
+          ))}
+        </nav>
+        <Botao texto={botao} posicao="menu" />
+      </div>
+    )
+  }
+</header>
+
+<style>
+  .hd {
+    position: fixed;
+    inset: var(--aviso, 0px) 0 auto;
+    z-index: 50;
+    padding: 10px var(--margem);
+    transition: transform 0.7s var(--ease-ankura);
+  }
+  .hd[data-oculto='sim'] {
+    transform: translateY(-120%);
+  }
+  .hd-barra {
+    max-width: var(--largura);
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: calc(var(--header) - 20px);
+    padding: 0 6px 0 16px;
+    border-radius: var(--radius-pilula);
+    border: 1px solid transparent;
+    transition:
+      background-color 0.5s ease,
+      border-color 0.5s ease,
+      box-shadow 0.5s ease,
+      max-width 0.7s var(--ease-ankura);
+  }
+  .hd[data-rolado='sim'] .hd-barra,
+  :global(html[data-menu='aberto']) .hd-barra {
+    background: color-mix(in oklab, var(--color-fundo) 84%, transparent);
+    border-color: var(--color-linha);
+    backdrop-filter: blur(16px) saturate(1.3);
+    -webkit-backdrop-filter: blur(16px) saturate(1.3);
+    box-shadow: 0 10px 40px -24px rgb(0 0 0 / 0.35);
+  }
+  .hd-marca {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--color-tinta);
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .hd-nav {
+    display: none;
+  }
+  .hd-acoes {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hd-acoes :global(.hd-botao) {
+    display: none;
+  }
+  .hd-menu {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    color: var(--color-tinta);
+    background: var(--color-superficie);
+    border: 1px solid var(--color-linha);
+  }
+  .hd-menu :global(.ico-fechar),
+  :global(html[data-menu='aberto']) .hd-menu :global(.ico-abrir) {
+    display: none;
+  }
+  :global(html[data-menu='aberto']) .hd-menu :global(.ico-fechar) {
+    display: block;
+  }
+
+  .painel {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    padding: 110px var(--margem) 40px;
+    background: var(--color-fundo);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.4s ease,
+      visibility 0.4s;
+  }
+  :global(html[data-menu='aberto']) .painel {
+    opacity: 1;
+    visibility: visible;
+  }
+  :global(html[data-menu='aberto']) {
+    overflow: hidden;
+  }
+  .painel nav {
+    display: grid;
+    gap: 6px;
+  }
+  .painel-link {
+    font-family: var(--font-titulo);
+    font-size: clamp(1.75rem, 7vw, 2.75rem);
+    line-height: 1.2;
+    color: var(--color-tinta);
+    text-decoration: none;
+    padding-block: 4px;
+  }
+
+  @media (min-width: 1024px) {
+    .hd {
+      padding-top: 14px;
+    }
+    .hd[data-oculto='sim'] {
+      transform: none;
+    }
+    .hd[data-rolado='sim'] .hd-barra {
+      max-width: 1080px;
+    }
+    .hd-nav {
+      display: flex;
+      gap: 2px;
+      padding: 4px;
+    }
+    .hd-link {
+      padding: 9px 15px;
+      border-radius: var(--radius-pilula);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--color-texto);
+      text-decoration: none;
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+    }
+    .hd-link:hover {
+      background: var(--color-tinta);
+      color: var(--color-fundo);
+    }
+    .hd-acoes :global(.hd-botao) {
+      display: inline-flex;
+    }
+    .hd-menu,
+    .painel {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hd,
+    .hd-barra,
+    .painel {
+      transition: none;
+    }
+  }
+</style>

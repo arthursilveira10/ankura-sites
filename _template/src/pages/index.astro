@@ -1,0 +1,7 @@
+---
+import Pagina from '../components/Pagina.astro';
+import { home } from '../lib/dados';
+const pagina = await home();
+---
+
+<Pagina pagina={pagina} />

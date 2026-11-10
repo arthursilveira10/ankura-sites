@@ -1,0 +1,55 @@
+---
+// Renderiza a lista de seções de uma página, na ordem do conteúdo.
+import type { Secao } from '../lib/dados';
+import Topo from './secoes/Topo.astro';
+import FaixaDados from './secoes/FaixaDados.astro';
+import Marquee from './secoes/Marquee.astro';
+import Identificacao from './secoes/Identificacao.astro';
+import Manifesto from './secoes/Manifesto.astro';
+import Profissional from './secoes/Profissional.astro';
+import Procedimentos from './secoes/Procedimentos.astro';
+import OQueE from './secoes/OQueE.astro';
+import ParaQuem from './secoes/ParaQuem.astro';
+import Numeros from './secoes/Numeros.astro';
+import Cuidados from './secoes/Cuidados.astro';
+import ComoFunciona from './secoes/ComoFunciona.astro';
+import Depoimentos from './secoes/Depoimentos.astro';
+import AntesDepois from './secoes/AntesDepois.astro';
+import Clinica from './secoes/Clinica.astro';
+import Particular from './secoes/Particular.astro';
+import Faq from './secoes/Faq.astro';
+import CtaFinal from './secoes/CtaFinal.astro';
+
+interface Props {
+  secoes: Secao[];
+}
+const { secoes } = Astro.props;
+
+const mapa: Record<Secao['tipo'], any> = {
+  topo: Topo,
+  'faixa-dados': FaixaDados,
+  marquee: Marquee,
+  identificacao: Identificacao,
+  manifesto: Manifesto,
+  profissional: Profissional,
+  procedimentos: Procedimentos,
+  'o-que-e': OQueE,
+  'para-quem': ParaQuem,
+  numeros: Numeros,
+  cuidados: Cuidados,
+  'como-funciona': ComoFunciona,
+  depoimentos: Depoimentos,
+  'antes-depois': AntesDepois,
+  clinica: Clinica,
+  particular: Particular,
+  faq: Faq,
+  'cta-final': CtaFinal,
+};
+---
+
+{
+  secoes.map((s, i) => {
+    const Componente = mapa[s.tipo];
+    return <Componente dados={s} indice={i} />;
+  })
+}

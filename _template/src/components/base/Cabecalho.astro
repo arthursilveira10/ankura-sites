@@ -1,0 +1,48 @@
+---
+// Cabeçalho padrão de seção: rótulo + título (com palavra-chave) + texto de apoio.
+import { titulo as fmtTitulo, paragrafos } from '../../lib/texto';
+interface Props {
+  rotulo?: string;
+  titulo: string;
+  texto?: string;
+  centro?: boolean;
+  id?: string;
+  nivel?: 'h1' | 'h2';
+  classe?: string;
+}
+const { rotulo, titulo, texto, centro = false, id, nivel = 'h2', classe = 't-h2' } = Astro.props;
+const H = nivel;
+---
+
+<div class:list={['cab', centro && 'cab-centro']}>
+  {rotulo && <p class="rotulo" data-revela>{rotulo}</p>}
+  <H id={id} class:list={[classe, 'medida-titulo']} data-revela style="--atraso:1" set:html={fmtTitulo(titulo)} />
+  {
+    texto && (
+      <div class="cab-texto t-lead medida texto" data-revela style="--atraso:2">
+        {paragrafos(texto).map((p) => (
+          <p set:html={p} />
+        ))}
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .cab {
+    display: grid;
+    gap: 18px;
+    justify-items: start;
+  }
+  .cab-centro {
+    justify-items: center;
+    text-align: center;
+  }
+  .cab-centro .medida-titulo,
+  .cab-centro .medida {
+    margin-inline: auto;
+  }
+  .cab-texto {
+    color: inherit;
+  }
+</style>

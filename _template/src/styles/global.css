@@ -1,0 +1,245 @@
+/*
+  RÉGUA ANKURA (fixa entre clientes)
+  Medidas tiradas de _referencias/extracao-tecnica.md. Não mude por cliente sem motivo.
+  A identidade do cliente fica em tema.css.
+*/
+@import 'tailwindcss';
+@import './tema.css';
+@import './movimento.css';
+
+@theme {
+  --ease-ankura: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --largura: 1240px;
+  --margem: clamp(20px, 4vw, 48px);
+  --secao: clamp(72px, 10vw, 150px);
+  --gap: 16px;
+  --header: 64px;
+
+  /* Escala tipográfica */
+  --t-display: clamp(2.125rem, 1.2rem + 3.9vw, 5.25rem); /* 34px → 84px */
+  --t-h2: clamp(1.75rem, 1.1rem + 2.6vw, 3.75rem); /* 28px → 60px */
+  --t-h3: clamp(1.25rem, 1.05rem + 0.6vw, 1.75rem); /* 20px → 28px */
+  --t-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); /* 17px → 20px */
+  --t-corpo: 1rem; /* 16px no celular */
+  --t-pequeno: 0.875rem;
+  --t-rotulo: 0.75rem;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header: 76px;
+    --t-corpo: 1.0625rem; /* 17px */
+  }
+}
+
+/* ---------- base ---------- */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header) + 16px);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: var(--color-fundo);
+  color: var(--color-texto);
+  font-family: var(--font-texto);
+  font-size: var(--t-corpo);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-titulo);
+  color: var(--color-tinta);
+  font-weight: var(--titulo-peso);
+  letter-spacing: var(--titulo-espacamento);
+  text-wrap: balance;
+}
+p,
+li,
+blockquote,
+figcaption {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-tinta);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: var(--color-superficie-2);
+  color: var(--color-tinta);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- utilitários da régua ---------- */
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--largura) + 2 * var(--margem));
+  margin-inline: auto;
+  padding-inline: var(--margem);
+}
+.secao {
+  padding-block: var(--secao);
+  position: relative;
+}
+.secao-abaixo {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+.t-display {
+  font-size: var(--t-display);
+  line-height: 1.02;
+  letter-spacing: calc(var(--titulo-espacamento) - 0.01em);
+}
+.t-h2 {
+  font-size: var(--t-h2);
+  line-height: 1.06;
+}
+.t-h3 {
+  font-size: var(--t-h3);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+.t-lead {
+  font-size: var(--t-lead);
+  line-height: 1.6;
+}
+.t-pequeno {
+  font-size: var(--t-pequeno);
+  line-height: 1.5;
+}
+.rotulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-texto);
+  font-size: var(--t-rotulo);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-apagado);
+}
+.rotulo::before {
+  content: '';
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+}
+
+/* Palavra-chave dos títulos (**palavra** no conteúdo) */
+.chave {
+  font-weight: var(--titulo-destaque-peso);
+  font-style: var(--titulo-destaque-estilo);
+  color: var(--color-destaque);
+}
+
+.medida {
+  max-width: 34em;
+}
+.medida-titulo {
+  max-width: 16em;
+}
+
+.texto > * + * {
+  margin-top: 1em;
+}
+
+/* Fundo escuro */
+.escuro {
+  background: var(--color-escuro);
+  color: var(--color-escuro-apagado);
+  --color-linha: var(--color-escuro-linha);
+}
+.escuro h1,
+.escuro h2,
+.escuro h3 {
+  color: var(--color-escuro-texto);
+}
+
+/* Bloco arredondado com margem (seção em bloco) */
+.bloco {
+  margin-inline: clamp(8px, 1.4vw, 20px);
+  border-radius: var(--radius-bloco);
+}
+
+/* Espaço reservado para foto que ainda não chegou */
+.foto-reservada {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  text-align: center;
+  font-size: var(--t-rotulo);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-apagado);
+  background:
+    repeating-linear-gradient(135deg, transparent 0 14px, rgb(0 0 0 / 0.035) 14px 15px),
+    var(--color-superficie-2);
+}
+
+/* Pular para o conteúdo */
+.pular {
+  position: fixed;
+  left: 12px;
+  top: -80px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--radius-pilula);
+  background: var(--color-tinta);
+  color: var(--color-fundo);
+}
+.pular:focus {
+  top: 12px;
+}
+
+/* Faixa de site de demonstração (medico.demonstracao: true) */
+.aviso-demo {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  height: 28px;
+  padding: 0 var(--margem);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 0.6875rem;
+  background: var(--color-tinta);
+  color: var(--color-fundo);
+}
+html:has(.aviso-demo) {
+  --aviso: 28px;
+}
+html:has(.aviso-demo) main {
+  padding-top: var(--aviso);
+}
+
+/* Decoração nunca atrapalha */
+.decor {
+  pointer-events: none;
+  user-select: none;
+}

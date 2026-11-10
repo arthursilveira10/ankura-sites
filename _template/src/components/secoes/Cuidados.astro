@@ -1,0 +1,67 @@
+---
+// CUIDADOS: antes e depois do procedimento, em grupos de itens curtos.
+import Cabecalho from '../base/Cabecalho.astro';
+import Separador from '../conceito/Separador.astro';
+import type { Secao } from '../../lib/dados';
+interface Props {
+  dados: Extract<Secao, { tipo: 'cuidados' }>;
+}
+const { dados: d } = Astro.props;
+---
+
+<section class="secao secao-abaixo cuid">
+  <div class="wrap">
+    <Cabecalho rotulo={d.rotulo} titulo={d.titulo} />
+    <div class="cuid-grade">
+      {
+        d.grupos.map((g, i) => (
+          <div class="cuid-card" data-revela style={`--atraso:${i}`}>
+            <h3 class="t-h3">{g.titulo}</h3>
+            <ul>
+              {g.itens.map((it) => (
+                <li>
+                  <Separador />
+                  <span>{it}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .cuid-grade {
+    display: grid;
+    gap: var(--gap);
+    margin-top: clamp(32px, 5vw, 56px);
+  }
+  .cuid-card {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+    padding: clamp(24px, 3vw, 36px);
+    border-radius: var(--radius-bloco);
+    background: var(--color-superficie);
+    box-shadow: inset 0 0 0 1px var(--color-linha);
+  }
+  .cuid-card ul {
+    display: grid;
+    gap: 12px;
+  }
+  .cuid-card li {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+  .cuid-card li :global(svg) {
+    transform: translateY(2px);
+  }
+  @media (min-width: 768px) {
+    .cuid-grade {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+  }
+</style>
