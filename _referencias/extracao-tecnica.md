@@ -1,6 +1,6 @@
 # Extração técnica das referências 03 a 06
 
-Medições feitas em 10/11/2026 com navegador automatizado, em 1440×900 (desktop) e, na ref. 03, também em largura de celular. Registramos **princípios e medidas** para orientar a skill `site-build` e o `_template/`. Nada de código, imagem ou texto dessas páginas deve ir para os nossos sites.
+Medições feitas em 10/11/2026 com navegador automatizado, em 1440×900 (desktop) e 390×844 (celular, com navegador de celular simulado). O que é específico do celular está na seção 5. Registramos **princípios e medidas** para orientar a skill `site-build` e o `_template/`. Nada de código, imagem ou texto dessas páginas deve ir para os nossos sites.
 
 Na seção 1 está a síntese com os valores padrão da Ankura. Os detalhes por referência estão na seção 2.
 
@@ -190,3 +190,63 @@ Linha de 3 a 4 itens (CRM, RQE, cidade, modalidade) logo após o hero, com divis
 | Marquee | conteúdo duplicado + translateX -50% | 03, 05, 06 |
 | Bento | grade de 3 colunas desiguais, raio de 28 a 30px | 04 |
 | Cursor e scroll suave | só desktop com mouse, opcionais por cliente | 05 |
+
+---
+
+## 5. Celular (390×844)
+
+O paciente chega pelo Instagram. Dentro do app do Instagram, o navegador tem barras em cima e embaixo, e a área visível fica menor que os 844px medidos aqui (na prática, algo entre 650 e 700px). As conclusões abaixo já consideram isso.
+
+### O que cada referência faz no topo
+
+| Ref. | Ordem no topo | Headline | Botão principal | Foto |
+|---|---|---|---|---|
+| 03 Lucas | foto (colagem) → selo → headline → texto → botão | 34px, começa em 486px | termina em ~810px | começa em 84px, ~300px de altura |
+| 04 Mônica | foto (arco) → selo → headline → local → 2 botões | 32px, começa em 557px | termina em ~783px | começa em 86px, ~375px de altura |
+| 05 Helena | selo → headline → texto → 2 botões → foto | 44px, começa em 192px | visível já na primeira tela | começa em 600px |
+| 06 Gabrielle | selo → headline → texto → 2 botões → números → foto | 43px, começa em 172px | termina em 527px | começa em 806px, fora da primeira tela |
+
+**Leitura:** são dois modelos.
+- **Foto primeiro (03, 04):** o médico como protagonista, bonito e humano. Mas o botão cai abaixo de ~780px, ou seja, **fora da tela no navegador do Instagram**. O paciente precisa rolar para achar como agendar.
+- **Texto primeiro (05, 06):** headline e botão aparecem na hora, mas a foto do médico só aparece rolando. Isso contraria a nossa regra de "foto real do médico no topo junto com a resposta".
+
+**Padrão Ankura para o topo no celular (meio-termo):**
+- Foto do médico em cima, mas **compacta**: 260 a 300px de altura (cerca de 35% da tela), com o recorte da identidade (arco, cantos, colagem).
+- Headline logo depois: 34 a 40px.
+- Texto de apoio curto (2 a 3 linhas) e o botão principal **terminando até ~620px do topo**, para aparecer inteiro no navegador do Instagram sem rolar.
+- Selos e elementos decorativos ao redor da foto, nunca empurrando o botão para baixo.
+- Faixa de dados (CRM, RQE, cidade) logo abaixo do botão.
+- **Validar a primeira tela em 390×664** (simulando o Instagram) no checklist da skill.
+
+### Medidas no celular
+
+| Item | Referências | Padrão Ankura |
+|---|---|---|
+| H1 | 32 a 44px | 34 a 40px |
+| H2 | 27 a 37px | 28 a 34px |
+| Texto corrido | 14,5px (03) a 16,8px (05) | **mínimo 16px**. O 14,5px do Lucas fica pequeno para leitura longa no celular |
+| Respiro entre seções | 32px (04) a 104px (06) | 72 a 96px. O da Mônica (32px de cada lado) deixa as seções coladas |
+| Margem lateral | 16 a 20px | 20px |
+| Header | 64 a 88px de altura | 64 a 72px, para não roubar tela |
+| Botão do menu | 46px | mínimo 44px |
+| Botão de WhatsApp flutuante | 48 a 49px, 12 a 16px da borda (03, 04, 06; a 05 não tem) | 56px, 16px da borda. Na página normal: botão flutuante. No modo LP: barra fixa embaixo com o CTA escrito |
+| Botões | 52 a 58px de altura | 52 a 56px, largura total ou quase total |
+| Áreas de toque pequenas (menos de 40px) | 2 a 11 por página | nenhuma em link ou botão importante. Mínimo de 44px |
+| Rolagem lateral acidental | nenhuma das 4 | nenhuma (item do checklist) |
+| Tamanho total da página | 13 a 22 telas (05: 13; 04: 14; 06: 21; 03: 22) | a home e as páginas de procedimento podem ser longas. No **modo LP**, buscar no máximo ~14 telas |
+
+### Como as interações se comportam no celular
+
+- **Sticky do "como funciona" (05) e dos pilares (06):** **desligam** no celular e viram uma coluna normal. O título fixo à esquerda não cabe numa tela de 390px. No template: no celular, título em cima e passos embaixo, mantendo a linha que se preenche com a rolagem (funciona bem em coluna).
+- **Cartas empilhadas (03):** **continuam funcionando** no celular (cada carta para 14px abaixo da anterior). É o único efeito de rolagem fixa que sobrevive bem no celular. Boa opção para dar movimento a essa seção no celular.
+- **Hover com imagem (06):** no celular vira uma lista com **todos os itens abertos e uma imagem em cada um**, com ~545px por item. Com 5 serviços dá ~2.700px, mais de 3 telas só nessa seção. **No nosso template:** acordeão com o primeiro item aberto e a imagem dentro do item aberto, ou cards em carrossel horizontal com deslize.
+- **Bento (04):** passa de 3 colunas para uma grade 2×2 com ~470px de altura. Funciona bem.
+- **Antes e depois (06):** mantém o slider com arraste na largura total. Funciona bem.
+- **Menu:** hambúrguer abrindo painel de tela cheia nas 4.
+- **Cursor personalizado e scroll suave:** desligados no celular (05).
+
+### Problemas encontrados (para não repetir)
+
+- **Fotos secundárias do topo carregando atrasadas (03, 04):** a foto principal tem prioridade alta, mas as fotos menores da colagem estão com carregamento adiado (`loading="lazy"`). No primeiro print elas aparecem como **blocos vazios**. Regra: **tudo que aparece na primeira tela carrega na hora**, e a foto principal tem `fetchpriority="high"`.
+- **Topo invisível até a animação terminar (05):** a headline e a foto só aparecem depois da tela de carregamento e da animação de entrada. No teste, a primeira tela ficou vazia por vários segundos. O tempo foi inflado porque o navegador do teste estava em segundo plano, mas o problema é de fundo: **a headline nunca pode depender de animação para aparecer**. A animação de entrada vale só para a foto e os elementos decorativos.
+- **Selo de agenda com mês (05):** "agenda aberta em outubro" já estava fora do prazo quando medimos. Nada de data no topo.
